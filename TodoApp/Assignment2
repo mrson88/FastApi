@@ -1,0 +1,14 @@
+Recap what we have learned. We will be creating a new route that has a lot of functionality that we have learned thus far from FastAPI :)
+
+
+        Create a new route within the routers directory called users.py
+
+        Enhance users.py to be able to return all users within the application
+
+        Enhance users.py to be able to get a single user by a path parameter
+
+        Enhance users.py to be able to get a single user by a query parameter
+
+        Enhance users.py to be able to modify their current user's password, if passed by authentication
+
+        Enhance users.py to be able to delete their own user.
