@@ -12,9 +12,9 @@ SQLALCHEMY_DATABASE_URL = "postgresql://ioipbvjh:gh55DaBH3Ikcl3nRdWfOK4ILYIlaHoH
 # )
 
 # MYSQL Series
-# engine = create_engine(
-#     SQLALCHEMY_DATABASE_URL
-# )
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL
+)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
