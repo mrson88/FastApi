@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append("..")
 
 from fastapi import Depends, HTTPException, status, APIRouter
@@ -11,7 +12,6 @@ from database import SessionLocal, engine
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
-
 
 SECRET_KEY = "KlgH6AzYDeZeGwD288to79I3vTHT8wp7"
 ALGORITHM = "HS256"
@@ -30,7 +30,6 @@ bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 models.Base.metadata.create_all(bind=engine)
 
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="token")
-
 
 router = APIRouter(
     prefix="/auth",
@@ -56,8 +55,8 @@ def verify_password(plain_password, hashed_password):
 
 
 def authenticate_user(username: str, password: str, db):
-    user = db.query(models.Users)\
-        .filter(models.Users.username == username)\
+    user = db.query(models.Users) \
+        .filter(models.Users.username == username) \
         .first()
 
     if not user:
@@ -69,7 +68,6 @@ def authenticate_user(username: str, password: str, db):
 
 def create_access_token(username: str, user_id: int,
                         expires_delta: Optional[timedelta] = None):
-
     encode = {"sub": username, "id": user_id}
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -121,7 +119,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"token": token}
 
 
-#Exceptions
+# Exceptions
 def get_user_exception():
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -138,15 +136,3 @@ def token_exception():
         headers={"WWW-Authenticate": "Bearer"},
     )
     return token_exception_response
-
-
-
-
-
-
-
-
-
-
-
-
