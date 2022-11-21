@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 # MYSQL Series
 # SQLALCHEMY_DATABASE_URL = "postgresql://postgres:daovanson88@localhost/TodoApplicationDatabase"
-SQLALCHEMY_DATABASE_URL = "postgresql://kahpmtuz:k9h91WHG02lgb06ug3v88wca8pg5udwG@satao.db.elephantsql.com/kahpmtuz"
+SQLALCHEMY_DATABASE_URL = "postgresql://ioipbvjh:gh55DaBH3Ikcl3nRdWfOK4ILYIlaHoHD@satao.db.elephantsql.com/ioipbvjh"
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
