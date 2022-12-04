@@ -1,1 +1,1 @@
-uvicorn books:app --reload
+uvicorn main:app --reload

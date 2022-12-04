@@ -138,6 +138,5 @@ async def complete_todo(request: Request, todo_id: int, db: Session = Depends(ge
 
     return RedirectResponse(url="/todos", status_code=status.HTTP_302_FOUND)
 
-
-def http_exception():
-    return HTTPException(status_code=404, detail="Todo not found")
+# def http_exception():
+#     return HTTPException(status_code=404, detail="Todo not found")
