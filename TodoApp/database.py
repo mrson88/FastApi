@@ -5,7 +5,8 @@ from sqlalchemy.ext.declarative import declarative_base
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./todos.db"
 
 # MYSQL Series
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:daovanson88@localhost/TodoApplicationDatabase"
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:daovanson88@localhost/mrsonbd"
+
 # engine = create_engine(
 #     SQLALCHEMY_DATABASE_URL
 # )
