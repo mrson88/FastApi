@@ -1,6 +1,7 @@
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from database import Base
+from sqlalchemy import Table, Column, Float, Integer, String, MetaData, ForeignKey, ARRAY
 
 
 class Users(Base):
@@ -13,11 +14,9 @@ class Users(Base):
     last_name = Column(String)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
-    phone_number = Column(String)
-    address_id = Column(Integer, ForeignKey('address.id'), nullable=True)
-
     todos = relationship("Todos", back_populates="owner")
-    address = relationship('Address', back_populates='user_address')
+    xsmb = relationship("Xsmb", back_populates="owner")
+    payment = relationship("Payment", back_populates="owner")
 
 
 class Todos(Base):
@@ -29,20 +28,30 @@ class Todos(Base):
     priority = Column(Integer)
     complete = Column(Boolean, default=False)
     owner_id = Column(Integer, ForeignKey("users.id"))
-
     owner = relationship("Users", back_populates="todos")
 
 
-class Address(Base):
-    __tablename__ = 'address'
+class Xsmb(Base):
+    __tablename__ = "xsmb"
 
     id = Column(Integer, primary_key=True, index=True)
-    address1 = Column(String)
-    address2 = Column(String)
-    city = Column(String)
-    state = Column(String)
-    country = Column(String)
-    postalcode = Column(String)
-    apt_num = Column(Integer)
+    date = Column(String)
+    time = Column(String)
+    data = Column(ARRAY(String))
+    data_type = Column(String)
+    data_cost = Column(String)
+    active = Column(Boolean, default=False)
+    owner_id = Column(Integer, ForeignKey("users.id"))
+    owner = relationship("Users", back_populates="xsmb")
 
-    user_address = relationship('Users', back_populates="address")
+
+class Payment(Base):
+    __tablename__ = "payment"
+
+    id = Column(Integer, primary_key=True, index=True)
+    date = Column(String)
+    time = Column(String)
+    data_money = Column(Float)
+    active = Column(Boolean, default=True)
+    owner_id = Column(Integer, ForeignKey("users.id"))
+    owner = relationship("Users", back_populates="payment")

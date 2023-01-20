@@ -1,3 +1,5 @@
+-- Create table user
+
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
@@ -10,7 +12,7 @@ CREATE TABLE users (
   is_active boolean DEFAULT NULL,
   PRIMARY KEY (id)
 );
-
+-- Create table todos
 DROP TABLE IF EXISTS todos;
 
 CREATE TABLE todos (
@@ -19,6 +21,36 @@ CREATE TABLE todos (
   description varchar(200) DEFAULT NULL,
   priority integer  DEFAULT NULL,
   complete boolean  DEFAULT NULL,
+  owner_id integer  DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (owner_id) REFERENCES users(id)
+);
+-- Create table xsmb
+DROP TABLE IF EXISTS xsmb;
+
+CREATE TABLE xsmb (
+  id SERIAL,
+  date varchar(50) DEFAULT NULL,
+  time varchar(50) DEFAULT NULL,
+  data varchar(400)[]  DEFAULT NULL,
+  data_type varchar(20)  DEFAULT NULL,
+  data_cost varchar(20)  DEFAULT NULL,
+  active boolean  DEFAULT NULL,
+  owner_id integer  DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (owner_id) REFERENCES users(id)
+);
+
+
+-- Create table payment
+DROP TABLE IF EXISTS payment;
+
+CREATE TABLE payment (
+  id SERIAL,
+  date varchar(50) DEFAULT NULL,
+  time varchar(50) DEFAULT NULL,
+  data_money numberic  DEFAULT NULL,
+  active boolean  DEFAULT NULL,
   owner_id integer  DEFAULT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (owner_id) REFERENCES users(id)
