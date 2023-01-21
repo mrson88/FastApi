@@ -2,7 +2,6 @@ alembic
 beautifulsoup4
 click
 fastapi
-html5lib
 httpx
 hyperlink
 Jinja2
@@ -29,7 +28,7 @@ Twisted
 urllib3
 uvicorn
 w3lib
-watchfiles
-webencodings
 websockets
-zope.interface
+passlib
+python-jose>=3.0.0
+python-multipart

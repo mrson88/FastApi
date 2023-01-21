@@ -8,7 +8,7 @@ class PostgresNoDuplicates:
         hostname = 'localhost'
         username = 'postgres'
         password = 'daovanson88'  # your password
-        database = 'TodoApplicationDatabase'
+        database = 'mrsondb'
 
         ## Create/Connect to database
         self.connection = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
