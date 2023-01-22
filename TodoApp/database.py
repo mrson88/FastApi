@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 # MYSQL Series
 SQLALCHEMY_DATABASE_URL = "postgresql://postgres:daovanson88@localhost/mrsondb"
-
+# SQLALCHEMY_DATABASE_URL = "postgresql://postgres:daovanson88@14.225.36.120/mrsondb"
 # engine = create_engine(
 #     SQLALCHEMY_DATABASE_URL
 # )

@@ -1,8 +1,8 @@
 import asyncio
 import time
-from .crawl_data import crawl_data
-from .save_data_to_database import PostgresNoDuplicates
-from .check_data_daily import CheckDataDaily
+from TodoApp.crawl_data.crawl_data import crawl_data, create_data_five_minute
+from TodoApp.check_data.save_data_to_database import PostgresNoDuplicates
+from TodoApp.check_data.check_data_daily import CheckDataDaily
 
 
 async def task():
@@ -12,7 +12,7 @@ async def task():
         local_time = time.localtime(seconds)
 
         await asyncio.sleep(10)
-        if int(local_time.tm_hour) == 18 and int(local_time.tm_min) == 40:
+        if int(local_time.tm_hour) == 16 and int(local_time.tm_min) == 50:
             print("time: ", local_time.tm_sec)
             save_data = PostgresNoDuplicates()
             save_data.process_item(crawl_data())
@@ -23,8 +23,6 @@ async def task():
 
 
 async def task_check():
-    # async with httpx.AsyncClient() as client:
-    # while True:
     seconds = time.time()
     local_time = time.localtime(seconds)
     print("time: ", local_time.tm_sec)
@@ -35,10 +33,19 @@ async def task_check():
         CheckDataDaily().checkdata(owner_id_list[i])
     save_data.close_database()
 
-    # await asyncio.sleep(10)
-    # if int(local_time.tm_hour) == 11 and int(local_time.tm_min) == 32:
-    #     print("time: ", local_time.tm_sec)
-    #     save_data = PostgresNoDuplicates()
-    #     save_data.process_item(crawl_data())
-    #     CheckDataDaily().checkdata()
-    #     save_data.close_database()
+
+async def task_five_minute():
+    # async with httpx.AsyncClient() as client:
+    while True:
+        seconds = time.time()
+        local_time = time.localtime(seconds)
+
+        await asyncio.sleep(20)
+        if int(local_time.tm_min) % 1 == 0:
+            print("time: ", local_time.tm_sec)
+            save_data = PostgresNoDuplicates()
+            save_data.process_item_five_minute(create_data_five_minute())
+            owner_id_list = CheckDataDaily().check_all_id()
+            for i in range(len(owner_id_list)):
+                CheckDataDaily().check_data_five_minute(owner_id_list[i])
+            save_data.close_database()

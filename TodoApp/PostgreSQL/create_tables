@@ -55,3 +55,23 @@ CREATE TABLE payment (
   PRIMARY KEY (id),
   FOREIGN KEY (owner_id) REFERENCES users(id)
 );
+
+-- Create table result_daily
+DROP TABLE IF EXISTS result_daily;
+
+CREATE TABLE result_daily (
+  id SERIAL,
+  day varchar(10) DEFAULT NULL,
+  result varchar[](200)
+);
+
+-- Create table result_five_minute
+DROP TABLE IF EXISTS result_five_minute;
+
+CREATE TABLE result_five_minute (
+  id SERIAL,
+  day varchar(10) DEFAULT NULL,
+  time varchar(10) DEFAULT NULL,
+  result varchar(200)[],
+  ischeck boolean DEFAULT False
+);

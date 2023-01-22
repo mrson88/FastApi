@@ -7,9 +7,9 @@ from fastapi import Depends, HTTPException, APIRouter
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from .auth import get_current_user, get_user_exception
-from TodoApp.crawl_data.schedule_task import task, task_check
+from TodoApp.check_data.schedule_task import task_check
 import asyncio
 
 router = APIRouter(
@@ -56,7 +56,7 @@ async def read_all_by_user(user: dict = Depends(get_current_user),
     list_user_id = db.query(models.Payment) \
         .filter(models.Payment.owner_id == user.get("id")) \
         .all()
-    print(list_user_id)
+    # print(list_user_id)
     return list_user_id
 
 
@@ -98,11 +98,13 @@ async def update_todo(payment_id: int,
     payment_model.time = payment.time
     payment_model.data_money -= payment.data_money
     payment_model.active = payment.active
+    if float(payment_model.data_money) >= 0:
+        db.add(payment_model)
+        db.commit()
 
-    db.add(payment_model)
-    db.commit()
-
-    return successful_response(200)
+        return successful_response(200)
+    else:
+        return http_exception()
 
 
 @router.put("/add_money/{payment_id}")

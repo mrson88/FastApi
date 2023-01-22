@@ -1,5 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
+import time
+import datetime
+import random
 
 
 def crawl_data():
@@ -17,3 +20,22 @@ def crawl_data():
 
 def check_body(b):
     return [b[i].text for i in range(len(b))]
+
+
+def create_data_five_minute():
+    data = create_data_list_five_minute()
+    date_today = datetime.date.today()
+    # no_of_days = datetime.timedelta(days=1)
+    # before_one_days = (date_today - no_of_days).strftime("%d/%m/%Y")
+    date_today_strftime = date_today.strftime("%d/%m/%Y")
+    time_today_strtime = time.strftime('%H:%M')
+
+    return [date_today_strftime, time_today_strtime, data]
+
+
+def create_data_list_five_minute():
+    five_minute_data = []
+    for i in range(27):
+        data = random.randint(0, 99)
+        five_minute_data.append(data)
+    return five_minute_data

@@ -1,9 +1,8 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 import models
 from database import engine
 from routers import auth, todos, xsmb, payment
-from company import companyapis, dependencies
-from crawl_data.schedule_task import task
+from TodoApp.check_data.schedule_task import task, task_five_minute
 import asyncio
 
 app = FastAPI()
@@ -16,14 +15,7 @@ app.include_router(xsmb.router)
 app.include_router(payment.router)
 
 
-# app.include_router(
-#     companyapis.router,
-#     prefix="/companyapis",
-#     tags=["companysapis"],
-#     dependencies=[Depends(dependencies.get_token_header)],
-#     responses={418: {"description": "Internal Use Only"}}
-# )
-
 @app.on_event('startup')
 def start_up():
+    asyncio.create_task(task_five_minute())
     asyncio.create_task(task())

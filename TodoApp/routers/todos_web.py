@@ -1,6 +1,6 @@
 import sys
 
-from TodoApp.crawl_data.save_data_to_database import PostgresNoDuplicates
+from TodoApp.check_data.save_data_to_database import PostgresNoDuplicates
 
 sys.path.append("..")
 from starlette import status
