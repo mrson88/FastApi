@@ -64,7 +64,7 @@ class CheckDataDaily:
                         if set(bb).issubset(result_calculate):
                             x += 1
                             # print('bb=', bb)
-                print('x=', x)
+                # print('x=', x)
                 self.cur.execute(f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
                                  (xien[i - 2], id_owner,))
                 self.connection.commit()
@@ -93,19 +93,19 @@ class CheckDataDaily:
                 result_calculate.append(result[0][i])
             # print(result_calculate)
 
-            print(len(result_data))
-            print((result_data))
+            # print(len(result_data))
+            # print((result_data))
             for j in range(len(result_data)):
                 x = 0
                 aa = result_data[j][0]
-                print((aa))
+                # print((aa))
                 for k in range(len(aa)):
                     bb = aa[k]
                     # if set(bb).issubset(result_calculate):
                     if bb in result_calculate:
                         x += 1
-                        print('bb=', bb)
-                print('x=', x)
+                        # print('bb=', bb)
+                # print('x=', x)
                 if x > 0:
                     self.cur.execute(f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
                                      (xien_5p, id_owner,))

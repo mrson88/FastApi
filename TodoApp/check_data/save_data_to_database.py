@@ -44,7 +44,7 @@ class PostgresNoDuplicates:
                                                                                             item[1],
                                                                                             ))
 
-            print('save data ok')
+            # print('save data ok')
 
             # Execute insert of data into database
             self.connection.commit()
@@ -69,7 +69,8 @@ class PostgresNoDuplicates:
 
         # If it is in DB, create log message
         if result:
-            print("Item already in database: %s" % str(item[1]))
+            # print("Item already in database: %s" % str(item[1]))
+            return
 
         # If text isn't in the DB, insert data
         else:
