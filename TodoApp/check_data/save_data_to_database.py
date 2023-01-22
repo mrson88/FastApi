@@ -35,7 +35,8 @@ class PostgresNoDuplicates:
 
         # If it is in DB, create log message
         if result:
-            print("Item already in database: %s" % str(item[0]))
+            return
+            # print("Item already in database: %s" % str(item[0]))
 
         # If text isn't in the DB, insert data
         else:

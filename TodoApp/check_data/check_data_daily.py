@@ -30,7 +30,7 @@ class CheckDataDaily:
     def check_all_id(self):
         self.cur.execute("select owner_id from payment")
         result_id = self.cur.fetchall()
-        print(result_id)
+        # print(result_id)
         return result_id
 
     def checkdata(self, id_owner):
