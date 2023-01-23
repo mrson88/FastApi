@@ -62,7 +62,6 @@ async def create_xsmb(xsmb: Xsmb,
     xsmb_model.data_cost = xsmb.data_cost
     xsmb_model.active = xsmb.active
     xsmb_model.owner_id = user.get("id")
-
     db.add(xsmb_model)
     db.commit()
 
