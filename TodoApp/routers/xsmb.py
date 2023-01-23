@@ -69,7 +69,7 @@ async def create_xsmb(xsmb: Xsmb,
     return successful_response(201)
 
 
-@router.get("/kq-xs5p/{id}")
+@router.get("/kq-xs5p/{day_xs5p}")
 async def read_kqxs5p(day_xs5p: str,
                       db: Session = Depends(get_db)):
     xs5p_model = db.query(models.ResultFiveMinute) \
