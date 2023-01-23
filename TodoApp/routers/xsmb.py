@@ -69,12 +69,9 @@ async def create_xsmb(xsmb: Xsmb,
     return successful_response(201)
 
 
-@router.get("/kq-xs5p/{day_xs5p}")
-async def read_todo(day_xs5p: str,
-                    user: dict = Depends(get_current_user),
-                    db: Session = Depends(get_db)):
-    if user is None:
-        raise get_user_exception()
+@router.get("/kq-xs5p/{id}")
+async def read_kqxs5p(day_xs5p: str,
+                      db: Session = Depends(get_db)):
     xs5p_model = db.query(models.ResultFiveMinute) \
         .filter(models.ResultFiveMinute.day == day_xs5p) \
         .first()
