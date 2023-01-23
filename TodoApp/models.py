@@ -58,7 +58,7 @@ class Payment(Base):
 
 
 class ResultFiveMinute(Base):
-    __tablename__ = "xs5p"
+    __tablename__ = "result_five_minute"
     id = Column(Integer, primary_key=True, index=True)
     day = Column(String)
     time = Column(String)
