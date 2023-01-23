@@ -13,7 +13,7 @@ async def task():
 
         await asyncio.sleep(10)
         if int(local_time.tm_hour) == 16 and int(local_time.tm_min) == 50:
-            print("time: ", local_time.tm_sec)
+            # print("time: ", local_time.tm_sec)
             save_data = PostgresNoDuplicates()
             save_data.process_item(crawl_data())
             owner_id_list = CheckDataDaily().check_all_id()
@@ -41,7 +41,7 @@ async def task_five_minute():
         local_time = time.localtime(seconds)
 
         await asyncio.sleep(20)
-        if int(local_time.tm_min) % 5 == 0 and int(local_time.tm_sec == 0):
+        if int(local_time.tm_min) % 5 == 0:
             # print("time: ", local_time.tm_sec)
             save_data = PostgresNoDuplicates()
             save_data.process_item_five_minute(create_data_five_minute())
