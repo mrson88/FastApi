@@ -58,7 +58,7 @@ class Payment(Base):
 
 
 class ResultFiveMinute(Base):
-    __tablename__ = "xsmb"
+    __tablename__ = "xs5p"
 
     day = Column(String)
     time = Column(String)
