@@ -5,7 +5,7 @@ import time
 def before_x_day(day):
     date_today = datetime.date.today()
     no_of_days = datetime.timedelta(days=day)
-    return (date_today - no_of_days).strftime("%d/%m/%Y")
+    return (date_today - no_of_days).strftime("%d-%m-%Y")
 
 
 def time_hour():
@@ -22,4 +22,4 @@ def time_today():
 
 def date_today_strf():
     date_today = datetime.date.today()
-    return date_today.strftime("%d/%m/%Y")
+    return date_today.strftime("%d-%m-%Y")
