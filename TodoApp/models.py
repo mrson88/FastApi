@@ -63,4 +63,4 @@ class ResultFiveMinute(Base):
     day = Column(String)
     time = Column(String)
     result = Column(ARRAY(String))
-    isCheck = Column(Boolean, default=True)
+    ischeck = Column(Boolean, default=True)

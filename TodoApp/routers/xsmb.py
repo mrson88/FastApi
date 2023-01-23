@@ -45,7 +45,7 @@ class ResultFiveMinute(BaseModel):
     day: str
     time: Optional[str]
     result: List[str]
-    isCheck: bool
+    ischeck: bool
 
 
 @router.post("/add_loto")
@@ -72,7 +72,7 @@ async def create_xsmb(xsmb: Xsmb,
 @router.get("/kq-xs5p/{day_xs5p}")
 async def read_kqxs5p(day_xs5p: str,
                       db: Session = Depends(get_db)):
-    xs5p_model = db.query(models.ResultFiveMinute) \
+    xs5p_model = db.query(models.ResultFiveMinute.result) \
         .filter(models.ResultFiveMinute.day == day_xs5p) \
         .first()
     if xs5p_model is not None:
