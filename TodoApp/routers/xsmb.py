@@ -36,6 +36,18 @@ class Xsmb(BaseModel):
     active: bool
 
 
+class ResultDaily(BaseModel):
+    day: str
+    result: List[str]
+
+
+class ResultFiveMinute(BaseModel):
+    day: str
+    time: Optional[str]
+    result: List[str]
+    isCheck: bool
+
+
 @router.post("/add_loto")
 async def create_xsmb(xsmb: Xsmb,
                       user: dict = Depends(get_current_user),
@@ -55,6 +67,20 @@ async def create_xsmb(xsmb: Xsmb,
     db.commit()
 
     return successful_response(201)
+
+
+@router.get("/kq-xs5p/{day_xs5p}")
+async def read_todo(day_xs5p: str,
+                    user: dict = Depends(get_current_user),
+                    db: Session = Depends(get_db)):
+    if user is None:
+        raise get_user_exception()
+    xs5p_model = db.query(models.ResultFiveMinute) \
+        .filter(models.ResultFiveMinute.day == day_xs5p) \
+        .first()
+    if xs5p_model is not None:
+        return xs5p_model
+    raise http_exception()
 
 
 def successful_response(status_code: int):

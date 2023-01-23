@@ -14,7 +14,7 @@ def crawl_data():
     print(result_day)
     result_raw = check_body(body.findChildren("span", class_="div-horizontal"))
     result_final = result_raw[-27:]
-    print(f'result_final= {result_final}')
+    # print(f'result_final= {result_final}')
     return [result_day, result_final]
 
 

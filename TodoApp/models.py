@@ -55,3 +55,12 @@ class Payment(Base):
     active = Column(Boolean, default=True)
     owner_id = Column(Integer, ForeignKey("users.id"))
     owner = relationship("Users", back_populates="payment")
+
+
+class ResultFiveMinute(Base):
+    __tablename__ = "xs5p"
+
+    day = Column(String)
+    time = Column(String)
+    result = Column(ARRAY(String))
+    isCheck = Column(Boolean, default=True)
