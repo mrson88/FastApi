@@ -41,9 +41,10 @@ class PostgresNoDuplicates:
         # If text isn't in the DB, insert data
         else:
             # Define insert statement
-            self.cur.execute(""" insert into result_daily (day, result) values (%s,%s)""", (str(item[0]),
-                                                                                            item[1],
-                                                                                            ))
+            self.cur.execute(""" insert into result_daily (day, result) values (%s,%s)""",
+                             (str(item[0]).replace('/', '-'),
+                              item[1],
+                              ))
 
             # print('save data ok')
 
