@@ -77,8 +77,8 @@ class CheckDataDaily:
     def check_data_five_minute(self, id_owner):
         xien_5p = 100
 
-        self.cur.execute("select result from result_five_minute where day = %s and time = %s",
-                         (date_today_strf(), time_today(),))
+        self.cur.execute("select result from result_five_minute where day = %s",
+                         (date_today_strf(),))
         result = self.cur.fetchone()
         # print('result_five_minute=', result)
 
