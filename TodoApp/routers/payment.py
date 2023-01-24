@@ -30,7 +30,7 @@ def get_db():
 
 
 class Payment(BaseModel):
-    date: str
+    date: Optional[str]
     time: Optional[str]
     data_money: Optional[float]
     active: bool

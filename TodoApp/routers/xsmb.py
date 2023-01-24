@@ -28,7 +28,7 @@ def get_db():
 
 
 class Xsmb(BaseModel):
-    date: str
+    date: Optional[str]
     time: Optional[str]
     data: List[str]
     data_type: Optional[str]
@@ -42,7 +42,7 @@ class ResultDaily(BaseModel):
 
 
 class ResultFiveMinute(BaseModel):
-    day: str
+    day: Optional[str]
     time: Optional[str]
     result: List[str]
     ischeck: bool
