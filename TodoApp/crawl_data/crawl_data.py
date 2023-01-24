@@ -29,7 +29,6 @@ def create_data_five_minute():
     # before_one_days = (date_today - no_of_days).strftime("%d/%m/%Y")
     date_today_strftime = date_today.strftime("%d-%m-%Y")
     time_today_strtime = time.strftime('%H:%M')
-
     return [date_today_strftime, time_today_strtime, data]
 
 
