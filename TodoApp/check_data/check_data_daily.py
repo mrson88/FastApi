@@ -76,7 +76,7 @@ class CheckDataDaily:
 
     def check_data_five_minute(self, id_owner):
         xien_5p = 100
-        print('check data')
+        # print('check data')
         self.cur.execute("select result from result_five_minute where day = %s",
                          (date_today_strf(),))
         result = self.cur.fetchone()
@@ -85,7 +85,7 @@ class CheckDataDaily:
         self.cur.execute("select data from xsmb where date = %s and data_type = %s and owner_id = %s and active = %s",
                          (date_today_strf(), 'xs_5p', id_owner, False))
         result_data = self.cur.fetchall()
-        print('result_data_five_minute=', result_data)
+        # print('result_data_five_minute=', result_data)
 
         if result:
             result_calculate = []
@@ -104,8 +104,8 @@ class CheckDataDaily:
                     # if set(bb).issubset(result_calculate):
                     if bb in result_calculate:
                         x += 1
-                        print('bb=', bb)
-                print('x=', x)
+                        # print('bb=', bb)
+                # print('x=', x)
                 if x > 0:
                     self.cur.execute(f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
                                      (xien_5p, id_owner,))
