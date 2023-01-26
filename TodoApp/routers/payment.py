@@ -127,7 +127,6 @@ async def update_todo(payment_id: int,
     payment_model.time = payment.time
     payment_model.data_money += payment.data_money
     payment_model.active = payment.active
-
     db.add(payment_model)
     db.commit()
 
