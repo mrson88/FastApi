@@ -39,7 +39,7 @@ class CheckDataDaily:
         if int(time_hour()) > 18 and int(time_minute()) > 30:
             self.cur.execute("select result from result_daily where day = %s", (date_today_strf(),))
         else:
-            self.cur.execute("select result from result_daily where day = %s", (before_x_day(2),))
+            self.cur.execute("select result from result_daily where day = %s", (before_x_day(1),))
         result = self.cur.fetchone()
         # print(type(result[0]))
         if result:

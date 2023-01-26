@@ -28,7 +28,7 @@ class PostgresNoDuplicates:
         """)
         # Check to see if text is already in database
 
-        self.cur.execute("select * from result_daily where day = %s", (item[0],))
+        self.cur.execute("select * from result_daily where day = %s", (str(item[0]).replace('/', '-'),))
 
         result = self.cur.fetchone()
         # print(str(item))
