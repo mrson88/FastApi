@@ -36,9 +36,9 @@ class Xsmb(BaseModel):
     active: bool
 
 
-class ResultDaily(BaseModel):
-    day: str
-    result: List[str]
+# class ResultDaily(BaseModel):
+#     day: str
+#     result: List[str]
 
 
 class ResultFiveMinute(BaseModel):

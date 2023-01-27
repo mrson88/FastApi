@@ -17,6 +17,7 @@ class Users(Base):
     todos = relationship("Todos", back_populates="owner")
     xsmb = relationship("Xsmb", back_populates="owner")
     payment = relationship("Payment", back_populates="owner")
+    payment_his = relationship("PaymentHistory", back_populates="owner")
 
 
 class Todos(Base):

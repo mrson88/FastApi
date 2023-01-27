@@ -69,7 +69,6 @@ async def read_all_by_user(user: dict = Depends(get_current_user),
 
 @router.post("/create_payment")
 async def create_payment(payment: Payment,
-                         # payment_his: PaymentHistory,
                          user: dict = Depends(get_current_user),
                          db: Session = Depends(get_db)):
     if user is None:
