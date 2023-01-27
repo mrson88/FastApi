@@ -33,8 +33,8 @@ class CheckDataDaily:
         # print(result_id)
         return result_id
 
-    def checkdata(self, id_owner):
-        xien = [100, 200, 300]
+    def check_data_daily(self, id_owner):
+        xien = [99, 99 / 27, 17, 74, 251]
 
         if int(time_hour()) > 18 and int(time_minute()) > 30:
             self.cur.execute("select result from result_daily where day = %s", (date_today_strf(),))
@@ -48,7 +48,7 @@ class CheckDataDaily:
                 result_calculate.append(result[0][i][-2:])
             # print(result_calculate)
 
-            for i in range(2, 5):
+            for i in range(5):
                 self.cur.execute(
                     "select data from xsmb where date = %s and data_type = %s and owner_id = %s and active = %s",
                     (date_today_strf(), f'x{i}', id_owner, False))
@@ -66,7 +66,7 @@ class CheckDataDaily:
                             # print('bb=', bb)
                 # print('x=', x)
                 self.cur.execute(f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
-                                 (xien[i - 2], id_owner,))
+                                 (xien[i], id_owner,))
                 self.connection.commit()
 
                 # print(len(result_data))
@@ -75,7 +75,7 @@ class CheckDataDaily:
                 self.connection.commit()
 
     def check_data_five_minute(self, id_owner):
-        xien_5p = 100
+        xien_5p = 99 / 27
         # print('check data')
         self.cur.execute("select result from result_five_minute where day = %s",
                          (date_today_strf(),))

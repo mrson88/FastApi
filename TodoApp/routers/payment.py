@@ -36,6 +36,13 @@ class Payment(BaseModel):
     active: bool
 
 
+class PaymentHistory(BaseModel):
+    date: Optional[str]
+    time: Optional[str]
+    data_money_cost: Optional[float]
+    data_type = Optional[str]
+
+
 @router.post('/check')
 async def f():
     # seconds = time.time()
@@ -60,10 +67,11 @@ async def read_all_by_user(user: dict = Depends(get_current_user),
     return list_user_id
 
 
-@router.post("/add_money")
-async def create_xsmb(payment: Payment,
-                      user: dict = Depends(get_current_user),
-                      db: Session = Depends(get_db)):
+@router.post("/create_payment")
+async def create_payment(payment: Payment,
+                         # payment_his: PaymentHistory,
+                         user: dict = Depends(get_current_user),
+                         db: Session = Depends(get_db)):
     if user is None:
         raise get_user_exception()
     payment_model = models.Payment()
@@ -75,14 +83,15 @@ async def create_xsmb(payment: Payment,
     db.add(payment_model)
     db.commit()
 
-    return successful_response(201)
+    return successful_response(200)
 
 
 @router.put("/minus_money/{payment_id}")
-async def update_todo(payment_id: int,
-                      payment: Payment,
-                      user: dict = Depends(get_current_user),
-                      db: Session = Depends(get_db)):
+async def minus_payment(payment_id: int,
+                        payment: Payment,
+                        # payment_his: PaymentHistory,
+                        user: dict = Depends(get_current_user),
+                        db: Session = Depends(get_db)):
     if user is None:
         raise get_user_exception()
 
@@ -98,8 +107,10 @@ async def update_todo(payment_id: int,
     payment_model.time = payment.time
     payment_model.data_money -= payment.data_money
     payment_model.active = payment.active
+
     if float(payment_model.data_money) >= 0:
         db.add(payment_model)
+        # db.add(payment_his_model)
         db.commit()
 
         return successful_response(200)
@@ -108,7 +119,7 @@ async def update_todo(payment_id: int,
 
 
 @router.put("/add_money/{payment_id}")
-async def update_todo(payment_id: int,
+async def add_payment(payment_id: int,
                       payment: Payment,
                       user: dict = Depends(get_current_user),
                       db: Session = Depends(get_db)):
@@ -128,6 +139,36 @@ async def update_todo(payment_id: int,
     payment_model.data_money += payment.data_money
     payment_model.active = payment.active
     db.add(payment_model)
+    db.commit()
+
+    return successful_response(200)
+
+
+@router.get("/payment_history")
+async def read_payment_history_by_user(user: dict = Depends(get_current_user),
+                                       db: Session = Depends(get_db)):
+    if user is None:
+        raise get_user_exception()
+    list_payment_id = db.query(models.PaymentHistory) \
+        .filter(models.PaymentHistory.owner_id == user.get("id")) \
+        .all()
+    print(list_payment_id)
+    return list_payment_id
+
+
+@router.post("/payment_history")
+async def create_payment_history(payment_his: PaymentHistory,
+                                 user: dict = Depends(get_current_user),
+                                 db: Session = Depends(get_db)):
+    if user is None:
+        raise get_user_exception()
+    payment_his_model = models.PaymentHistory()
+    payment_his_model.date = payment_his.date
+    payment_his_model.time = payment_his.time
+    payment_his_model.data_money_cost = payment_his.data_money_cost
+    payment_his_model.data_type = payment_his.data_type
+    payment_his_model.owner_id = user.get("id")
+    db.add(payment_his_model)
     db.commit()
 
     return successful_response(200)

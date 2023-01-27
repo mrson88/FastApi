@@ -49,7 +49,7 @@ CREATE TABLE payment (
   id SERIAL,
   date varchar(50) DEFAULT NULL,
   time varchar(50) DEFAULT NULL,
-  data_money numberic  DEFAULT NULL,
+  data_money double precision  DEFAULT NULL,
   active boolean  DEFAULT NULL,
   owner_id integer  DEFAULT NULL,
   PRIMARY KEY (id),
@@ -74,4 +74,18 @@ CREATE TABLE result_five_minute (
   time varchar(10) DEFAULT NULL,
   result varchar(200)[],
   ischeck boolean DEFAULT False
+);
+
+-- Create table payment_history
+DROP TABLE IF EXISTS payment_history;
+
+CREATE TABLE payment_history (
+  id SERIAL,
+  date varchar(50) DEFAULT NULL,
+  time varchar(50) DEFAULT NULL,
+  data_money double precision  DEFAULT NULL,
+  data_type varchar(20)  DEFAULT NULL,
+  owner_id integer  DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (owner_id) REFERENCES users(id)
 );

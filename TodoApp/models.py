@@ -57,6 +57,18 @@ class Payment(Base):
     owner = relationship("Users", back_populates="payment")
 
 
+class PaymentHistory(Base):
+    __tablename__ = "payment_history"
+
+    id = Column(Integer, primary_key=True, index=True)
+    date = Column(String)
+    time = Column(String)
+    data_money_cost = Column(Float)
+    data_type = Column(String)
+    owner_id = Column(Integer, ForeignKey("users.id"))
+    owner = relationship("Users", back_populates="payment")
+
+
 class ResultFiveMinute(Base):
     __tablename__ = "result_five_minute"
     id = Column(Integer, primary_key=True, index=True)
