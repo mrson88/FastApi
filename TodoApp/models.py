@@ -67,7 +67,7 @@ class PaymentHistory(Base):
     data_money = Column(Float)
     data_type = Column(String)
     owner_id = Column(Integer, ForeignKey("users.id"))
-    owner = relationship("Users", back_populates="payment_history")
+    owner = relationship("Users", back_populates="PaymentHistory")
 
 
 class ResultFiveMinute(Base):
