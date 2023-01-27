@@ -36,11 +36,11 @@ class Payment(BaseModel):
     active: bool
 
 
-class PaymentHistory(BaseModel):
-    date: Optional[str]
-    time: Optional[str]
-    data_money: Optional[float]
-    data_type = Optional[str]
+# class PaymentHistory(BaseModel):
+#     date: Optional[str]
+#     time: Optional[str]
+#     data_money: Optional[float]
+#     data_type = Optional[str]
 
 
 @router.post('/check')
