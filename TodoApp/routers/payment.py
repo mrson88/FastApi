@@ -151,7 +151,7 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
     list_payment_id = db.query(models.PaymentHistory) \
         .filter(models.PaymentHistory.owner_id == user.get("id")) \
         .all()
-    print(list_payment_id)
+
     return list_payment_id
 
 
