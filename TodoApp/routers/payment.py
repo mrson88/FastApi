@@ -39,7 +39,7 @@ class Payment(BaseModel):
 class PaymentHistory(BaseModel):
     date: Optional[str]
     time: Optional[str]
-    data_money_cost: Optional[float]
+    data_money: Optional[float]
     data_type = Optional[str]
 
 
