@@ -115,7 +115,7 @@ class CheckDataDaily:
                         insert into customers (date,time,data_money,data_type,owner_id) values 
                         (%s,%s,%s,%s);
                         """
-                    self.cur.execute(query, (date_today_strf(), time_today(), xien_5p, 'win_xs_5p', int(id_owner)))
+                    self.cur.execute(query, (date_today_strf(), time_today(), xien_5p * x, 'win_xs_5p', str(id_owner)))
                     self.connection.commit()
 
                 # print(len(result_data))
