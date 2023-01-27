@@ -113,11 +113,9 @@ class CheckDataDaily:
                     self.connection.commit()
                     query = """
                         insert into customers (date,time,data_money,data_type,owner_id) values 
-                        (:date,:time,:data_money,:data_type,:owner_id)
+                        (%s,%s,%s,%s);
                         """
-                    self.cur.execute(query=text(query), values={'date': date_today_strf(), 'time': time_today(),
-                                                                'data_money': (xien_5p * x), 'data_type': 'win_xs_5p',
-                                                                'owner_id': id_owner})
+                    self.cur.execute(query, (date_today_strf(), time_today(), xien_5p, 'win_xs_5p', id_owner))
                     self.connection.commit()
 
                 # print(len(result_data))
