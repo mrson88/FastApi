@@ -1,5 +1,5 @@
 import psycopg2
-
+from sqlalchemy.sql import text
 from TodoApp.check_time.check_time_data import time_minute, time_hour, before_x_day, time_today, date_today_strf
 
 
@@ -111,8 +111,13 @@ class CheckDataDaily:
                     self.cur.execute(f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
                                      (xien_5p, id_owner,))
                     self.connection.commit()
-                    self.cur.execute(
-                        f"insert into payment_history (date,time,data_money,data_type,owner_id) values ({date_today_strf()},{time_today()},{xien_5p * x},{'win_soxo_5p'},{id_owner})")
+                    query = """
+                        insert into customers (date,time,data_money,data_type,owner_id) values 
+                        (:date,:time,:data_money,:data_type,:owner_id)
+                        """
+                    self.cur.execute(query=text(query), values={'date': date_today_strf(), 'time': time_today(),
+                                                                'data_money': (xien_5p * x), 'data_type': 'win_xs_5p',
+                                                                'owner_id': id_owner})
                     self.connection.commit()
 
                 # print(len(result_data))
