@@ -143,34 +143,34 @@ async def add_payment(payment_id: int,
     return successful_response(200)
 
 
-@router.get("/payment_history")
-async def read_payment_history_by_user(user: dict = Depends(get_current_user),
-                                       db: Session = Depends(get_db)):
-    if user is None:
-        raise get_user_exception()
-    list_payment_id = db.query(models.PaymentHistory) \
-        .filter(models.PaymentHistory.owner_id == user.get("id")) \
-        .all()
-    print(list_payment_id)
-    return list_payment_id
-
-
-@router.post("/payment_history")
-async def create_payment_history(payment_his: PaymentHistory,
-                                 user: dict = Depends(get_current_user),
-                                 db: Session = Depends(get_db)):
-    if user is None:
-        raise get_user_exception()
-    payment_his_model = models.PaymentHistory()
-    payment_his_model.date = payment_his.date
-    payment_his_model.time = payment_his.time
-    payment_his_model.data_money = payment_his.data_money
-    payment_his_model.data_type = payment_his.data_type
-    payment_his_model.owner_id = user.get("id")
-    db.add(payment_his_model)
-    db.commit()
-
-    return successful_response(200)
+# @router.get("/payment_history")
+# async def read_payment_history_by_user(user: dict = Depends(get_current_user),
+#                                        db: Session = Depends(get_db)):
+#     if user is None:
+#         raise get_user_exception()
+#     list_payment_id = db.query(models.PaymentHistory) \
+#         .filter(models.PaymentHistory.owner_id == user.get("id")) \
+#         .all()
+#     print(list_payment_id)
+#     return list_payment_id
+#
+#
+# @router.post("/payment_history")
+# async def create_payment_history(payment_his: PaymentHistory,
+#                                  user: dict = Depends(get_current_user),
+#                                  db: Session = Depends(get_db)):
+#     if user is None:
+#         raise get_user_exception()
+#     payment_his_model = models.PaymentHistory()
+#     payment_his_model.date = payment_his.date
+#     payment_his_model.time = payment_his.time
+#     payment_his_model.data_money = payment_his.data_money
+#     payment_his_model.data_type = payment_his.data_type
+#     payment_his_model.owner_id = user.get("id")
+#     db.add(payment_his_model)
+#     db.commit()
+#
+#     return successful_response(200)
 
 
 def successful_response(status_code: int):
