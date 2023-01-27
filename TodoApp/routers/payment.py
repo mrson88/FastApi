@@ -40,7 +40,7 @@ class PaymentHistory(BaseModel):
     date: Optional[str]
     time: Optional[str]
     data_money: Optional[float]
-    # data_type = Optional[str]
+    data_type = Optional[str]
 
 
 @router.post('/check')
