@@ -112,7 +112,7 @@ class CheckDataDaily:
                                      (xien_5p, id_owner,))
                     self.connection.commit()
                     self.cur.execute(
-                        f"insert into payment_history (date,time,data_money,data_type,owner_id) values ('{date_today_strf()}','{time_today()}',{xien_5p * x},'{'win_soxo_5p'}',{id_owner})")
+                        f"insert into payment_history (date,time,data_money,data_type,owner_id) values ('{date_today_strf()}','{time_today()}',{xien_5p * x},'{'win_soxo_5p'}',{id_owner});")
                     self.connection.commit()
 
                 # print(len(result_data))
