@@ -80,7 +80,7 @@ class CheckDataDaily:
         self.cur.execute("select result from result_five_minute where day = %s",
                          (date_today_strf(),))
         result = self.cur.fetchone()
-        # print('result_five_minute=', result)
+        print('result_five_minute=', result)
 
         self.cur.execute("select data from xsmb where date = %s and data_type = %s and owner_id = %s and active = %s",
                          (date_today_strf(), 'xs_5p', id_owner, False))
