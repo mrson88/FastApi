@@ -79,7 +79,7 @@ async def read_kqxs5p_day(day: str,
     raise http_exception()
 
 
-@router.get("/kq-xs5p/{number}")
+@router.get("/kq-xs5p-number/{number}")
 async def read_kqxs5p_number(number: str,
                              db: Session = Depends(get_db)):
     xs5p_model = db.query(models.ResultFiveMinute) \
