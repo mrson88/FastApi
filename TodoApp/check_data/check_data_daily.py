@@ -106,7 +106,7 @@ class CheckDataDaily:
                     for l in range(len(result_calculate)):
                         if bb == result_calculate[l]:
                             x += 1
-                            # print('bb=', bb)
+                            print('bb=', bb)
                 # print('x=', x)
                 if x > 0:
                     self.cur.execute(f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
