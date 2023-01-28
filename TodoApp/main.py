@@ -2,7 +2,7 @@ from fastapi import FastAPI
 import models
 from database import engine
 from routers import auth, todos, xsmb, payment
-from TodoApp.check_data.schedule_task import task, task_five_minute
+from TodoApp.check_data.schedule_task import task_daily, task_five_minute
 import asyncio
 
 app = FastAPI()
@@ -18,4 +18,4 @@ app.include_router(payment.router)
 @app.on_event('startup')
 def start_up():
     asyncio.create_task(task_five_minute())
-    asyncio.create_task(task())
+    asyncio.create_task(task_daily())
