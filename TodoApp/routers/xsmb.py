@@ -83,7 +83,7 @@ async def read_kqxs5p_day(day: str,
 async def read_kqxs5p_number(number: str,
                              db: Session = Depends(get_db)):
     xs5p_model = db.query(models.ResultFiveMinute) \
-        .order_by(models.ResultFiveMinute.id.desc()).limit(int(number))
+        .order_by(models.ResultFiveMinute.id.desc()).limit(int(number)).all()
     if xs5p_model is not None:
         return xs5p_model
     raise http_exception()
