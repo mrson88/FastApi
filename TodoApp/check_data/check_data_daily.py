@@ -68,7 +68,7 @@ class CheckDataDaily:
                             # print('bb=', bb)
                 # print('x=', x)
                 self.cur.execute(
-                    f"update payment set data_money=data_money+{x * self.eff_money}*%s where owner_id = %s",
+                    f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
                     (xien[i], id_owner,))
                 self.connection.commit()
 
@@ -116,7 +116,7 @@ class CheckDataDaily:
                 # print('x=', x)
                 if x > 0:
                     self.cur.execute(
-                        f"update payment set data_money=data_money+{x * self.eff_money}*%s where owner_id = %s",
+                        f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
                         (xien_5p, id_owner,))
                     # self.connection.commit()
                     # print('x=', x)
@@ -124,7 +124,7 @@ class CheckDataDaily:
                     self.cur.execute(query,
                                      (
                                          date_today_strf(), time_today(),
-                                         f'+{float(round((xien_5p * x * float(price) * self.eff_money), 2))}',
+                                         f'+{float(round((xien_5p * x * float(price)), 2))}',
                                          'win_xs_5p',
                                          id_owner,))
                     self.connection.commit()
