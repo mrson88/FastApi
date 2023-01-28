@@ -27,11 +27,11 @@ async def task_check():
     local_time = time.localtime(seconds)
     # print("time: ", local_time.tm_sec)
     save_data = PostgresNoDuplicates()
-    save_data.process_item(crawl_data())
+    # save_data.process_item(crawl_data())
     save_data.process_item_five_minute(create_data_five_minute())
     owner_id_list = CheckDataDaily().check_all_id()
     for i in range(len(owner_id_list)):
-        CheckDataDaily().check_data_daily(owner_id_list[i])
+        # CheckDataDaily().check_data_daily(owner_id_list[i])
         CheckDataDaily().check_data_five_minute(owner_id_list[i])
     save_data.close_database()
 
