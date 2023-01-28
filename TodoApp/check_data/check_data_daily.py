@@ -113,7 +113,7 @@ class CheckDataDaily:
                     self.connection.commit()
                     query = "insert into payment_history (date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s);"
                     self.cur.execute(query,
-                                     ('fdjd', 'time_today()', 100, 'win_xs_5p', 1))
+                                     ('fdjd', 'time_today()', 100, 'win_xs_5p', 1,))
                     self.connection.commit()
 
                 # print(len(result_data))
