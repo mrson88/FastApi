@@ -87,6 +87,7 @@ class CheckDataDaily:
             (date_today_strf(), 'xs_5p', id_owner, False))
         result_data = self.cur.fetchall()
         print('result_data_five_minute=', result_data)
+        price = result_data[1]
 
         if result:
             result_calculate = []
@@ -117,7 +118,7 @@ class CheckDataDaily:
                     query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
                     self.cur.execute(query,
                                      (
-                                         date_today_strf(), time_today(), f'+{float(round((xien_5p * x), 2))}',
+                                         date_today_strf(), time_today(), f'+{float(round((xien_5p * x * price), 2))}',
                                          'win_xs_5p',
                                          id_owner,))
                     self.connection.commit()
