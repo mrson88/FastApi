@@ -114,11 +114,11 @@ class CheckDataDaily:
                     # query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
                     # self.cur.execute(query,
                     #                  (date_today_strf(), time_today(), float(xien_5p * x), 'win_xs_5p', id_owner,))
-                    print(type(date_today_strf()), type(time_today()), type(float(xien_5p * x)), type(int(id_owner)))
-                    self.cur.execute(
-                        "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);",
-                        (date_today_strf(), time_today(), float(xien_5p * x), 'win_xs_5p', id_owner,))
-                    self.connection.commit()
+                    print(type(date_today_strf()), type(time_today()), type(float(xien_5p * x)), type(id_owner))
+                    # self.cur.execute(
+                    #     "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);",
+                    #     (date_today_strf(), time_today(), float(xien_5p * x), 'win_xs_5p', id_owner,))
+                    # self.connection.commit()
 
                 # print(len(result_data))
 
