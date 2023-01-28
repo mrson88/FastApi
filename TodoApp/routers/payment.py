@@ -135,7 +135,7 @@ async def add_payment(payment_id: int,
 
     payment_model.date = payment.date
     payment_model.time = payment.time
-    payment_model.data_money += payment.data_money * 23000
+    payment_model.data_money += payment.data_money
     payment_model.active = payment.active
     db.add(payment_model)
     db.commit()
