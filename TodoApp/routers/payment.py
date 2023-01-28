@@ -104,7 +104,7 @@ async def minus_payment(payment_id: int,
 
     payment_model.date = payment.date
     payment_model.time = payment.time
-    payment_model.data_money -= payment.data_money
+    payment_model.data_money -= payment.data_money * 23000
     payment_model.active = payment.active
 
     if float(payment_model.data_money) >= 0:
@@ -135,7 +135,7 @@ async def add_payment(payment_id: int,
 
     payment_model.date = payment.date
     payment_model.time = payment.time
-    payment_model.data_money += payment.data_money
+    payment_model.data_money += payment.data_money * 23000
     payment_model.active = payment.active
     db.add(payment_model)
     db.commit()
@@ -165,7 +165,7 @@ async def create_payment_history(payment_his: PaymentHistory,
     payment_his_model = models.PaymentHistory()
     payment_his_model.date = payment_his.date
     payment_his_model.time = payment_his.time
-    payment_his_model.data_money = payment_his.data_money
+    payment_his_model.data_money = payment_his.data_money * 23000
     payment_his_model.data_type = payment_his.data_type
     payment_his_model.owner_id = user.get("id")
     db.add(payment_his_model)
