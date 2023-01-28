@@ -64,7 +64,7 @@ class CheckDataDaily:
                         if set(bb).issubset(result_calculate):
                             x += 1
                             # print('bb=', bb)
-                print('x=', x)
+                # print('x=', x)
                 self.cur.execute(f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
                                  (xien[i], id_owner,))
                 self.connection.commit()
@@ -116,8 +116,9 @@ class CheckDataDaily:
                     query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
                     self.cur.execute(query,
                                      (
-                                     date_today_strf(), time_today(), f'+{float(round((xien_5p * x), 2))}', 'win_xs_5p',
-                                     id_owner,))
+                                         date_today_strf(), time_today(), f'+{float(round((xien_5p * x), 2))}',
+                                         'win_xs_5p',
+                                         id_owner,))
                     self.connection.commit()
 
                 # print(len(result_data))
