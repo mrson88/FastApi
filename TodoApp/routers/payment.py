@@ -150,6 +150,7 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
         raise get_user_exception()
     list_payment_id = db.query(models.PaymentHistory) \
         .filter(models.PaymentHistory.owner_id == user.get("id")) \
+        .order_by(models.PaymentHistory.id.desc()).limit(50) \
         .all()
 
     return list_payment_id
