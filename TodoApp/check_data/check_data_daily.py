@@ -76,7 +76,7 @@ class CheckDataDaily:
 
     def check_data_five_minute(self, id_owner):
         xien_5p = 99 / 27
-        print('check data')
+        # print('check data')
         self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
                          (date_today_strf(),))
         result = self.cur.fetchone()
@@ -86,11 +86,11 @@ class CheckDataDaily:
             "select data,data_cost from xsmb where date = %s and data_type = %s and owner_id = %s and active = %s",
             (date_today_strf(), 'xs_5p', id_owner, False))
         result_data = self.cur.fetchall()
-        print('result_data_five_minute=', result_data)
+        # print('result_data_five_minute=', result_data)
 
-        if result:
-            if result_data:
-                price = result_data[0][1]
+        if result and result_data:
+
+            price = result_data[0][1]
             result_calculate = []
             for i in range(len(result[0])):
                 result_calculate.append(result[0][i])
@@ -109,13 +109,13 @@ class CheckDataDaily:
                     for l in range(len(result_calculate)):
                         if bb == result_calculate[l]:
                             x += 1
-                            print('bb=', bb)
+                            # print('bb=', bb)
                 # print('x=', x)
                 if x > 0:
                     self.cur.execute(f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
                                      (xien_5p, id_owner,))
                     # self.connection.commit()
-                    print('x=', x)
+                    # print('x=', x)
                     query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
                     self.cur.execute(query,
                                      (
