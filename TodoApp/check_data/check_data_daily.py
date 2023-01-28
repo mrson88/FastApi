@@ -92,11 +92,11 @@ class CheckDataDaily:
             for i in range(len(result[0])):
                 result_calculate.append(result[0][i])
             # print(result_calculate)
-
+            x = 0
             # print(len(result_data))
             # print((result_data))
             for j in range(len(result_data)):
-                x = 0
+
                 aa = result_data[j][0]
                 # print((aa))
                 for k in range(len(aa)):
@@ -107,15 +107,15 @@ class CheckDataDaily:
                             x += 1
                             # print('bb=', bb)
                 # print('x=', x)
-                if x > 0:
-                    self.cur.execute(f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
-                                     (xien_5p, id_owner,))
-                    self.connection.commit()
-                    query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
-                    self.cur.execute(query,
-                                     (date_today_strf(), time_today(), f'+{float(round(xien_5p * x, 2))}', 'win_xs_5p',
-                                      id_owner,))
-                    self.connection.commit()
+            if x > 0:
+                self.cur.execute(f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
+                                 (xien_5p, id_owner,))
+                self.connection.commit()
+                query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
+                self.cur.execute(query,
+                                 (date_today_strf(), time_today(), f'+{float(round(xien_5p * x, 2))}', 'win_xs_5p',
+                                  id_owner,))
+                self.connection.commit()
 
                 # print(len(result_data))
 
