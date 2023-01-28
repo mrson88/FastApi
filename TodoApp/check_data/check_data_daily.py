@@ -118,7 +118,8 @@ class CheckDataDaily:
                     query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
                     self.cur.execute(query,
                                      (
-                                         date_today_strf(), time_today(), f'+{float(round((xien_5p * x * price), 2))}',
+                                         date_today_strf(), time_today(),
+                                         f'+{float(round((xien_5p * x * float(price)), 2))}',
                                          'win_xs_5p',
                                          id_owner,))
                     self.connection.commit()
