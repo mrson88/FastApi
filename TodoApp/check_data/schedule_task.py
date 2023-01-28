@@ -31,6 +31,7 @@ async def task_check():
     owner_id_list = CheckDataDaily().check_all_id()
     for i in range(len(owner_id_list)):
         CheckDataDaily().check_data_daily(owner_id_list[i])
+        CheckDataDaily().check_data_five_minute(owner_id_list[i])
     save_data.close_database()
 
 
