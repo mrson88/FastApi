@@ -11,6 +11,7 @@ class CheckDataDaily:
         username = 'postgres'
         password = 'daovanson88'  # your password
         database = 'mrsondb'
+        self.eff_money = 23000
 
         # Create/Connect to database
         self.connection = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
@@ -34,6 +35,7 @@ class CheckDataDaily:
         return result_id
 
     def check_data_daily(self, id_owner):
+
         xien = [99, 99 / 27, 17, 74, 251]
 
         if int(time_hour()) > 18 and int(time_minute()) > 30:
@@ -65,8 +67,9 @@ class CheckDataDaily:
                             x += 1
                             # print('bb=', bb)
                 # print('x=', x)
-                self.cur.execute(f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
-                                 (xien[i], id_owner,))
+                self.cur.execute(
+                    f"update payment set data_money=data_money+{x * self.eff_money}*%s where owner_id = %s",
+                    (xien[i], id_owner,))
                 self.connection.commit()
 
                 # print(len(result_data))
@@ -112,15 +115,16 @@ class CheckDataDaily:
                             # print('bb=', bb)
                 # print('x=', x)
                 if x > 0:
-                    self.cur.execute(f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
-                                     (xien_5p, id_owner,))
+                    self.cur.execute(
+                        f"update payment set data_money=data_money+{x * self.eff_money}*%s where owner_id = %s",
+                        (xien_5p, id_owner,))
                     # self.connection.commit()
                     # print('x=', x)
                     query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
                     self.cur.execute(query,
                                      (
                                          date_today_strf(), time_today(),
-                                         f'+{float(round((xien_5p * x * float(price)), 2))}',
+                                         f'+{float(round((xien_5p * x * float(price) * self.eff_money), 2))}',
                                          'win_xs_5p',
                                          id_owner,))
                     self.connection.commit()
