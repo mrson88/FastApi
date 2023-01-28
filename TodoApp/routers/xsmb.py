@@ -69,11 +69,21 @@ async def create_xsmb(xsmb: Xsmb,
 
 
 @router.get("/kq-xs5p/{day}")
-async def read_kqxs5p(day: str,
-                      db: Session = Depends(get_db)):
+async def read_kqxs5p_day(day: str,
+                          db: Session = Depends(get_db)):
     xs5p_model = db.query(models.ResultFiveMinute.result) \
         .filter(models.ResultFiveMinute.day == day) \
         .order_by(models.ResultFiveMinute.id.desc()).first()
+    if xs5p_model is not None:
+        return xs5p_model
+    raise http_exception()
+
+
+@router.get("/kq-xs5p/{number}")
+async def read_kqxs5p_number(number: str,
+                             db: Session = Depends(get_db)):
+    xs5p_model = db.query(models.ResultFiveMinute) \
+        .order_by(models.ResultFiveMinute.id.desc()).all().limit(int(number))
     if xs5p_model is not None:
         return xs5p_model
     raise http_exception()
