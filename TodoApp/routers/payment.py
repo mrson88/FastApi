@@ -135,7 +135,7 @@ async def add_payment(payment_id: int,
 
     payment_model.date = payment.date
     payment_model.time = payment.time
-    payment_model.active = payment.active
+    # payment_model.active = payment.active
     if not payment_model.active:
         payment_model.active = True
         payment_model.data_money = payment.data_money + 1000000
