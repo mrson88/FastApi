@@ -135,12 +135,13 @@ async def add_payment(payment_id: int,
 
     payment_model.date = payment.date
     payment_model.time = payment.time
-    # payment_model.active = payment.active
-    if not payment_model.active:
-        payment_model.active = True
-        payment_model.data_money = payment_model.data_mone + 1000000
-    else:
-        payment_model.data_money += payment.data_money
+    payment_model.active = payment.active
+    payment_model.data_money += payment.data_money
+    # if not payment_model.active:
+    #     payment_model.active = True
+    #     payment_model.data_money = payment_model.data_mone + 1000000
+    # else:
+    #     payment_model.data_money += payment.data_money
     db.add(payment_model)
     db.commit()
     return successful_response(200)
