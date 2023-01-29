@@ -77,3 +77,10 @@ class ResultFiveMinute(Base):
     time = Column(String)
     result = Column(ARRAY(String))
     ischeck = Column(Boolean, default=True)
+
+
+class ResultDaily(Base):
+    __tablename__ = "result_daily"
+    id = Column(Integer, primary_key=True, index=True)
+    day = Column(String)
+    result = Column(ARRAY(String))

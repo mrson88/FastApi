@@ -48,6 +48,11 @@ class ResultFiveMinute(BaseModel):
     ischeck: bool
 
 
+class ResultDaily(BaseModel):
+    day: Optional[str]
+    result: List[str]
+
+
 @router.post("/add_loto")
 async def create_xsmb(xsmb: Xsmb,
                       user: dict = Depends(get_current_user),
