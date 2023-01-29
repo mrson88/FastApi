@@ -89,6 +89,16 @@ async def read_kqxs5p_number(number: str,
     raise http_exception()
 
 
+@router.get("/xsmb-dayly-number/{number}")
+async def read_kqxsmb_number(number: str,
+                             db: Session = Depends(get_db)):
+    kq_xsmb_dayly_model = db.query(models.Xsmb) \
+        .order_by(models.Xsmb.id.desc()).limit(int(number)).all()
+    if kq_xsmb_dayly_model is not None:
+        return kq_xsmb_dayly_model
+    raise http_exception()
+
+
 def successful_response(status_code: int):
     return {
         'status': status_code,
