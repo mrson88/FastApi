@@ -12,7 +12,7 @@ async def task_daily():
         local_time = time.localtime(seconds)
 
         await asyncio.sleep(10)
-        if int(local_time.tm_hour) == 18 and int(local_time.tm_min) == 40 and int(local_time.tm_sec) < 20:
+        if int(local_time.tm_hour) == 18 and int(local_time.tm_min) == 50 and int(local_time.tm_sec) < 20:
             # print("time: ", local_time.tm_sec)
             save_data = PostgresNoDuplicates()
             save_data.process_item(crawl_data())
