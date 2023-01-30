@@ -112,7 +112,7 @@ async def minus_payment(payment_id: int,
         else:
             db.add(payment_model)
             db.commit()
-            raise successful_response(200)
+            return successful_response(200)
 
     else:
         raise http_exception()
