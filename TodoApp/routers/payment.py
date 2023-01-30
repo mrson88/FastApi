@@ -34,6 +34,7 @@ class Payment(BaseModel):
     time: Optional[str]
     data_money: Optional[float]
     active: bool
+    daily_pay: bool
 
 
 class PaymentHistory(BaseModel):
@@ -105,8 +106,7 @@ async def minus_payment(payment_id: int,
     payment_model.time = payment.time
     payment_model.active = payment.active
     if float(payment.data_money) > 0:
-        payment_model.data_money -= payment.data_money
-        print(payment_model.data_money)
+        payment_model.data_money -= float(payment.data_money)
         if float(payment_model.data_money) > 0:
             db.add(payment_model)
             db.commit()
@@ -136,11 +136,12 @@ async def add_payment(payment_id: int,
     payment_model.date = payment.date
     payment_model.time = payment.time
     payment_model.active = payment.active
-    if payment.data_money > 0:
-        # payment_model.data_money += payment.data_money
-        if not payment_model.active:
-            payment_model.active = True
-            payment_model.data_money = payment_model.data_mone + 1000000
+    payment_model.daily_pay = payment.daily_pay
+    if float(payment.data_money) > 0 and payment_model.active:
+        if not payment_model.daily_pay:
+            payment_model.data_money = payment_model.data_mone + 3000000
+            payment_model.daily_pay = True
+
         else:
             payment_model.data_money += payment.data_money
         db.add(payment_model)

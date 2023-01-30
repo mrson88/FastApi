@@ -53,8 +53,9 @@ class Payment(Base):
     date = Column(String)
     time = Column(String)
     data_money = Column(Float)
-    active = Column(Boolean, default=True)
+    active = Column(Boolean)
     owner_id = Column(Integer, ForeignKey("users.id"))
+    daily_pay = Column(Boolean)
     owner = relationship("Users", back_populates="payment")
 
 
