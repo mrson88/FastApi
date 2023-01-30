@@ -34,6 +34,7 @@ class Payment(BaseModel):
     time: Optional[str]
     data_money: Optional[float]
     active: bool
+    data_type: Optional[str]
 
 
 class PaymentHistory(BaseModel):
@@ -104,8 +105,14 @@ async def minus_payment(payment_id: int,
     payment_model.date = payment.date
     payment_model.time = payment.time
     payment_model.active = payment.active
+    payment_model.data_type = payment.data_type
     if float(payment.data_money) > 0:
-        payment_model.data_money -= float(payment.data_money)
+        if payment.data_type == 'x2' or 'x3' or 'x4':
+            payment_model.data_money -= float(payment.data_money) * 10000
+        elif payment.data_type == 'xs_5p':
+            payment_model.data_money -= float(payment.data_money) * 23000
+        else:
+            payment_model.data_money -= 0
         if float(payment_model.data_money) > 0:
             db.add(payment_model)
             db.commit()
