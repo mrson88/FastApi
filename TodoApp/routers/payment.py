@@ -33,7 +33,6 @@ class Payment(BaseModel):
     date: Optional[str]
     time: Optional[str]
     data_money: Optional[float]
-    active: bool
     data_type: Optional[str]
 
 
@@ -78,7 +77,6 @@ async def create_payment(payment: Payment,
     payment_model.date = payment.date
     payment_model.time = payment.time
     payment_model.data_money = payment.data_money
-    payment_model.active = payment.active
     payment_model.owner_id = user.get("id")
     db.add(payment_model)
     db.commit()
@@ -104,8 +102,8 @@ async def minus_payment(payment_id: int,
 
     payment_model.date = payment.date
     payment_model.time = payment.time
-    payment_model.active = payment.active
     payment_model.data_type = payment.data_type
+    print(payment.data_type)
     if float(payment.data_money) > 0:
         if payment.data_type == 'x2' or 'x3' or 'x4':
             payment_model.data_money -= float(payment.data_money) * 10000
