@@ -106,6 +106,7 @@ async def minus_payment(payment_id: int,
     payment_model.active = payment.active
     if payment.data_money > 0:
         payment_model.data_money -= payment.data_money
+        print(payment_model.data_money)
         if payment_model.data_money > 0:
             db.add(payment_model)
             db.commit()
