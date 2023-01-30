@@ -85,37 +85,37 @@ async def create_payment(payment: Payment,
     return successful_response(200)
 
 
-@router.put("/minus_money/{payment_id}")
-async def minus_payment(payment_id: int,
-                        payment: Payment,
-                        user: dict = Depends(get_current_user),
-                        db: Session = Depends(get_db)):
-    if user is None:
-        raise get_user_exception()
-
-    payment_model = db.query(models.Payment) \
-        .filter(models.Payment.id == payment_id) \
-        .filter(models.Payment.owner_id == user.get("id")) \
-        .first()
-
-    if payment_model is None:
-        raise http_exception()
-
-    payment_model.date = payment.date
-    payment_model.time = payment.time
-    payment_model.active = payment.active
-    if payment.data_money > 0:
-        payment_model.data_money -= payment.data_money
-        print(payment_model.data_money)
-        if float(payment_model.data_money) > 0:
-            return http_exception()
-        else:
-            db.add(payment_model)
-            db.commit()
-            return successful_response(200)
-
-    else:
-        return http_exception()
+# @router.put("/minus_money/{payment_id}")
+# async def minus_payment(payment_id: int,
+#                         payment: Payment,
+#                         user: dict = Depends(get_current_user),
+#                         db: Session = Depends(get_db)):
+#     if user is None:
+#         raise get_user_exception()
+#
+#     payment_model = db.query(models.Payment) \
+#         .filter(models.Payment.id == payment_id) \
+#         .filter(models.Payment.owner_id == user.get("id")) \
+#         .first()
+#
+#     if payment_model is None:
+#         raise http_exception()
+#
+#     payment_model.date = payment.date
+#     payment_model.time = payment.time
+#     payment_model.active = payment.active
+#     if payment.data_money > 0:
+#         payment_model.data_money -= payment.data_money
+#         print(payment_model.data_money)
+#         if float(payment_model.data_money) > 0:
+#             return http_exception()
+#         else:
+#             db.add(payment_model)
+#             db.commit()
+#             return successful_response(200)
+#
+#     else:
+#         return http_exception()
 
 
 @router.put("/add_money/{payment_id}")
