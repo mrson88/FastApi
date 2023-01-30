@@ -34,7 +34,6 @@ class Payment(BaseModel):
     time: Optional[str]
     data_money: Optional[float]
     active: bool
-    daily_pay: bool
 
 
 class PaymentHistory(BaseModel):
