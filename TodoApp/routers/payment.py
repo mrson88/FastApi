@@ -104,18 +104,18 @@ async def minus_payment(payment_id: int,
     payment_model.date = payment.date
     payment_model.time = payment.time
     payment_model.active = payment.active
-    if payment.data_money > 0:
+    if payment.data_money > 0 and payment.data_money >= payment_model.data_money:
         payment_model.data_money -= payment.data_money
-        # print(payment_model.data_money)
+        print(payment_model.data_money)
         if float(payment_model.data_money) < 0:
-            return False
+            return http_exception()
         else:
             db.add(payment_model)
             db.commit()
-            return True
+            return successful_response(200)
 
     else:
-        return False
+        return http_exception()
 
 
 @router.put("/add_money/{payment_id}")
