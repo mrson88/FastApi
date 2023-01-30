@@ -88,7 +88,6 @@ async def create_payment(payment: Payment,
 @router.put("/minus_money/{payment_id}")
 async def minus_payment(payment_id: int,
                         payment: Payment,
-                        # payment_his: PaymentHistory,
                         user: dict = Depends(get_current_user),
                         db: Session = Depends(get_db)):
     if user is None:
@@ -104,14 +103,11 @@ async def minus_payment(payment_id: int,
 
     payment_model.date = payment.date
     payment_model.time = payment.time
-    payment_model.data_money -= payment.data_money * 23000
     payment_model.active = payment.active
-
-    if float(payment_model.data_money) >= 0:
+    if payment_model.data_money >= payment.data_money > 0:
+        payment_model.data_money -= payment.data_money
         db.add(payment_model)
-        # db.add(payment_his_model)
         db.commit()
-
         return successful_response(200)
     else:
         return http_exception()
@@ -136,15 +132,18 @@ async def add_payment(payment_id: int,
     payment_model.date = payment.date
     payment_model.time = payment.time
     payment_model.active = payment.active
-    payment_model.data_money += payment.data_money
-    # if not payment_model.active:
-    #     payment_model.active = True
-    #     payment_model.data_money = payment_model.data_mone + 1000000
-    # else:
-    #     payment_model.data_money += payment.data_money
-    db.add(payment_model)
-    db.commit()
-    return successful_response(200)
+    if payment.data_money > 0:
+        # payment_model.data_money += payment.data_money
+        if not payment_model.active:
+            payment_model.active = True
+            payment_model.data_money = payment_model.data_mone + 1000000
+        else:
+            payment_model.data_money += payment.data_money
+        db.add(payment_model)
+        db.commit()
+        return successful_response(200)
+    else:
+        http_exception()
 
 
 # @router.put("/status_payment/{payment_id}")
