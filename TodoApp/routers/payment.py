@@ -104,16 +104,15 @@ async def minus_payment(payment_id: int,
     payment_model.date = payment.date
     payment_model.time = payment.time
     payment_model.active = payment.active
-    if payment.data_money > 0 and payment.data_money >= payment_model.data_money:
+    if float(payment.data_money) > 0:
         payment_model.data_money -= payment.data_money
         print(payment_model.data_money)
-        if float(payment_model.data_money) < 0:
-            raise http_exception()
-        else:
+        if float(payment_model.data_money) > 0:
             db.add(payment_model)
             db.commit()
             return successful_response(200)
-
+        else:
+            raise http_exception()
     else:
         raise http_exception()
 
