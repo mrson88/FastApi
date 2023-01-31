@@ -116,7 +116,7 @@ async def minus_payment(payment_id: int,
             payment_model.data_money -= float(payment.data_money) * 1000
         else:
             payment_model.data_money -= 0
-        if float(payment_model.data_money) > 0:
+        if float(payment_model.data_money) >= 0:
             db.add(payment_model)
             db.commit()
             return successful_response(200)
