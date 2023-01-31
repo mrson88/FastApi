@@ -213,7 +213,7 @@ async def create_payment_history(payment_his: PaymentHistory,
     payment_his_model = models.PaymentHistory()
     payment_his_model.date = payment_his.date
     payment_his_model.time = payment_his.time
-    payment_his_model.data_money = payment_his.data_money * 23000
+    payment_his_model.data_money = payment_his.data_money * 27000
     payment_his_model.data_type = payment_his.data_type
     payment_his_model.owner_id = user.get("id")
     db.add(payment_his_model)
