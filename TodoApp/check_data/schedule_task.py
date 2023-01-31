@@ -43,7 +43,7 @@ async def task_five_minute():
         local_time = time.localtime(seconds)
 
         await asyncio.sleep(10)
-        if int(local_time.tm_min) % 5 == 0 and int(local_time.tm_sec) < 10:
+        if int(local_time.tm_min) % 2 == 0 and int(local_time.tm_sec) < 10:
             # print("time: ", local_time.tm_sec)
             save_data = PostgresNoDuplicates()
             save_data.process_item_five_minute(create_data_five_minute())
