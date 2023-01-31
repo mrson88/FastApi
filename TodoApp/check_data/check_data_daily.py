@@ -116,7 +116,7 @@ class CheckDataDaily:
                 # print('x=', x)
                 if x > 0:
                     self.cur.execute(
-                        f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
+                        f"update payment set data_money=data_money+{x * float(price)}*%s where owner_id = %s",
                         (xien_5p, id_owner,))
                     # self.connection.commit()
                     # print('x=', x)
