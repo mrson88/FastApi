@@ -151,7 +151,10 @@ async def add_payment(payment_id: int,
             payment_model.daily_pay = True
 
         else:
-            payment_model.data_money += payment.data_money
+            if payment.data_money < 10000001:
+                payment_model.data_money += payment.data_money
+            else:
+                raise http_exception()
         db.add(payment_model)
         db.commit()
         return successful_response(200)

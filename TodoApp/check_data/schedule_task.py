@@ -51,3 +51,16 @@ async def task_five_minute():
             for i in range(len(owner_id_list)):
                 CheckDataDaily().check_data_five_minute(owner_id_list[i])
             save_data.close_database()
+
+
+async def task_new_day():
+    # async with httpx.AsyncClient() as client:
+    while True:
+        seconds = time.time()
+        local_time = time.localtime(seconds)
+
+        await asyncio.sleep(10)
+        if int(local_time.tm_hour) == 0 and int(local_time.tm_min) == 0 and int(local_time.tm_sec) < 30:
+            owner_id_list = CheckDataDaily().check_all_id()
+            for i in range(len(owner_id_list)):
+                CheckDataDaily().set_data_new_day(owner_id_list[i])
