@@ -108,8 +108,9 @@ class CheckDataDaily:
                 aa = result_data[j][0]
 
                 print((aa))
+                x = 0
                 for k in range(len(aa)):
-                    x = 0
+
                     bb = aa[k]
                     # if set(bb).issubset(result_calculate):
                     for l in range(len(result_calculate)):
@@ -117,20 +118,20 @@ class CheckDataDaily:
                             x += 1
                             print('bb=', bb)
                     # print('x=', x)
-                    if x > 0:
-                        self.cur.execute(
-                            f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
-                            (win_xien_5p, id_owner,))
-                        # self.connection.commit()
-                        print('x=', x)
-                        query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
-                        self.cur.execute(query,
-                                         (
-                                             date_today_strf(), time_today(),
-                                             f'+{float(round((win_xien_5p * x), 2))}',
-                                             'win_xs_5p',
-                                             id_owner,))
-                        self.connection.commit()
+                if x > 0:
+                    self.cur.execute(
+                        f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
+                        (win_xien_5p, id_owner,))
+                    # self.connection.commit()
+                    print('x=', x)
+                    query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
+                    self.cur.execute(query,
+                                     (
+                                         date_today_strf(), time_today(),
+                                         f'+{float(round((win_xien_5p * x), 2))}',
+                                         'win_xs_5p',
+                                         id_owner,))
+                    self.connection.commit()
 
                 # print(len(result_data))
 
