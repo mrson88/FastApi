@@ -91,10 +91,10 @@ class CheckDataDaily:
             (date_today_strf(), 'xs_5p', id_owner, False))
         result_data = self.cur.fetchall()
         # print('result_data_five_minute=', result_data)
-        price = result_data[0][1]
-        print('price=', price)
 
         if result and result_data:
+            price = result_data[0][1]
+            print('price=', price)
 
             result_calculate = []
             for i in range(len(result[0])):
