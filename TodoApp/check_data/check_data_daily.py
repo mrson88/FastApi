@@ -78,8 +78,8 @@ class CheckDataDaily:
                 self.connection.commit()
 
     def check_data_five_minute(self, id_owner):
-        xien_5p = 99 / 27
-        win_xien_5p = 99
+        # xien_5p = 99 / 27
+        win_xien_5p = 99000
         # print('check data')
         self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
                          (date_today_strf(),))
@@ -106,30 +106,31 @@ class CheckDataDaily:
             for j in range(len(result_data)):
 
                 aa = result_data[j][0]
-                x = 0
+
                 print((aa))
                 for k in range(len(aa)):
+                    x = 0
                     bb = aa[k]
                     # if set(bb).issubset(result_calculate):
                     for l in range(len(result_calculate)):
                         if bb == result_calculate[l]:
                             x += 1
                             print('bb=', bb)
-                # print('x=', x)
-                if x > 0:
-                    self.cur.execute(
-                        f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
-                        (win_xien_5p, id_owner,))
-                    # self.connection.commit()
-                    print('x=', x)
-                    query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
-                    self.cur.execute(query,
-                                     (
-                                         date_today_strf(), time_today(),
-                                         f'+{float(round((win_xien_5p * x), 2))}',
-                                         'win_xs_5p',
-                                         id_owner,))
-                    self.connection.commit()
+                    # print('x=', x)
+                    if x > 0:
+                        self.cur.execute(
+                            f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
+                            (win_xien_5p, id_owner,))
+                        # self.connection.commit()
+                        print('x=', x)
+                        query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
+                        self.cur.execute(query,
+                                         (
+                                             date_today_strf(), time_today(),
+                                             f'+{float(round((win_xien_5p * x), 2))}',
+                                             'win_xs_5p',
+                                             id_owner,))
+                        self.connection.commit()
 
                 # print(len(result_data))
 
