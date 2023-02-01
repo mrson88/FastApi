@@ -79,7 +79,7 @@ class CheckDataDaily:
 
     def check_data_five_minute(self, id_owner):
         # xien_5p = 99 / 27
-        win_xien_5p = 99000
+        win_xien_5p = 99
         # print('check data')
         self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
                          (date_today_strf(),))
