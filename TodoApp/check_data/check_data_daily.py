@@ -103,9 +103,10 @@ class CheckDataDaily:
             print('result_calculate=', result_calculate)
 
             print(len(result_data))
-            print((result_data))
-            x = 0
+            print('result_data=', result_data)
+
             for j in range(len(result_data)):
+                x = 0
                 aa = result_data[j][0]
                 print((aa))
                 for k in range(len(aa)):
