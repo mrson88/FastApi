@@ -109,6 +109,7 @@ class CheckDataDaily:
                 price = result_data[j][1]
                 print('price=', price)
                 x = 0
+                result_his = []
                 aa = result_data[j][0]
                 print((aa))
                 for k in range(len(aa)):
@@ -118,6 +119,7 @@ class CheckDataDaily:
                         if bb == result_calculate[l]:
                             x += 1
                             print('bb=', bb)
+                            result_his.append(bb)
                     # print('x=', x)
                 if x > 0:
                     self.cur.execute(
@@ -125,13 +127,13 @@ class CheckDataDaily:
                         (win_xien_5p, id_owner,))
                     # self.connection.commit()
                     print('x=', x)
-                    query = "insert into payment_history(date,time,data_money,data_type,owner_id) values (%s,%s,%s,%s,%s);"
+                    query = "insert into payment_history(date,time,data_money,data_type,owner_id,result_his) values (%s,%s,%s,%s,%s,%s);"
                     self.cur.execute(query,
                                      (
                                          date_today_strf(), time_today(),
                                          f'+{float(round((win_xien_5p * x * float(price)), 2))}',
                                          'win_xs_5p',
-                                         id_owner,))
+                                         id_owner, result_his))
                     self.connection.commit()
 
                 # print(len(result_data))
