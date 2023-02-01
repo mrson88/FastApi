@@ -93,22 +93,23 @@ class CheckDataDaily:
         print('result_data_five_minute=', result_data)
 
         if result and result_data:
-            price = result_data[0][1]
-            print('price=', price)
 
             result_calculate = []
             for i in range(len(result[0])):
+                price = result_data[i][1]
+                print('price=', price)
                 result_calculate.append(result[0][i])
             print(result_calculate)
 
             print(len(result_data))
             print((result_data))
+            x = 0
             for j in range(len(result_data)):
 
                 aa = result_data[j][0]
 
                 print((aa))
-                x = 0
+
                 for k in range(len(aa)):
 
                     bb = aa[k]
