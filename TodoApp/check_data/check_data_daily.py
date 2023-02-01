@@ -84,7 +84,7 @@ class CheckDataDaily:
         self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
                          (date_today_strf(),))
         result = self.cur.fetchone()
-        # print('result_five_minute=', result)
+        print('result=', result)
 
         self.cur.execute(
             "select data,data_cost from xsmb where date = %s and data_type = %s and owner_id = %s and active = %s",
@@ -97,7 +97,7 @@ class CheckDataDaily:
 
             result_calculate = []
             for i in range(len(result[0])):
-                price = result_data[i][1]
+                price = result_data[0][1]
                 print('price=', price)
                 result_calculate.append(result[0][i])
             print(result_calculate)
