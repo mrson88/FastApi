@@ -68,6 +68,7 @@ class PaymentHistory(Base):
     time = Column(String)
     data_money = Column(String)
     data_type = Column(String)
+    result_his = Column(ARRAY(String))
     owner_id = Column(Integer, ForeignKey("users.id"))
     owner = relationship("Users", back_populates="payment_his")
 
