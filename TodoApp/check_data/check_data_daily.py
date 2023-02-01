@@ -93,6 +93,7 @@ class CheckDataDaily:
         print('result_data_five_minute=', result_data)
 
         if result and result_data:
+            price = 0
 
             result_calculate = []
             for i in range(len(result[0])):
@@ -105,13 +106,9 @@ class CheckDataDaily:
             print((result_data))
             x = 0
             for j in range(len(result_data)):
-
                 aa = result_data[j][0]
-
                 print((aa))
-
                 for k in range(len(aa)):
-
                     bb = aa[k]
                     # if set(bb).issubset(result_calculate):
                     for l in range(len(result_calculate)):
@@ -121,7 +118,7 @@ class CheckDataDaily:
                     # print('x=', x)
                 if x > 0:
                     self.cur.execute(
-                        f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
+                        f"update payment set data_money=data_money+{x * price}*%s where owner_id = %s",
                         (win_xien_5p, id_owner,))
                     # self.connection.commit()
                     print('x=', x)
@@ -129,7 +126,7 @@ class CheckDataDaily:
                     self.cur.execute(query,
                                      (
                                          date_today_strf(), time_today(),
-                                         f'+{float(round((win_xien_5p * x), 2))}',
+                                         f'+{float(round((win_xien_5p * x * price), 2))}',
                                          'win_xs_5p',
                                          id_owner,))
                     self.connection.commit()
