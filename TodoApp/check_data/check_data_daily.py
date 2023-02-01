@@ -90,7 +90,7 @@ class CheckDataDaily:
             "select data,data_cost from xsmb where date = %s and data_type = %s and owner_id = %s and active = %s",
             (date_today_strf(), 'xs_5p', id_owner, False))
         result_data = self.cur.fetchall()
-        # print('result_data_five_minute=', result_data)
+        print('result_data_five_minute=', result_data)
 
         if result and result_data:
             price = result_data[0][1]
@@ -99,22 +99,22 @@ class CheckDataDaily:
             result_calculate = []
             for i in range(len(result[0])):
                 result_calculate.append(result[0][i])
-            # print(result_calculate)
+            print(result_calculate)
 
-            # print(len(result_data))
-            # print((result_data))
+            print(len(result_data))
+            print((result_data))
             for j in range(len(result_data)):
 
                 aa = result_data[j][0]
                 x = 0
-                # print((aa))
+                print((aa))
                 for k in range(len(aa)):
                     bb = aa[k]
                     # if set(bb).issubset(result_calculate):
                     for l in range(len(result_calculate)):
                         if bb == result_calculate[l]:
                             x += 1
-                            # print('bb=', bb)
+                            print('bb=', bb)
                 # print('x=', x)
                 if x > 0:
                     self.cur.execute(
