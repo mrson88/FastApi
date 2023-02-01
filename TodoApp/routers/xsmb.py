@@ -64,7 +64,13 @@ async def create_xsmb(xsmb: Xsmb,
     xsmb_model.time = xsmb.time
     xsmb_model.data = xsmb.data
     xsmb_model.data_type = xsmb.data_type
-    xsmb_model.data_cost = str(float(xsmb.data_cost) * 23000)
+    if float(xsmb.data_cost) > 0:
+        if xsmb.data_type in ['x2', 'x3', 'x4']:
+            xsmb_model.data_cost = str(float(xsmb.data_cost) * 10000)
+        if xsmb.data_type in ['xs_5p', 'x1']:
+            xsmb_model.data_cost = str(float(xsmb.data_cost) * 27000)
+        if xsmb.data_type in ['de']:
+            xsmb_model.data_cost = str(float(xsmb.data_cost) * 1000)
     xsmb_model.active = xsmb.active
     xsmb_model.owner_id = user.get("id")
     db.add(xsmb_model)
