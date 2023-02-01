@@ -84,7 +84,7 @@ class CheckDataDaily:
         self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
                          (date_today_strf(),))
         result = self.cur.fetchone()
-        print('result=', result)
+        # print('result=', result)
 
         self.cur.execute(
             "select data,data_cost from xsmb where date = %s and data_type = %s and owner_id = %s and active = %s",
