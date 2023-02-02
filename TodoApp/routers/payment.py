@@ -104,16 +104,16 @@ async def minus_payment(payment_id: int,
     payment_model.date = payment.date
     payment_model.time = payment.time
     payment_model.data_type = payment.data_type
-    print(payment.data_type)
+    # print(payment.data_type)
     if float(payment.data_money) > 0:
         if payment.data_type in ['x2', 'x3', 'x4']:
-            print('1')
+            # print('1')
             payment_model.data_money -= float(payment.data_money) * 10000
         elif payment.data_type in ['xs_5p', 'x1']:
-            print('2')
+            # print('2')
             payment_model.data_money -= float(payment.data_money) * 27000
         elif payment.data_type == 'de':
-            print('3')
+            # print('3')
             payment_model.data_money -= float(payment.data_money) * 1000
         else:
             payment_model.data_money -= 0
@@ -163,35 +163,6 @@ async def add_payment(payment_id: int,
         return successful_response(200)
     else:
         raise http_exception()
-
-
-# @router.put("/status_payment/{payment_id}")
-# async def status_payment(payment_id: int,
-#                          payment: Payment,
-#                          user: dict = Depends(get_current_user),
-#                          db: Session = Depends(get_db)):
-#     if user is None:
-#         raise get_user_exception()
-#
-#     payment_model = db.query(models.Payment) \
-#         .filter(models.Payment.id == payment_id) \
-#         .filter(models.Payment.owner_id == user.get("id")) \
-#         .first()
-#
-#     if payment_model is None:
-#         raise http_exception()
-#
-#     payment_model.date = payment.date
-#     payment_model.time = payment.time
-#     payment_model.data_money = payment.data_money + 1000000
-#     payment_model.active = payment.active
-#     if not payment_model.active:
-#         payment_model.active = True
-#         db.add(payment_model)
-#         db.commit()
-#         return successful_response(200)
-#     else:
-#         return http_exception()
 
 
 @router.get("/payment_history")

@@ -92,35 +92,35 @@ class CheckDataDaily:
             "select data,data_cost from xsmb where date = %s and data_type = %s and owner_id = %s and active = %s",
             (date_today_strf(), 'xs_5p', id_owner, False))
         result_data = self.cur.fetchall()
-        print('result_data_five_minute=', result_data)
+        # print('result_data_five_minute=', result_data)
 
         if result and result_data:
 
             result_calculate = []
             for i in range(len(result[0])):
                 result_calculate.append(result[0][i])
-            print('result_calculate=', result_calculate)
+            # print('result_calculate=', result_calculate)
             # for i in range(len(result_data)):
             #     price = result_data[i][1]
             #     print('price=', price)
 
             print(len(result_data))
-            print('result_data=', result_data)
+            # print('result_data=', result_data)
 
             for j in range(len(result_data)):
                 price = result_data[j][1]
-                print('price=', price)
+                # print('price=', price)
                 x = 0
                 result_his = []
                 aa = result_data[j][0]
-                print((aa))
+                # print((aa))
                 for k in range(len(aa)):
                     bb = aa[k]
                     # if set(bb).issubset(result_calculate):
                     for l in range(len(result_calculate)):
                         if bb == result_calculate[l]:
                             x += 1
-                            print('bb=', bb)
+                            # print('bb=', bb)
                             result_his.append(bb)
                     # print('x=', x)
                 if x > 0:
@@ -128,7 +128,7 @@ class CheckDataDaily:
                         f"update payment set data_money=data_money+{x * float(price)}*%s where owner_id = %s",
                         (win_xien_5p, id_owner,))
                     # self.connection.commit()
-                    print('x=', x)
+                    # print('x=', x)
                     query = "insert into payment_history(date,time,data_money,data_type,owner_id,result_his) values (%s,%s,%s,%s,%s,%s);"
                     self.cur.execute(query,
                                      (
