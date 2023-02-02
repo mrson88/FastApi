@@ -76,6 +76,8 @@ class CheckDataDaily:
                 self.cur.execute("update xsmb set active=true where date = %s and data_type = %s and owner_id = %s",
                                  (date_today_strf(), f'x{i}', id_owner))
                 self.connection.commit()
+                self.cur.close()
+                self.connection.close()
 
     def check_data_five_minute(self, id_owner):
         # xien_5p = 99 / 27
@@ -141,8 +143,12 @@ class CheckDataDaily:
             self.cur.execute("update xsmb set active=true where date = %s and data_type = %s and owner_id = %s",
                              (date_today_strf(), 'xs_5p', id_owner))
             self.connection.commit()
+            self.cur.close()
+            self.connection.close()
 
     def set_data_new_day(self, id_owner):
         self.cur.execute("update payment set daily_pay=false where owner_id = %s",
                          (id_owner))
         self.connection.commit()
+        self.cur.close()
+        self.connection.close()

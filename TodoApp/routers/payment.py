@@ -80,6 +80,7 @@ async def create_payment(payment: Payment,
     payment_model.owner_id = user.get("id")
     db.add(payment_model)
     db.commit()
+    db.close()
 
     return successful_response(200)
 
@@ -119,6 +120,7 @@ async def minus_payment(payment_id: int,
         if float(payment_model.data_money) >= 0:
             db.add(payment_model)
             db.commit()
+            db.close()
             return successful_response(200)
         else:
             raise http_exception()
@@ -157,6 +159,7 @@ async def add_payment(payment_id: int,
                 raise http_exception()
         db.add(payment_model)
         db.commit()
+        db.close()
         return successful_response(200)
     else:
         raise http_exception()
@@ -219,6 +222,7 @@ async def create_payment_history(payment_his: PaymentHistory,
     payment_his_model.owner_id = user.get("id")
     db.add(payment_his_model)
     db.commit()
+    db.close()
 
     return successful_response(200)
 
