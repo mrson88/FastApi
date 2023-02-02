@@ -5,9 +5,9 @@ import os
 
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./todos.db"
 pass_database = os.environ.get("PASS_DATABASE")
-database = os.environ.get("DATABASE")
+database_name = os.environ.get("DATABASE")
 # MYSQL Series
-SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:{pass_database}@localhost/mrsondb"
+SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:{pass_database}@localhost/{database_name}"
 # SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:{pass_database}@14.225.36.120/mrsondb"
 # engine = create_engine(
 #     SQLALCHEMY_DATABASE_URL
