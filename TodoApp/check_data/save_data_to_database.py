@@ -13,7 +13,7 @@ class PostgresNoDuplicates:
         # hostname = '14.225.36.120'
         username = 'postgres'
         password = pass_database  # your password
-        database = database_name
+        database = 'mrsondb'
 
         # Create/Connect to database
         self.connection = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)

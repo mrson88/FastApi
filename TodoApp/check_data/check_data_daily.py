@@ -14,7 +14,7 @@ class CheckDataDaily:
         # hostname = '14.225.36.120'
         username = 'postgres'
         password = pass_database  # your password
-        database = database_name
+        database = 'mrsondb'
         self.eff_money = 23000
 
         # Create/Connect to database
