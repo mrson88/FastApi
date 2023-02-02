@@ -1,16 +1,18 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import os
 
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./todos.db"
-
+pass_database = os.environ.get("PASS_DATABASE")
+database = os.environ.get("DATABASE")
 # MYSQL Series
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:daovanson88@localhost/mrsondb"
-# SQLALCHEMY_DATABASE_URL = "postgresql://postgres:daovanson88@14.225.36.120/mrsondb"
+SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:{pass_database}@localhost/{database}"
+# SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:{pass_database}@14.225.36.120/mrsondb"
 # engine = create_engine(
 #     SQLALCHEMY_DATABASE_URL
 # )
-# SQLALCHEMY_DATABASE_URL = "postgresql://postgres:daovanson88@localhost/TodoApplicationDatabase"
+# SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:{pass_database}@localhost/TodoApplicationDatabase"
 # SQLALCHEMY_DATABASE_URL = "postgresql://ioipbvjh:gh55DaBH3Ikcl3nRdWfOK4ILYIlaHoHD@satao.db.elephantsql.com/ioipbvjh"
 # engine = create_engine(
 #     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}

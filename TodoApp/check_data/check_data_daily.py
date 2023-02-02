@@ -1,6 +1,10 @@
 import psycopg2
 from sqlalchemy.sql import text
 from TodoApp.check_time.check_time_data import time_minute, time_hour, before_x_day, time_today, date_today_strf
+import os
+
+pass_database = os.environ.get("PASS_DATABASE")
+database_name = os.environ.get("DATABASE")
 
 
 class CheckDataDaily:
@@ -9,8 +13,8 @@ class CheckDataDaily:
         hostname = 'localhost'
         # hostname = '14.225.36.120'
         username = 'postgres'
-        password = 'daovanson88'  # your password
-        database = 'mrsondb'
+        password = pass_database  # your password
+        database = database_name
         self.eff_money = 23000
 
         # Create/Connect to database

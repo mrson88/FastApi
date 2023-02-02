@@ -1,4 +1,8 @@
 import psycopg2
+import os
+
+pass_database = os.environ.get("PASS_DATABASE")
+database_name = os.environ.get("DATABASE")
 
 
 class PostgresNoDuplicates:
@@ -8,8 +12,8 @@ class PostgresNoDuplicates:
         hostname = 'localhost'
         # hostname = '14.225.36.120'
         username = 'postgres'
-        password = 'daovanson88'  # your password
-        database = 'mrsondb'
+        password = pass_database  # your password
+        database = database_name
 
         # Create/Connect to database
         self.connection = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
