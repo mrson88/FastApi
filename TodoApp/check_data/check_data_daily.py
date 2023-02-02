@@ -3,6 +3,8 @@ from sqlalchemy.sql import text
 from TodoApp.check_time.check_time_data import time_minute, time_hour, before_x_day, time_today, date_today_strf
 import os
 
+# os.environ['PASS_DATABASE'] = ''//password
+
 pass_database = os.environ.get("PASS_DATABASE")
 database_name = os.environ.get("DATABASE")
 
@@ -84,7 +86,6 @@ class CheckDataDaily:
                 self.connection.close()
 
     def check_data_five_minute(self, id_owner):
-        # xien_5p = 99 / 27
         win_xien_5p = 99 / 27
         # print('check data')
         self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
@@ -104,11 +105,8 @@ class CheckDataDaily:
             for i in range(len(result[0])):
                 result_calculate.append(result[0][i])
             # print('result_calculate=', result_calculate)
-            # for i in range(len(result_data)):
-            #     price = result_data[i][1]
-            #     print('price=', price)
 
-            print(len(result_data))
+            # print(len(result_data))
             # print('result_data=', result_data)
 
             for j in range(len(result_data)):
@@ -133,7 +131,8 @@ class CheckDataDaily:
                         (win_xien_5p, id_owner,))
                     # self.connection.commit()
                     # print('x=', x)
-                    query = "insert into payment_history(date,time,data_money,data_type,owner_id,result_his) values (%s,%s,%s,%s,%s,%s);"
+                    query = "insert into payment_history(date,time,data_money,data_type,owner_id,result_his) values (" \
+                            "%s,%s,%s,%s,%s,%s); "
                     self.cur.execute(query,
                                      (
                                          date_today_strf(), time_today(),
