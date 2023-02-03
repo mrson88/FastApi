@@ -103,7 +103,7 @@ class CheckDataDaily:
 
             result_calculate = []
             for i in range(len(result[0])):
-                result_calculate.append(result[0][i])
+                result_calculate.append(result[0][i][-2:])
             # print('result_calculate=', result_calculate)
 
             # print(len(result_data))
