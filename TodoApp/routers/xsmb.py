@@ -65,13 +65,13 @@ async def create_xsmb(xsmb: Xsmb,
     xsmb_model.data = xsmb.data
     xsmb_model.data_type = xsmb.data_type
     if float(xsmb.data_cost) > 0:
-        if xsmb.data_type in ['x2', 'x3', 'x4', 'xs_5p_2', 'xs_5p_3', 'xs_5p_4']:
+        if xsmb.data_type in ['x2', 'x3', 'x4', 'x2_2p', 'x3_2p', 'x4_2p']:
             xsmb_model.data_cost = str(float(xsmb.data_cost) * 10000)
-        if xsmb.data_type in ['xs_5p', 'L1']:
+        if xsmb.data_type in ['L_2p', 'L1', 'L3C_2p', 'L4C_2p']:
             xsmb_model.data_cost = str(float(xsmb.data_cost) * 27000)
         if xsmb.data_type in ['L2', 'L3', 'L4']:
             xsmb_model.data_cost = str(float(xsmb.data_cost) * 20000)
-        if xsmb.data_type in ['D2', 'D3', 'D4']:
+        if xsmb.data_type in ['D2', 'D3', 'D4', 'D_2p', 'D3C_2p', 'D4C_2p']:
             xsmb_model.data_cost = str(float(xsmb.data_cost) * 1000)
     xsmb_model.active = xsmb.active
     xsmb_model.owner_id = user.get("id")

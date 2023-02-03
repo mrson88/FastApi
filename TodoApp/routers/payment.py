@@ -106,17 +106,17 @@ async def minus_payment(payment_id: int,
     payment_model.data_type = payment.data_type
     # print(payment.data_type)
     if float(payment.data_money) > 0:
-        if payment.data_type in ['x2', 'x3', 'x4', 'xs_5p_2', 'xs_5p_3', 'xs_5p_4']:
+        if payment.data_type in ['x2', 'x3', 'x4', 'x2_2p', 'x3_2p', 'x4_2p']:
             # print('1')
             payment_model.data_money -= float(payment.data_money) * 10000
-        elif payment.data_type in ['xs_5p', 'L1']:
+        elif payment.data_type in ['L_2p', 'L1', 'L3C_2p', 'L4C_2p']:
             # print('2')
             payment_model.data_money -= float(payment.data_money) * 27000
             # print('3')
         elif payment.data_type in ['L2', 'L3', 'L4']:
             payment_model.data_cost -= str(float(payment.data_money) * 20000)
 
-        elif payment.data_type in ['D2', 'D3', 'D4']:
+        elif payment.data_type in ['D2', 'D3', 'D4', 'D_2p', 'D3C_2p', 'D4C_2p']:
             # print('4')
             payment_model.data_money -= float(payment.data_money) * 1000
         else:
@@ -191,9 +191,25 @@ async def create_payment_history(payment_his: PaymentHistory,
     payment_his_model = models.PaymentHistory()
     payment_his_model.date = payment_his.date
     payment_his_model.time = payment_his.time
-
-    payment_his_model.data_money = payment_his.data_money * 27000
     payment_his_model.data_type = payment_his.data_type
+    # payment_his_model.data_money = payment_his.data_money * 27000
+    if float(payment_his.data_money) > 0:
+        if payment_his.data_type in ['x2', 'x3', 'x4', 'x2_2p', 'x3_2p', 'x4_2p']:
+            # print('1')
+            payment_his_model.data_money = float(payment_his.data_money) * 10000
+        elif payment_his.data_type in ['L_2p', 'L1', 'L3C_2p', 'L4C_2p']:
+            # print('2')
+            payment_his_model.data_money = float(payment_his.data_money) * 27000
+            # print('3')
+        elif payment_his.data_type in ['L2', 'L3', 'L4']:
+            payment_his_model.data_cost = str(float(payment_his.data_money) * 20000)
+
+        elif payment_his.data_type in ['D2', 'D3', 'D4', 'D_2p', 'D3C_2p', 'D4C_2p']:
+            # print('4')
+            payment_his_model.data_money = float(payment_his.data_money) * 1000
+        else:
+            payment_his_model.data_money = 0
+
     payment_his_model.owner_id = user.get("id")
     db.add(payment_his_model)
     db.commit()
