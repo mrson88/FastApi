@@ -42,13 +42,13 @@ def create_data_list_five_minute():
             data = secrets.randbelow(100000)
 
         elif i < 10:
-            data = secrets.randbelow(100000)
+            data = secrets.randbelow(10000)
 
         elif i < 18:
-            data = secrets.randbelow(100000)
+            data = secrets.randbelow(1000)
 
         else:
-            data = secrets.randbelow(100000)
+            data = secrets.randbelow(100)
 
         five_minute_data.append(data)
     print(five_minute_data)
