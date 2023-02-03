@@ -43,7 +43,7 @@ def create_data_list_five_minute():
             data_fn = convert_number_string_data(data, 5)
         elif i < 20:
             data_fn = convert_number_string_data(data, 4)
-        elif i < 24:
+        elif i < 23:
             data_fn = convert_number_string_data(data, 3)
         else:
             data_fn = convert_number_string_data(data, 2)
