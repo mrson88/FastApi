@@ -61,7 +61,7 @@ def convert_number_string_data(data, data_length):
     if len(data) >= data_length:
         data_final = data[(len(data) - data_length):]
     elif len(data) < data_length:
-        data_final = '0' * (len(data) - data_length) + data
+        data_final = ('0' * (len(data) - data_length), data)
     else:
         data_final = data
     return data_final
