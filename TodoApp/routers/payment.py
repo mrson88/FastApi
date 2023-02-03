@@ -192,6 +192,7 @@ async def create_payment_history(payment_his: PaymentHistory,
     payment_his_model.date = payment_his.date
     payment_his_model.time = payment_his.time
     payment_his_model.data_type = payment_his.data_type
+    payment_his_model.owner_id = user.get("id")
     # payment_his_model.data_money = payment_his.data_money * 27000
     if float(payment_his.data_money) > 0:
         if payment_his.data_type in ['x2', 'x3', 'x4', 'x2_2p', 'x3_2p', 'x4_2p']:
@@ -210,10 +211,9 @@ async def create_payment_history(payment_his: PaymentHistory,
         else:
             raise http_exception()
 
-    payment_his_model.owner_id = user.get("id")
-    db.add(payment_his_model)
-    db.commit()
-    db.close()
+        db.add(payment_his_model)
+        db.commit()
+        db.close()
 
     return successful_response(200)
 
