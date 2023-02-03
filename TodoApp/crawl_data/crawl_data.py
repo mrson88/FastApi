@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import time
 import datetime
 import random
+import secrets
 
 
 def crawl_data():
@@ -36,6 +37,14 @@ def create_data_five_minute():
 def create_data_list_five_minute():
     five_minute_data = []
     for i in range(27):
-        data = random.randint(0, 99)
-        five_minute_data.append(data)
+        data = secrets.randbelow(100000)
+        if i >= 0:
+            five_minute_data.append(data)
+        elif i > 10:
+            five_minute_data.append(data[1:])
+        elif i > 18:
+            five_minute_data.append(data[2:])
+        else:
+            five_minute_data.append(data[3:])
+    print(five_minute_data)
     return five_minute_data

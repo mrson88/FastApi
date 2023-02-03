@@ -20,3 +20,6 @@ caddy reverse-proxy --from phuonghoang88.online --to localhost:8000
 $ sudo service nginx restart
 $ python3 -m uvicorn main:app
 uvicorn main:app --reload --host 0.0.0.0 --port 80
+
+#set password linux
+echo "export PASS_DATABASE=" >> ~/.bashrc

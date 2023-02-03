@@ -106,14 +106,18 @@ async def minus_payment(payment_id: int,
     payment_model.data_type = payment.data_type
     # print(payment.data_type)
     if float(payment.data_money) > 0:
-        if payment.data_type in ['x2', 'x3', 'x4']:
+        if payment.data_type in ['x2', 'x3', 'x4', 'xs_5p_2', 'xs_5p_3', 'xs_5p_4']:
             # print('1')
             payment_model.data_money -= float(payment.data_money) * 10000
-        elif payment.data_type in ['xs_5p', 'x1']:
+        elif payment.data_type in ['xs_5p', 'L1']:
             # print('2')
             payment_model.data_money -= float(payment.data_money) * 27000
-        elif payment.data_type == 'de':
             # print('3')
+        elif payment.data_type in ['L2', 'L3', 'L4']:
+            payment_model.data_cost -= str(float(payment.data_money) * 20000)
+
+        elif payment.data_type in ['D2', 'D3', 'D4']:
+            # print('4')
             payment_model.data_money -= float(payment.data_money) * 1000
         else:
             payment_model.data_money -= 0
