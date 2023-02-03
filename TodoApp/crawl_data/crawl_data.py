@@ -41,6 +41,7 @@ def create_data_list_five_minute():
         data = str(my_secure_rng.randrange(0, 100000, 1))
         print('data=', data)
         if i < 10:
+
             data_fn = convert_number_string_data(data, 5)
         elif i < 20:
             data_fn = convert_number_string_data(data, 4)
@@ -48,6 +49,8 @@ def create_data_list_five_minute():
             data_fn = convert_number_string_data(data, 3)
         else:
             data_fn = convert_number_string_data(data, 2)
+            print(i)
+            print(data_fn)
         five_minute_data.append(data_fn)
 
     print(five_minute_data)
