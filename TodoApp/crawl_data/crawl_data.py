@@ -38,11 +38,11 @@ def create_data_list_five_minute():
     five_minute_data = []
     for i in range(27):
         data = str(secrets.randbelow(100000))
-        if i < 3:
+        if i < 10:
             data_fn = convert_number_string_data(data, 5)
-        elif i < 10:
+        elif i < 20:
             data_fn = convert_number_string_data(data, 4)
-        elif i < 18:
+        elif i < 24:
             data_fn = convert_number_string_data(data, 3)
         else:
             data_fn = convert_number_string_data(data, 2)
