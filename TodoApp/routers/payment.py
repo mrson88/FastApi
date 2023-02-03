@@ -208,7 +208,7 @@ async def create_payment_history(payment_his: PaymentHistory,
             # print('4')
             payment_his_model.data_money = float(payment_his.data_money) * 1000
         else:
-            payment_his_model.data_money = 0
+            raise http_exception()
 
     payment_his_model.owner_id = user.get("id")
     db.add(payment_his_model)
