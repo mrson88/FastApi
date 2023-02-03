@@ -40,9 +40,9 @@ def create_data_list_five_minute():
         data = secrets.randbelow(100000)
         if i >= 0:
             five_minute_data.append(data)
-        elif i > 10:
+        if i > 10:
             five_minute_data.append(data[1:])
-        elif i > 18:
+        if i > 18:
             five_minute_data.append(data[2:])
         else:
             five_minute_data.append(data[3:])
