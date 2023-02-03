@@ -49,8 +49,8 @@ def create_data_list_five_minute():
             data_fn = convert_number_string_data(data, 3)
         else:
             data_fn = convert_number_string_data(data, 2)
-            print(i)
-            print(data_fn)
+        print(i)
+        print(data_fn)
         five_minute_data.append(data_fn)
 
     print(five_minute_data)
