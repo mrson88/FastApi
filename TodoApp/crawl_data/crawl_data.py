@@ -38,13 +38,13 @@ def create_data_list_five_minute():
     five_minute_data = []
     for i in range(27):
         data = secrets.randbelow(100000)
-        if i >= 0:
+        if i < 3:
             five_minute_data.append(data)
-        if i > 10:
-            five_minute_data.append(data[1:])
-        if i > 18:
-            five_minute_data.append(data[2:])
+        elif i < 10:
+            five_minute_data.append(int(str(data)[1:]))
+        elif i < 18:
+            five_minute_data.append(int(str(data)[2:]))
         else:
-            five_minute_data.append(data[3:])
+            five_minute_data.append(int(str(data)[3:]))
     print(five_minute_data)
     return five_minute_data
