@@ -95,7 +95,7 @@ class CheckDataDaily:
 
         self.cur.execute(
             "select data,data_cost from xsmb where date = %s and data_type = %s and owner_id = %s and active = %s",
-            (date_today_strf(), 'xs_5p', id_owner, False))
+            (date_today_strf(), 'L_2p', id_owner, False))
         result_data = self.cur.fetchall()
         # print('result_data_five_minute=', result_data)
 
@@ -137,14 +137,14 @@ class CheckDataDaily:
                                      (
                                          date_today_strf(), time_today(),
                                          f'+{float(round((win_xien_5p * x * float(price)), 2))}',
-                                         'win_xs_5p',
+                                         'win_L_2p',
                                          id_owner, result_his))
                     self.connection.commit()
 
                 # print(len(result_data))
 
             self.cur.execute("update xsmb set active=true where date = %s and data_type = %s and owner_id = %s",
-                             (date_today_strf(), 'xs_5p', id_owner))
+                             (date_today_strf(), 'L_2p', id_owner))
             self.connection.commit()
             self.cur.close()
             self.connection.close()
