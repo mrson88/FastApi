@@ -39,6 +39,7 @@ def create_data_list_five_minute():
     my_secure_rng = secrets.SystemRandom()
     for i in range(27):
         data = str(my_secure_rng.randrange(0, 100000, 1))
+        print('data=', data)
         if i < 10:
             data_fn = convert_number_string_data(data, 5)
         elif i < 20:
@@ -54,7 +55,7 @@ def create_data_list_five_minute():
 
 
 def convert_number_string_data(data, data_length):
-    if len(data) > data_length:
+    if len(data) >= data_length:
         data_final = data[(len(data) - data_length):]
     elif len(data) < data_length:
         data_final = '0' * (len(data) - data_length) + data
