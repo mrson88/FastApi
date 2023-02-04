@@ -30,7 +30,7 @@ def get_db():
 class Xsmb(BaseModel):
     date: Optional[str]
     time: Optional[str]
-    data: List[str]
+    data: List[List[str]]
     data_type: Optional[str]
     data_cost: Optional[str]
     xs_type: Optional[str]

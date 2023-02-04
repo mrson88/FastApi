@@ -32,11 +32,12 @@ CREATE TABLE xsmb (
   id SERIAL,
   date varchar(50) DEFAULT NULL,
   time varchar(50) DEFAULT NULL,
-  data varchar(400)[]  DEFAULT NULL,
+  data varchar(400)[][]  DEFAULT NULL,
   data_type varchar(20)  DEFAULT NULL,
-  data_cost varchar(20)  DEFAULT NULL,
+  data_cost varchar(50)  DEFAULT NULL,
   active boolean  DEFAULT NULL,
   owner_id integer  DEFAULT NULL,
+  xs_type varchar(30) DEFAULT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (owner_id) REFERENCES users(id)
 );
