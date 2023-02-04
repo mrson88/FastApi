@@ -41,7 +41,8 @@ class Xsmb(Base):
     data = Column(ARRAY(String))
     data_type = Column(String)
     data_cost = Column(String)
-    active = Column(Boolean, default=False)
+    xs_type = Column(String)
+    is_check = Column(Boolean, default=False)
     owner_id = Column(Integer, ForeignKey("users.id"))
     owner = relationship("Users", back_populates="xsmb")
 

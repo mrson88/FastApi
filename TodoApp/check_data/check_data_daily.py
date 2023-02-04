@@ -58,7 +58,7 @@ class CheckDataDaily:
 
             for i in range(5):
                 self.cur.execute(
-                    "select data from xsmb where date = %s and data_type = %s and owner_id = %s and active = %s",
+                    "select data from xsmb where date = %s and data_type = %s and owner_id = %s and is_check = %s",
                     (date_today_strf(), f'x{i}', id_owner, False))
                 result_data = self.cur.fetchall()
 
@@ -79,7 +79,7 @@ class CheckDataDaily:
                 self.connection.commit()
 
                 # print(len(result_data))
-                self.cur.execute("update xsmb set active=true where date = %s and data_type = %s and owner_id = %s",
+                self.cur.execute("update xsmb set is_check=true where date = %s and data_type = %s and owner_id = %s",
                                  (date_today_strf(), f'x{i}', id_owner))
                 self.connection.commit()
                 self.cur.close()
@@ -94,7 +94,7 @@ class CheckDataDaily:
         # print('result=', result)
 
         self.cur.execute(
-            "select data,data_cost from xsmb where date = %s and data_type = %s and owner_id = %s and active = %s",
+            "select data,data_cost from xsmb where date = %s and data_type = %s and owner_id = %s and is_check = %s",
             (date_today_strf(), 'L_2p', id_owner, False))
         result_data = self.cur.fetchall()
         # print('result_data_five_minute=', result_data)
@@ -143,7 +143,7 @@ class CheckDataDaily:
 
                 # print(len(result_data))
 
-            self.cur.execute("update xsmb set active=true where date = %s and data_type = %s and owner_id = %s",
+            self.cur.execute("update xsmb set is_check=true where date = %s and data_type = %s and owner_id = %s",
                              (date_today_strf(), 'L_2p', id_owner))
             self.connection.commit()
             self.cur.close()
