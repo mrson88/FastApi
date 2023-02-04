@@ -4,6 +4,8 @@ from TodoApp.crawl_data.crawl_data import crawl_data, create_data_five_minute
 from TodoApp.check_data.save_data_to_database import PostgresNoDuplicates
 from TodoApp.check_data.check_data_daily import CheckDataDaily
 
+is_check_5_minute = False
+
 
 async def task_daily():
     # async with httpx.AsyncClient() as client:
@@ -38,27 +40,30 @@ async def task_check():
 
 async def task_five_minute():
     # async with httpx.AsyncClient() as client:
+    global is_check_5_minute
     while True:
         seconds = time.time()
         local_time = time.localtime(seconds)
 
-        await asyncio.sleep(3)
-        if int(local_time.tm_min) % 2 == 0 and int(local_time.tm_sec) < 5:
-            # print("time: ", local_time.tm_sec)
-            save_data = PostgresNoDuplicates()
-            finish_1 = time.time() - seconds
-            print('finish_1=', finish_1)
-            save_data.process_item_five_minute(create_data_five_minute())
-            finish_2 = time.time() - seconds
-            print('finish_2=', finish_2)
-            owner_id_list = CheckDataDaily().check_all_id()
-            finish_3 = time.time() - seconds
-            print('finish_3=', finish_3)
-            for i in range(len(owner_id_list)):
-                CheckDataDaily().check_data_five_minute(owner_id_list[i])
-            finish_4 = time.time() - seconds
-            print('finish_4=', finish_4)
-            save_data.close_database()
+        await asyncio.sleep(1)
+        if int(local_time.tm_min) % 2 == 0 and int(local_time.tm_sec) < 10:
+            if is_check_5_minute == False:
+                # print("time: ", local_time.tm_sec)
+                save_data = PostgresNoDuplicates()
+                finish_1 = time.time() - seconds
+                print('finish_1=', finish_1)
+                save_data.process_item_five_minute(create_data_five_minute())
+                finish_2 = time.time() - seconds
+                print('finish_2=', finish_2)
+                owner_id_list = CheckDataDaily().check_all_id()
+                finish_3 = time.time() - seconds
+                print('finish_3=', finish_3)
+                for i in range(len(owner_id_list)):
+                    CheckDataDaily().check_data_five_minute(owner_id_list[i])
+                finish_4 = time.time() - seconds
+                print('finish_4=', finish_4)
+                save_data.close_database()
+                is_check_5_minute = True
 
 
 async def task_new_day():
