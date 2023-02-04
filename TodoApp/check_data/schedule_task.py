@@ -49,14 +49,14 @@ async def task_five_minute():
             finish_1 = time.time() - seconds
             print('finish_1=', finish_1)
             save_data.process_item_five_minute(create_data_five_minute())
-            finish_2 = time.time() - finish_1
+            finish_2 = time.time() - seconds
             print('finish_2=', finish_2)
             owner_id_list = CheckDataDaily().check_all_id()
-            finish_3 = time.time() - finish_2
+            finish_3 = time.time() - seconds
             print('finish_3=', finish_3)
             for i in range(len(owner_id_list)):
                 CheckDataDaily().check_data_five_minute(owner_id_list[i])
-            finish_4 = time.time() - finish_3
+            finish_4 = time.time() - seconds
             print('finish_4=', finish_4)
             save_data.close_database()
 
