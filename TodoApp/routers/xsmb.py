@@ -75,6 +75,8 @@ async def create_xsmb(xsmb: Xsmb,
             xsmb_model.data_cost = str(float(xsmb.data_cost) * 20000)
         if xsmb.data_type in ['D2', 'D3', 'D4']:
             xsmb_model.data_cost = str(float(xsmb.data_cost) * 1000)
+    else:
+        raise http_exception()
     xsmb_model.is_check = xsmb.is_check
     xsmb_model.owner_id = user.get("id")
     db.add(xsmb_model)
