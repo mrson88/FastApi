@@ -91,7 +91,7 @@ class CheckDataDaily:
             'x2': 17,
             'x3': 74,
             'x4': 251,
-            'L2': 99 / 27,
+            'L2': 99,
             'L3': 97.23 / 2,
             'L4': 450,
             'D2': 99,
@@ -122,7 +122,7 @@ class CheckDataDaily:
             # print('result_data=', result_data)
 
             for j in range(len(result_data)):
-                price = result_data[j][1]
+                # price = result_data[j][1]
                 # print('price=', price)
                 x = 0
                 result_his = []
@@ -139,7 +139,7 @@ class CheckDataDaily:
                     # print('x=', x)
                 if x > 0:
                     self.cur.execute(
-                        f"update payment set data_money=data_money+{x * float(price)}*%s where owner_id = %s",
+                        f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
                         (win_xien_5p[data_type], id_owner,))
                     # self.connection.commit()
                     # print('x=', x)
@@ -148,7 +148,7 @@ class CheckDataDaily:
                     self.cur.execute(query,
                                      (
                                          date_today_strf(), time_today(),
-                                         f'+{float(round((win_xien_5p[data_type] * x * float(price)), 2))}',
+                                         f'+{float(round((win_xien_5p[data_type] * x), 0))}',
                                          data_type,
                                          id_owner, result_his))
                     self.connection.commit()
