@@ -139,7 +139,7 @@ class CheckDataDaily:
                 if x > 0:
                     self.cur.execute(
                         f"update payment set data_money=data_money+{x * float(price)}*%s where owner_id = %s",
-                        (win_xien_5p, id_owner,))
+                        (win_xien_5p[data_type], id_owner,))
                     # self.connection.commit()
                     # print('x=', x)
                     query = "insert into payment_history(date,time,data_money,data_type,owner_id,result_his) values (" \
