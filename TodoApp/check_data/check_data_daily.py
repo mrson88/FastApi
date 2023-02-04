@@ -155,7 +155,7 @@ class CheckDataDaily:
                 # print(len(result_data))
 
             self.cur.execute("update xsmb set is_check=true where date = %s and data_type = %s and owner_id = %s",
-                             (date_today_strf(), 'L_2p', id_owner))
+                             (date_today_strf(), data_type, id_owner))
             self.connection.commit()
             self.cur.close()
             self.connection.close()
