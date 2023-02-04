@@ -109,7 +109,7 @@ class CheckDataDaily:
             "select data,data_cost from xsmb where date = %s and data_type = %s and owner_id = %s and is_check = %s",
             (date_today_strf(), data_type, id_owner, False))
         result_data = self.cur.fetchall()
-        print('result_data_five_minute=', result_data)
+        # print('result_data_five_minute=', result_data)
 
         if result and result_data:
 

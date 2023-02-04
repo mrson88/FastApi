@@ -52,13 +52,13 @@ async def task_five_minute():
                 # print("time: ", local_time.tm_sec)
                 save_data = PostgresNoDuplicates()
                 finish_1 = time.time() - seconds
-                print('finish_1=', finish_1)
+                # print('finish_1=', finish_1)
                 save_data.process_item_five_minute(create_data_five_minute())
                 finish_2 = time.time() - seconds
-                print('finish_2=', finish_2)
+                # print('finish_2=', finish_2)
                 owner_id_list = CheckDataDaily().check_all_id()
                 finish_3 = time.time() - seconds
-                print('finish_3=', finish_3)
+                # print('finish_3=', finish_3)
                 for i in range(len(owner_id_list)):
                     for j in ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']:
                         CheckDataDaily().check_data_five_minute(owner_id_list[i], j)
