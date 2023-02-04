@@ -66,6 +66,9 @@ async def create_xsmb(xsmb: Xsmb,
     xsmb_model.data = xsmb.data
     xsmb_model.xs_type = xsmb.xs_type
     xsmb_model.data_type = xsmb.data_type
+    print(xsmb.data)
+    print(xsmb.data_type)
+    print(xsmb.xs_type)
     if float(xsmb.data_cost) > 0:
         if xsmb.data_type in ['x2', 'x3', 'x4', ]:
             xsmb_model.data_cost = str(float(xsmb.data_cost) * 10000)
