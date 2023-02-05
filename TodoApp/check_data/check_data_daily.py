@@ -147,7 +147,7 @@ class CheckDataDaily:
                     self.cur.execute(query,
                                      (
                                          date_today_strf(), time_today(),
-                                         f'+{float(round((win_xien_5p[data_type] * x), 0))}',
+                                         f'+{float(round((win_xien_5p[data_type] * x * 1000), 0))}',
                                          data_type,
                                          id_owner, result_his))
                     self.connection.commit()
