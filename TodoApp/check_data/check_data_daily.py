@@ -126,10 +126,11 @@ class CheckDataDaily:
                 # print('price=', price)
                 x = 0
                 result_his = []
-                if data_type in data_type_list[2:]:
-                    aa = result_data[j][0][0]
-                else:
-                    aa = result_data[j][0]
+                # if data_type in data_type_list[2:]:
+                #     aa = result_data[j][0][0]
+                # else:
+                #     aa = result_data[j][0]
+                aa = result_data[j][0][0]
                 print('aa=', aa)
                 for k in range(len(aa)):
                     bb = aa[k]
