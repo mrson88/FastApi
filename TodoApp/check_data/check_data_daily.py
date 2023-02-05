@@ -106,7 +106,7 @@ class CheckDataDaily:
         # print('result=', result)
 
         self.cur.execute(
-            "select data,data_cost,data_type from xsmb where date = %s and xs_type and owner_id = %s and is_check = %s",
+            "select data,data_cost,data_type from xsmb where date = %s and xs_type=%s and owner_id = %s and is_check = %s",
             (date_today_strf(), 'xs_2p', id_owner, False))
         result_data = self.cur.fetchall()
 
