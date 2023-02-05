@@ -86,7 +86,7 @@ class CheckDataDaily:
                 self.cur.close()
                 self.connection.close()
 
-    def check_data_five_minute(self, id_owner):
+    def check_data_two_minute(self, id_owner):
         win_factor = {
             'x2': 1000 * 170,
             'x3': 1000 * 740,
@@ -106,8 +106,8 @@ class CheckDataDaily:
         # print('result=', result)
 
         self.cur.execute(
-            "select data,data_cost,data_type from xsmb where date = %s  and owner_id = %s and is_check = %s",
-            (date_today_strf(), id_owner, False))
+            "select data,data_cost,data_type from xsmb where date = %s and xs_type and owner_id = %s and is_check = %s",
+            (date_today_strf(), 'xs_2p', id_owner, False))
         result_data = self.cur.fetchall()
 
         if result and result_data:
