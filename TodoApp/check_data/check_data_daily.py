@@ -86,8 +86,6 @@ class CheckDataDaily:
                 self.connection.close()
 
     def check_data_five_minute(self, id_owner):
-        data_type = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
-        win_xien_5p = 99 / 27
         win_xien_5p = {
             'x2': 17,
             'x3': 74,
@@ -99,7 +97,7 @@ class CheckDataDaily:
             'D3': 972.3,
             'D4': 9000
         }
-        # data_type=['x2', 'x3', 'x4','L2','L3', 'L4','D2', 'D3', 'D4']
+        data_type = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
         # print('check data')
         self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
                          (date_today_strf(),))
@@ -107,7 +105,7 @@ class CheckDataDaily:
         # print('result=', result)
 
         self.cur.execute(
-            "select data,data_cost from xsmb where date = %s  and owner_id = %s and is_check = %s",
+            "select data,data_cost,data_type from xsmb where date = %s  and owner_id = %s and is_check = %s",
             (date_today_strf(), id_owner, False))
         result_data = self.cur.fetchall()
         print('result_data_five_minute=', result_data)

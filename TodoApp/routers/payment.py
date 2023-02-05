@@ -106,17 +106,17 @@ async def minus_payment(payment_id: int,
     payment_model.data_type = payment.data_type
     # print(payment.data_type)
     if float(payment.data_money) > 0:
-        if payment.data_type in ['x2', 'x3', 'x4', 'x2_2p', 'x3_2p', 'x4_2p']:
+        if payment.data_type in ['x2', 'x3', 'x4']:
             # print('1')
             payment_model.data_money -= float(payment.data_money) * 10000
-        elif payment.data_type in ['L_2p', 'L1', 'L3C_2p', 'L4C_2p']:
+        elif payment.data_type in ['L2']:
             # print('2')
             payment_model.data_money -= float(payment.data_money) * 27000
             # print('3')
-        elif payment.data_type in ['L2', 'L3', 'L4']:
+        elif payment.data_type in ['L3', 'L4']:
             payment_model.data_money -= float(payment.data_money) * 20000
 
-        elif payment.data_type in ['D2', 'D3', 'D4', 'D_2p', 'D3C_2p', 'D4C_2p']:
+        elif payment.data_type in ['D2', 'D3', 'D4']:
             # print('4')
             payment_model.data_money -= float(payment.data_money) * 1000
         else:
@@ -195,13 +195,13 @@ async def create_payment_history(payment_his: PaymentHistory,
     payment_his_model.owner_id = user.get("id")
     # payment_his_model.data_money = payment_his.data_money * 27000
 
-    if payment_his.data_type in ['x2', 'x3', 'x4', 'x2_2p', 'x3_2p', 'x4_2p']:
+    if payment_his.data_type in ['x2', 'x3', 'x4']:
         payment_his_model.data_money = payment_his.data_money * 10000
-    elif payment_his.data_type in ['L_2p', 'L1', 'L3C_2p', 'L4C_2p']:
+    elif payment_his.data_type in ['L2']:
         payment_his_model.data_money = payment_his.data_money * 27000
-    elif payment_his.data_type in ['L2', 'L3', 'L4']:
+    elif payment_his.data_type in ['L3', 'L4']:
         payment_his_model.data_money = payment_his.data_money * 20000
-    elif payment_his.data_type in ['D2', 'D3', 'D4', 'D_2p', 'D3C_2p', 'D4C_2p']:
+    elif payment_his.data_type in ['D2', 'D3', 'D4']:
         payment_his_model.data_money = payment_his.data_money * 1000
     else:
         raise http_exception()
