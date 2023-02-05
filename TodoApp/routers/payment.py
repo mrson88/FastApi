@@ -45,6 +45,11 @@ class PaymentHistory(BaseModel):
     data_type: Optional[str]
 
 
+class Users(BaseModel):
+    first_name: Optional[str]
+    last_name: Optional[str]
+
+
 @router.post('/check')
 async def f():
     # seconds = time.time()
@@ -70,6 +75,17 @@ async def read_all_by_user(user: dict = Depends(get_current_user),
     #     list_user_id.daily_pay = True
     # print(list_user_id.data_money)
     return list_user_id
+
+
+@router.get("/name_user")
+async def read_username(user: dict = Depends(get_current_user),
+                        db: Session = Depends(get_db)):
+    if user is None:
+        raise get_user_exception()
+    list_user_name = db.query(models.Users) \
+        .filter(models.Users.owner_id == user.get("id")) \
+        .first()
+    return list_user_name
 
 
 @router.get("/top_user")
