@@ -70,6 +70,17 @@ async def read_all_by_user(user: dict = Depends(get_current_user),
     return list_user_id
 
 
+@router.get("/top_user")
+async def read_all_by_user(user: dict = Depends(get_current_user),
+                           db: Session = Depends(get_db)):
+    if user is None:
+        raise get_user_exception()
+    list_top_user = db.query(models.Payment) \
+        .order_by(models.Payment.data_money.desc()).limit(50) \
+        .all()
+    return list_top_user
+
+
 @router.post("/create_payment")
 async def create_payment(payment: Payment,
                          user: dict = Depends(get_current_user),
