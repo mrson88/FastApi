@@ -86,7 +86,7 @@ class CheckDataDaily:
                 self.connection.close()
 
     def check_data_five_minute(self, id_owner):
-        win_xien_5p = {
+        win_factor = {
             'x2': 17,
             'x3': 74,
             'x4': 251,
@@ -139,7 +139,7 @@ class CheckDataDaily:
                 if x > 0:
                     self.cur.execute(
                         f"update payment set data_money=data_money+{x * 1000}*%s where owner_id = %s",
-                        (win_xien_5p[data_type], id_owner,))
+                        (win_factor[data_type], id_owner,))
                     # self.connection.commit()
                     # print('x=', x)
                     query = "insert into payment_history(date,time,data_money,data_type,owner_id,result_his) values (" \
@@ -147,7 +147,7 @@ class CheckDataDaily:
                     self.cur.execute(query,
                                      (
                                          date_today_strf(), time_today(),
-                                         f'+{float(round((win_xien_5p[data_type] * x * 1000), 0))}',
+                                         f'+{float(round((win_factor[data_type] * x * 1000), 0))}',
                                          data_type,
                                          id_owner, result_his))
                     self.connection.commit()
