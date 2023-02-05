@@ -139,9 +139,10 @@ class CheckDataDaily:
                         print('x=', x)
                 else:
                     aa = list(result_data[j][0])
-                    # print(len(aa))
+                    print(len(aa))
                     for k in range(len(aa)):
                         bb = aa[k]
+                        print(bb)
                         # bb = str(result_data[j][0][k]).split()
                         if set(bb).issubset(result_calculate):
                             x += 1
