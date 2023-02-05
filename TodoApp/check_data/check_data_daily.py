@@ -125,8 +125,8 @@ class CheckDataDaily:
                 # print('price=', price)
                 x = 0
                 result_his = []
-                aa = result_data[j][0]
-                print((aa))
+                aa = result_data[j][0][0]
+                print(('aa=', aa))
                 for k in range(len(aa)):
                     bb = aa[k]
                     for l in range(len(result_calculate)):
