@@ -58,6 +58,8 @@ class Payment(Base):
     owner_id = Column(Integer, ForeignKey("users.id"))
     daily_pay = Column(Boolean)
     data_type = Column(String)
+    first_name = Column(String)
+    last_name = Column(String)
     owner = relationship("Users", back_populates="payment")
 
 

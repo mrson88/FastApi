@@ -34,6 +34,8 @@ class Payment(BaseModel):
     time: Optional[str]
     data_money: Optional[float]
     data_type: Optional[str]
+    first_name: Optional[str]
+    last_name: Optional[str]
 
 
 class PaymentHistory(BaseModel):
@@ -91,6 +93,8 @@ async def create_payment(payment: Payment,
     payment_model.date = payment.date
     payment_model.time = payment.time
     payment_model.data_money = payment.data_money
+    payment_model.first_name = payment.first_name
+    payment_model.last_name = payment.last_name
     payment_model.owner_id = user.get("id")
     db.add(payment_model)
     db.commit()
