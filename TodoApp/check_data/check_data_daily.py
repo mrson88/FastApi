@@ -108,17 +108,17 @@ class CheckDataDaily:
             "select data,data_cost,data_type from xsmb where date = %s  and owner_id = %s and is_check = %s",
             (date_today_strf(), id_owner, False))
         result_data = self.cur.fetchall()
-        print('result_data_five_minute=', result_data)
 
         if result and result_data:
+            print('result_data_five_minute=', result_data)
 
             result_calculate = []
             for i in range(len(result[0])):
                 result_calculate.append(result[0][i][-2:])
-            # print('result_calculate=', result_calculate)
+            print('result_calculate=', result_calculate)
 
-            # print(len(result_data))
-            # print('result_data=', result_data)
+            print(len(result_data))
+            print('result_data=', result_data)
 
             for j in range(len(result_data)):
                 # price = result_data[j][1]
@@ -126,16 +126,15 @@ class CheckDataDaily:
                 x = 0
                 result_his = []
                 aa = result_data[j][0]
-                # print((aa))
+                print((aa))
                 for k in range(len(aa)):
                     bb = aa[k]
-                    # if set(bb).issubset(result_calculate):
                     for l in range(len(result_calculate)):
                         if bb == result_calculate[l]:
                             x += 1
-                            # print('bb=', bb)
+                            print('bb=', bb)
                             result_his.append(bb)
-                    # print('x=', x)
+                    print('x=', x)
                 if x > 0:
                     self.cur.execute(
                         f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
@@ -152,7 +151,7 @@ class CheckDataDaily:
                                          id_owner, result_his))
                     self.connection.commit()
 
-                # print(len(result_data))
+                print(len(result_data))
 
             # self.cur.execute("update xsmb set is_check=true where date = %s and data_type = %s and owner_id = %s",
             #                  (date_today_strf(), data_type, id_owner))
