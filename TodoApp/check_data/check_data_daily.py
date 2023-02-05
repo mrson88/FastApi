@@ -141,7 +141,8 @@ class CheckDataDaily:
                     aa = list(result_data[j][0])
                     # print(len(aa))
                     for k in range(len(aa)):
-                        bb = str(result_data[j][0][k]).split()
+                        bb = aa[k]
+                        # bb = str(result_data[j][0][k]).split()
                         if set(bb).issubset(result_calculate):
                             x += 1
                             print('bb=', bb)
