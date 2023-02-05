@@ -52,6 +52,7 @@ class CheckDataDaily:
         # print(type(result[0]))
         if result:
             result_calculate = []
+
             for i in range(len(result[0])):
                 result_calculate.append(result[0][i][-2:])
             # print(result_calculate)
@@ -111,7 +112,8 @@ class CheckDataDaily:
 
         if result and result_data:
             print('result_data_five_minute=', result_data)
-
+            result_D3C = result[0][-3:]
+            result_D4C = result[0][-4:]
             result_calculate = []
             for i in range(len(result[0])):
                 result_calculate.append(result[0][i][-2:])
@@ -155,11 +157,24 @@ class CheckDataDaily:
                     aa = result_data[j][0][0]
                     for k in range(len(aa)):
                         bb = aa[k]
-                        if bb == result_calculate[0]:
-                            x += 1
-                            print('bb=', bb)
-                            result_his.append(bb)
-                        print('x=', x)
+                        if data_type == ['D2']:
+                            if bb == result_calculate[0]:
+                                x += 1
+                                print('bb=', bb)
+                                result_his.append(bb)
+                            print('x=', x)
+                        elif data_type == ['D3']:
+                            if bb == result_D3C:
+                                x += 1
+                                print('bb=', bb)
+                                result_his.append(bb)
+                            print('x=', x)
+                        else:
+                            if bb == result_D4C:
+                                x += 1
+                                print('bb=', bb)
+                                result_his.append(bb)
+                            print('x=', x)
 
                 # print('aa=', aa)
                 # for k in range(len(aa)):
