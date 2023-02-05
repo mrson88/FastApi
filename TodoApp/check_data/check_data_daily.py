@@ -97,7 +97,7 @@ class CheckDataDaily:
             'D3': 972.3,
             'D4': 9000
         }
-        data_type = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
+        data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
         # print('check data')
         self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
                          (date_today_strf(),))
@@ -121,6 +121,7 @@ class CheckDataDaily:
             print('result_data=', result_data)
 
             for j in range(len(result_data)):
+                data_type = result_data[j][2]
                 # price = result_data[j][1]
                 # print('price=', price)
                 x = 0
