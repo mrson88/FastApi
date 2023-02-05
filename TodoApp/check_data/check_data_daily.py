@@ -140,7 +140,7 @@ class CheckDataDaily:
                                 print('bb=', bb)
                                 result_his.append(bb)
                         print('x=', x)
-                elif data_type == data_type_list[:3]:
+                elif data_type in data_type_list[:3]:
                     print('type=', data_type)
                     aa = result_data[j][0]
                     print(len(aa))
