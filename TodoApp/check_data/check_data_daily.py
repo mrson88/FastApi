@@ -127,6 +127,7 @@ class CheckDataDaily:
                 x = 0
                 result_his = []
                 if data_type in data_type_list[2:]:
+                    print('type=', data_type)
                     aa = result_data[j][0][0]
                     print('aa=', aa)
                     for k in range(len(aa)):
@@ -138,6 +139,7 @@ class CheckDataDaily:
                                 result_his.append(bb)
                         print('x=', x)
                 elif data_type == data_type_list[3]:
+                    print('type=', data_type)
                     aa = list(result_data[j][0])
                     print(len(aa))
                     for k in range(len(aa)):
@@ -149,6 +151,7 @@ class CheckDataDaily:
                             result_his.append(bb)
                         print('x=', x)
                 else:
+                    print('type=', data_type)
                     aa = result_data[j][0][0]
                     for k in range(len(aa)):
                         bb = aa[k]
