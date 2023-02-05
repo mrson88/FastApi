@@ -82,7 +82,7 @@ async def read_username(user: dict = Depends(get_current_user),
                         db: Session = Depends(get_db)):
     if user is None:
         raise get_user_exception()
-    list_user_name = db.query(models.Users.fisrt_name, models.Users.last_name) \
+    list_user_name = db.query(models.Users.first_name, models.Users.last_name) \
         .filter(models.Users.id == user.get("id")) \
         .first()
     return list_user_name
