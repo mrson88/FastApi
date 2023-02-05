@@ -111,70 +111,70 @@ class CheckDataDaily:
         result_data = self.cur.fetchall()
 
         if result and result_data:
-            print('result_data_five_minute=', result_data)
+            # print('result_data_five_minute=', result_data)
             result_D3C = result[0][-3:]
             result_D4C = result[0][-4:]
             result_calculate = []
             for i in range(len(result[0])):
                 result_calculate.append(result[0][i][-2:])
-            print('result_calculate=', result_calculate)
-
-            print(len(result_data))
-            print('result_data=', result_data)
+            # print('result_calculate=', result_calculate)
+            #
+            # print(len(result_data))
+            # print('result_data=', result_data)
 
             for j in range(len(result_data)):
                 data_type = result_data[j][2]
                 price = result_data[j][1]
-                print('price=', price)
+                # print('price=', price)
                 x = 0
                 result_his = []
                 if data_type == data_type_list[3]:
-                    print('type=', data_type)
+                    # print('type=', data_type)
                     aa = result_data[j][0][0]
-                    print('aa=', aa)
+                    # print('aa=', aa)
                     for k in range(len(aa)):
                         bb = aa[k]
                         for l in range(len(result_calculate)):
                             if bb == result_calculate[l]:
                                 x += 1
-                                print('bb=', bb)
+                                # print('bb=', bb)
                                 result_his.append(bb)
-                        print('x=', x)
+                        # print('x=', x)
                 elif data_type in data_type_list[:3]:
-                    print('type=', data_type)
+                    # print('type=', data_type)
                     aa = result_data[j][0]
-                    print(len(aa))
+                    # print(len(aa))
                     for k in range(len(aa)):
                         bb = aa[k]
-                        print(bb)
+                        # print(bb)
                         if set(bb).issubset(result_calculate):
                             x += 1
-                            print('bb=', bb)
+                            # print('bb=', bb)
                             result_his.append(bb)
-                        print('x=', x)
+                        # print('x=', x)
                 else:
-                    print('type=', data_type)
+                    # print('type=', data_type)
                     aa = result_data[j][0][0]
                     for k in range(len(aa)):
                         bb = aa[k]
                         if data_type == ['D2']:
                             if bb == result_calculate[0]:
                                 x += 1
-                                print('bb=', bb)
+                                # print('bb=', bb)
                                 result_his.append(bb)
-                            print('x=', x)
+                            # print('x=', x)
                         elif data_type == ['D3']:
                             if bb == result_D3C:
                                 x += 1
-                                print('bb=', bb)
+                                # print('bb=', bb)
                                 result_his.append(bb)
-                            print('x=', x)
+                            # print('x=', x)
                         else:
                             if bb == result_D4C:
                                 x += 1
-                                print('bb=', bb)
+                                # print('bb=', bb)
                                 result_his.append(bb)
-                            print('x=', x)
+                            # print('x=', x)
 
                 # print('aa=', aa)
                 # for k in range(len(aa)):
