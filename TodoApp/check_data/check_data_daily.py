@@ -122,8 +122,8 @@ class CheckDataDaily:
 
             for j in range(len(result_data)):
                 data_type = result_data[j][2]
-                # price = result_data[j][1]
-                # print('price=', price)
+                price = result_data[j][1]
+                print('price=', price)
                 x = 0
                 result_his = []
                 if data_type in data_type_list[2:]:
@@ -137,14 +137,22 @@ class CheckDataDaily:
                                 print('bb=', bb)
                                 result_his.append(bb)
                         print('x=', x)
-                else:
+                elif data_type == data_type_list[3]:
                     aa = list(result_data[j][0])
                     print(len(aa))
                     for k in range(len(aa)):
                         bb = aa[k]
                         print(bb)
-                        # bb = str(result_data[j][0][k]).split()
                         if set(bb).issubset(result_calculate):
+                            x += 1
+                            print('bb=', bb)
+                            result_his.append(bb)
+                        print('x=', x)
+                else:
+                    aa = result_data[j][0][0]
+                    for k in range(len(aa)):
+                        bb = aa[k]
+                        if bb == result_calculate[0]:
                             x += 1
                             print('bb=', bb)
                             result_his.append(bb)
@@ -161,7 +169,7 @@ class CheckDataDaily:
                 #     print('x=', x)
                 if x > 0:
                     self.cur.execute(
-                        f"update payment set data_money=data_money+{x * 1000}*%s where owner_id = %s",
+                        f"update payment set data_money=data_money+{x * price}*%s where owner_id = %s",
                         (win_factor[data_type], id_owner,))
                     # self.connection.commit()
                     # print('x=', x)
@@ -170,7 +178,7 @@ class CheckDataDaily:
                     self.cur.execute(query,
                                      (
                                          date_today_strf(), time_today(),
-                                         f'+{float(round((win_factor[data_type] * x * 1000), 0))}',
+                                         f'+{float(round((win_factor[data_type] * x * price), 0))}',
                                          data_type,
                                          id_owner, result_his))
                     self.connection.commit()
