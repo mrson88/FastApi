@@ -127,7 +127,7 @@ class CheckDataDaily:
                 x = 0
                 result_his = []
                 aa = result_data[j][0][0]
-                print(('aa=', aa))
+                print('aa=', aa)
                 for k in range(len(aa)):
                     bb = aa[k]
                     for l in range(len(result_calculate)):
@@ -154,8 +154,8 @@ class CheckDataDaily:
 
                 print(len(result_data))
 
-            # self.cur.execute("update xsmb set is_check=true where date = %s and data_type = %s and owner_id = %s",
-            #                  (date_today_strf(), data_type, id_owner))
+            self.cur.execute("update xsmb set is_check=true where date = %s  and owner_id = %s",
+                             (date_today_strf(), id_owner))
             self.connection.commit()
             self.cur.close()
             self.connection.close()
