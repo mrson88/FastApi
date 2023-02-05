@@ -126,20 +126,35 @@ class CheckDataDaily:
                 # print('price=', price)
                 x = 0
                 result_his = []
-                # if data_type in data_type_list[2:]:
-                #     aa = result_data[j][0][0]
-                # else:
-                #     aa = result_data[j][0]
-                aa = result_data[j][0][0]
-                print('aa=', aa)
-                for k in range(len(aa)):
-                    bb = aa[k]
-                    for l in range(len(result_calculate)):
-                        if bb == result_calculate[l]:
+                if data_type in data_type_list[2:]:
+                    aa = result_data[j][0][0]
+                    print('aa=', aa)
+                    for k in range(len(aa)):
+                        bb = aa[k]
+                        for l in range(len(result_calculate)):
+                            if bb == result_calculate[l]:
+                                x += 1
+                                print('bb=', bb)
+                                result_his.append(bb)
+                        print('x=', x)
+                else:
+                    aa = list(result_data[j][0])
+                    # print(len(aa))
+                    for k in range(len(aa)):
+                        bb = str(result_data[j][0][k]).split()
+                        if set(bb).issubset(result_calculate):
                             x += 1
-                            print('bb=', bb)
-                            result_his.append(bb)
-                    print('x=', x)
+                            # print('bb=', bb)
+
+                # print('aa=', aa)
+                # for k in range(len(aa)):
+                #     bb = aa[k]
+                #     for l in range(len(result_calculate)):
+                #         if bb == result_calculate[l]:
+                #             x += 1
+                #             print('bb=', bb)
+                #             result_his.append(bb)
+                #     print('x=', x)
                 if x > 0:
                     self.cur.execute(
                         f"update payment set data_money=data_money+{x * 1000}*%s where owner_id = %s",
