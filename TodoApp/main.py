@@ -17,7 +17,6 @@ app.include_router(payment.router)
 
 @app.on_event('startup')
 def start_up():
-    asyncio.create_task(task_five_minute())
+    # asyncio.create_task(task_five_minute())
     asyncio.create_task(task_daily())
     asyncio.create_task(task_new_day())
-
