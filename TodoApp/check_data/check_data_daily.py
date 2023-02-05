@@ -140,7 +140,7 @@ class CheckDataDaily:
                         print('x=', x)
                 elif data_type == data_type_list[3]:
                     print('type=', data_type)
-                    aa = list(result_data[j][0])
+                    aa = result_data[j][0]
                     print(len(aa))
                     for k in range(len(aa)):
                         bb = aa[k]
@@ -186,7 +186,7 @@ class CheckDataDaily:
                                          id_owner, result_his))
                     self.connection.commit()
 
-                print(len(result_data))
+                # print(len(result_data))
 
             self.cur.execute("update xsmb set is_check=true where date = %s  and owner_id = %s",
                              (date_today_strf(), id_owner))
