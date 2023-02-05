@@ -88,9 +88,9 @@ class CheckDataDaily:
 
     def check_data_five_minute(self, id_owner):
         win_factor = {
-            'x2': 17,
-            'x3': 74,
-            'x4': 251,
+            'x2': 1000 * 170,
+            'x3': 1000 * 740,
+            'x4': 1000 * 2510,
             'L2': 99000,
             'L3': 97.23 / 2,
             'L4': 450,
