@@ -63,9 +63,9 @@ async def read_all_by_user(user: dict = Depends(get_current_user),
     list_user_id = db.query(models.Payment) \
         .filter(models.Payment.owner_id == user.get("id")) \
         .first()
-    # if not list_user_id.daily_pay:
-    #     list_user_id.data_money = list_user_id.data_money + 3000000
-    #     list_user_id.daily_pay = True
+    if not list_user_id.daily_pay:
+        list_user_id.data_money = list_user_id.data_money + 3000000
+        list_user_id.daily_pay = True
     print(list_user_id.data_money)
     return list_user_id
 
