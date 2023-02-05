@@ -117,6 +117,7 @@ class CheckDataDaily:
             result_calculate = []
             for i in range(len(result[0])):
                 result_calculate.append(result[0][i][-2:])
+
             # print('result_calculate=', result_calculate)
             #
             # print(len(result_data))
@@ -124,11 +125,13 @@ class CheckDataDaily:
 
             for j in range(len(result_data)):
                 data_type = result_data[j][2]
-                price = result_data[j][1]
-                # print('price=', price)
+
+                price = 0
                 x = 0
                 result_his = []
                 if data_type == data_type_list[3]:
+                    price = result_data[j][1] / len(result_data[j])
+                    print('price=', price)
                     # print('type=', data_type)
                     aa = result_data[j][0][0]
                     # print('aa=', aa)
@@ -141,6 +144,8 @@ class CheckDataDaily:
                                 result_his.append(bb)
                         # print('x=', x)
                 elif data_type in data_type_list[:3]:
+                    price = result_data[j][1] / len(result_data[j])
+                    print('price=', price)
                     # print('type=', data_type)
                     aa = result_data[j][0]
                     # print(len(aa))
@@ -154,6 +159,8 @@ class CheckDataDaily:
                         # print('x=', x)
                 else:
                     # print('type=', data_type)
+                    price = result_data[j][1] / len(result_data[j])
+                    print('price=', price)
                     aa = result_data[j][0][0]
                     for k in range(len(aa)):
                         bb = aa[k]
@@ -191,7 +198,7 @@ class CheckDataDaily:
                         (win_factor[data_type], id_owner,))
                     # self.connection.commit()
                     # print('x=', x)
-                    query = "insert into payment_history(date,time,data_money,data_type,owner_id,result_his) values (" \
+                    query = f"insert into payment_history(date,time,data_money*{x},data_type,owner_id,result_his) values (" \
                             "%s,%s,%s,%s,%s,%s); "
                     self.cur.execute(query,
                                      (
