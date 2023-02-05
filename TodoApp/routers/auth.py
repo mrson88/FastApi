@@ -89,6 +89,18 @@ async def get_current_user(token: str = Depends(oauth2_bearer)):
         raise get_user_exception()
 
 
+async def get_name_user(token: str = Depends(oauth2_bearer)):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        last_name: str = payload.get("last_name")
+        first_name: str = payload.get("first_name")
+        if last_name is None or first_name is None:
+            raise get_user_exception()
+        return {"last_name": last_name, "first_name": first_name}
+    except JWTError:
+        raise get_user_exception()
+
+
 @router.post("/create/user")
 async def create_new_user(create_user: CreateUser, db: Session = Depends(get_db)):
     create_user_model = models.Users()
