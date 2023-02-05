@@ -144,7 +144,9 @@ class CheckDataDaily:
                         bb = str(result_data[j][0][k]).split()
                         if set(bb).issubset(result_calculate):
                             x += 1
-                            # print('bb=', bb)
+                            print('bb=', bb)
+                            result_his.append(bb)
+                        print('x=', x)
 
                 # print('aa=', aa)
                 # for k in range(len(aa)):
