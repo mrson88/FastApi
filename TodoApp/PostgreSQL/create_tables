@@ -34,10 +34,11 @@ CREATE TABLE xsmb (
   time varchar(50) DEFAULT NULL,
   data varchar(400)[][]  DEFAULT NULL,
   data_type varchar(20)  DEFAULT NULL,
-  data_cost varchar(50)  DEFAULT NULL,
-  active boolean  DEFAULT NULL,
+  data_cost varchar(50)  DEFAULT '0',
+  is_check boolean  DEFAULT NULL,
   owner_id integer  DEFAULT NULL,
   xs_type varchar(30) DEFAULT NULL,
+  data_cost_per varchar(50) DEFAULT '0',
   PRIMARY KEY (id),
   FOREIGN KEY (owner_id) REFERENCES users(id)
 );

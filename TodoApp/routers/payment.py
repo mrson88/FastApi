@@ -112,6 +112,8 @@ async def create_payment(payment: Payment,
     payment_model.first_name = payment.first_name
     payment_model.last_name = payment.last_name
     payment_model.owner_id = user.get("id")
+    payment_model.active = True
+    payment_model.daily_pay = True
     db.add(payment_model)
     db.commit()
     db.close()
