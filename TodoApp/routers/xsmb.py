@@ -34,6 +34,7 @@ class Xsmb(BaseModel):
     data_type: Optional[str]
     data_cost: Optional[str]
     xs_type: Optional[str]
+    data_cost_per: Optional[str]
     is_check: bool
 
 
@@ -66,6 +67,7 @@ async def create_xsmb(xsmb: Xsmb,
     xsmb_model.data = xsmb.data
     xsmb_model.xs_type = xsmb.xs_type
     xsmb_model.data_type = xsmb.data_type
+    xsmb_model.data_cost_per = xsmb.data_cost_per
     # print(xsmb.data)
     # print(xsmb.data_type)
     # print(xsmb.xs_type)
