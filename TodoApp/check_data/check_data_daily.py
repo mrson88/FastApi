@@ -130,7 +130,7 @@ class CheckDataDaily:
                 x = 0
                 result_his = []
                 if data_type == data_type_list[3]:
-                    price = result_data[j][1] / len(result_data[j])
+                    price = float(float(result_data[j][1]) / len(result_data[j]))
                     print('price=', price)
                     # print('type=', data_type)
                     aa = result_data[j][0][0]
@@ -144,7 +144,7 @@ class CheckDataDaily:
                                 result_his.append(bb)
                         # print('x=', x)
                 elif data_type in data_type_list[:3]:
-                    price = result_data[j][1] / len(result_data[j])
+                    price = float(float(result_data[j][1]) / len(result_data[j]))
                     print('price=', price)
                     # print('type=', data_type)
                     aa = result_data[j][0]
@@ -159,7 +159,7 @@ class CheckDataDaily:
                         # print('x=', x)
                 else:
                     # print('type=', data_type)
-                    price = result_data[j][1] / len(result_data[j])
+                    price = float(float(result_data[j][1]) / len(result_data[j]))
                     print('price=', price)
                     aa = result_data[j][0][0]
                     for k in range(len(aa)):
