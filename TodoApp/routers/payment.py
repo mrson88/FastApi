@@ -43,6 +43,7 @@ class PaymentHistory(BaseModel):
     time: Optional[str]
     data_money: Optional[float]
     data_type: Optional[str]
+    result_his: Optional[str]
 
 
 class Users(BaseModel):
@@ -228,9 +229,8 @@ async def create_payment_history(payment_his: PaymentHistory,
     payment_his_model.date = payment_his.date
     payment_his_model.time = payment_his.time
     payment_his_model.data_type = payment_his.data_type
+    payment_his_model.result_his = payment_his.result_his
     payment_his_model.owner_id = user.get("id")
-    # payment_his_model.data_money = payment_his.data_money * 27000
-
     if payment_his.data_type in ['x2', 'x3', 'x4']:
         payment_his_model.data_money = payment_his.data_money * 10000
     elif payment_his.data_type in ['L2']:
