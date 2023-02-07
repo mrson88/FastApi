@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("..")
 
-from typing import Optional
+from typing import Optional, List
 from fastapi import Depends, HTTPException, APIRouter
 import models
 from database import engine, SessionLocal
