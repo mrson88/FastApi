@@ -43,7 +43,7 @@ class PaymentHistory(BaseModel):
     time: Optional[str]
     data_money: Optional[float]
     data_type: Optional[str]
-    result_his: Optional[str]
+    result_his: List[List[str]]
 
 
 class Users(BaseModel):
