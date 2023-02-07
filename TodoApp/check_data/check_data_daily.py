@@ -204,7 +204,7 @@ class CheckDataDaily:
                                      (
                                          date_today_strf(), time_today(),
                                          f'+{float(round((win_factor[data_type] * x * float(price)), 0))}',
-                                         data_type,
+                                         f'win_{data_type}',
                                          id_owner, result_his))
                     self.connection.commit()
 
