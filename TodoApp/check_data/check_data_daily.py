@@ -102,7 +102,7 @@ class CheckDataDaily:
         self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
                          (date_today_strf(),))
         result = self.cur.fetchone()
-        print('result=', result[0])
+        # print('result=', result[0])
 
         self.cur.execute(
             "select data,data_cost_per,data_type from xsmb where date = %s and xs_type=%s and owner_id = %s and is_check = %s",
@@ -110,16 +110,24 @@ class CheckDataDaily:
         result_data = self.cur.fetchall()
 
         if result and result_data:
-            result_D3C = result[0][-3:]
-            result_D4C = result[0][-4:]
+            result_d3_c = result[0][0][-3:]
+            result_d4_c = result[0][0][-4:]
             result_calculate = []
+            result_calculate_l3c = []
+            result_calculate_l4c = []
+
             for i in range(len(result[0])):
                 result_calculate.append(result[0][i][-2:])
+            for i in range(len(result[0]) - 4):
+                result_calculate_l3c.append(result[0][i][-3:])
+            for i in range(len(result[0]) - 7):
+                result_calculate_l4c.append(result[0][i][-4:])
+
             for j in range(len(result_data)):
                 data_type = result_data[j][2]
                 x = 0
                 result_his = []
-                if data_type == data_type_list[3]:
+                if data_type == 'L2':
                     price = float(result_data[j][1])
                     aa = result_data[j][0][0]
                     for k in range(len(aa)):
@@ -128,7 +136,7 @@ class CheckDataDaily:
                             if bb == result_calculate[l]:
                                 x += 1
                                 result_his.append(bb)
-                elif data_type in data_type_list[:3]:
+                elif data_type in ['x2', 'x3', 'x4']:
                     price = float(result_data[j][1])
                     aa = result_data[j][0]
                     for k in range(len(aa)):
@@ -139,6 +147,7 @@ class CheckDataDaily:
                 else:
                     price = float(result_data[j][1])
                     aa = result_data[j][0][0]
+                    print('aa=', aa)
                     for k in range(len(aa)):
                         bb = aa[k]
                         if data_type == 'D2':
@@ -146,11 +155,11 @@ class CheckDataDaily:
                                 x += 1
                                 result_his.append(bb)
                         elif data_type == 'D3':
-                            if bb == result_D3C:
+                            if bb == result_d3_c:
                                 x += 1
                                 result_his.append(bb)
                         elif data_type == 'D4':
-                            if bb == result_D4C:
+                            if bb == result_d4_c:
                                 x += 1
                                 result_his.append(bb)
                 if x > 0:
