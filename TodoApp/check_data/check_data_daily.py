@@ -99,11 +99,10 @@ class CheckDataDaily:
             'D4': 1000 * 9000
         }
         data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
-        # print('check data')
         self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
                          (date_today_strf(),))
         result = self.cur.fetchone()
-        # print('result=', result)
+        print('result=', result)
 
         self.cur.execute(
             "select data,data_cost_per,data_type from xsmb where date = %s and xs_type=%s and owner_id = %s and is_check = %s",
@@ -111,87 +110,49 @@ class CheckDataDaily:
         result_data = self.cur.fetchall()
 
         if result and result_data:
-            # print('result_data_five_minute=', result_data)
             result_D3C = result[0][-3:]
             result_D4C = result[0][-4:]
             result_calculate = []
             for i in range(len(result[0])):
                 result_calculate.append(result[0][i][-2:])
-
-            # print('result_calculate=', result_calculate)
-            #
-            # print(len(result_data))
-            # print('result_data=', result_data)
-
             for j in range(len(result_data)):
                 data_type = result_data[j][2]
-
-                price = 0
                 x = 0
                 result_his = []
                 if data_type == data_type_list[3]:
                     price = float(result_data[j][1])
-                    # print('price=', price)
-                    # print('type=', data_type)
                     aa = result_data[j][0][0]
-                    # print('aa=', aa)
                     for k in range(len(aa)):
                         bb = aa[k]
                         for l in range(len(result_calculate)):
                             if bb == result_calculate[l]:
                                 x += 1
-                                # print('bb=', bb)
                                 result_his.append(bb)
-                        # print('x=', x)
                 elif data_type in data_type_list[:3]:
                     price = float(result_data[j][1])
-                    # print('price=', price)
-                    # print('type=', data_type)
                     aa = result_data[j][0]
-                    # print(len(aa))
                     for k in range(len(aa)):
                         bb = aa[k]
-                        # print(bb)
                         if set(bb).issubset(result_calculate):
                             x += 1
-                            # print('bb=', bb)
                             result_his.append(bb)
-                        # print('x=', x)
                 else:
-                    # print('type=', data_type)
                     price = float(result_data[j][1])
-                    # print('price=', price)
                     aa = result_data[j][0][0]
                     for k in range(len(aa)):
                         bb = aa[k]
-                        if data_type == ['D2']:
+                        if data_type == 'D2':
                             if bb == result_calculate[0]:
                                 x += 1
-                                # print('bb=', bb)
                                 result_his.append(bb)
-                            # print('x=', x)
-                        elif data_type == ['D3']:
+                        elif data_type == 'D3':
                             if bb == result_D3C:
                                 x += 1
-                                # print('bb=', bb)
                                 result_his.append(bb)
-                            # print('x=', x)
-                        else:
+                        elif data_type == 'D4':
                             if bb == result_D4C:
                                 x += 1
-                                # print('bb=', bb)
                                 result_his.append(bb)
-                            # print('x=', x)
-
-                # print('aa=', aa)
-                # for k in range(len(aa)):
-                #     bb = aa[k]
-                #     for l in range(len(result_calculate)):
-                #         if bb == result_calculate[l]:
-                #             x += 1
-                #             print('bb=', bb)
-                #             result_his.append(bb)
-                #     print('x=', x)
                 if x > 0:
                     self.cur.execute(
                         f"update payment set data_money=data_money+{x * float(price)}*%s where owner_id = %s",
