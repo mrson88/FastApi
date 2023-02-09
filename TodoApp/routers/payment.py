@@ -194,7 +194,7 @@ async def add_payment(payment_id: int,
             payment_model.daily_pay = True
 
         else:
-            if payment.data_money < 10000001:
+            if payment.data_money < 100000001:
                 payment_model.data_money += payment.data_money
             else:
                 raise http_exception()
