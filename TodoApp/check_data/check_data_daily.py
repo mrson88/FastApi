@@ -150,18 +150,13 @@ class CheckDataDaily:
                     print('aa=', aa)
                     for k in range(len(aa)):
                         bb = aa[k]
-                        if data_type == 'D2':
-                            if bb == result_calculate[0]:
-                                x += 1
-                                result_his.append(bb)
-                        elif data_type == 'D3':
-                            if bb == result_d3_c:
-                                x += 1
-                                result_his.append(bb)
-                        elif data_type == 'D4':
-                            if bb == result_d4_c:
-                                x += 1
-                                result_his.append(bb)
+                        if (data_type == 'D2' and bb == result_calculate[0]) or (
+                                data_type == 'D3' and bb == result_d3_c) or \
+                                (data_type == 'D4' and bb == result_d4_c) or \
+                                (data_type == 'L3' and bb in result_calculate_l3c) or \
+                                (data_type == 'L4' and bb in result_calculate_l4c):
+                            x += 1
+                            result_his.append(bb)
                 if x > 0:
                     self.cur.execute(
                         f"update payment set data_money=data_money+{x * float(price)}*%s where owner_id = %s",
