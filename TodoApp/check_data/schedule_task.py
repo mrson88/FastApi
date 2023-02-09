@@ -15,7 +15,7 @@ async def task_daily():
 
         await asyncio.sleep(60)
         if int(local_time.tm_hour) == 9 and 1 < int(local_time.tm_min) < 50:
-            # print("time: ", local_time.tm_sec)
+            print("time: ", local_time.tm_sec)
             save_data = PostgresNoDuplicates()
             if save_data.process_item(crawl_data()):
                 owner_id_list = CheckDataDaily().check_all_id()
