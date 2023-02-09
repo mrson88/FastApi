@@ -13,15 +13,15 @@ async def task_daily():
         seconds = time.time()
         local_time = time.localtime(seconds)
 
-        await asyncio.sleep(10)
-        if int(local_time.tm_hour) == 18 and int(local_time.tm_min) == 50 and int(local_time.tm_sec) < 20:
+        await asyncio.sleep(60)
+        if int(local_time.tm_hour) == 9 and 1 < int(local_time.tm_min) < 50:
             # print("time: ", local_time.tm_sec)
             save_data = PostgresNoDuplicates()
-            save_data.process_item(crawl_data())
-            owner_id_list = CheckDataDaily().check_all_id()
-            for i in range(len(owner_id_list)):
-                CheckDataDaily().check_data_daily(owner_id_list[i])
-            save_data.close_database()
+            if save_data.process_item(crawl_data()):
+                owner_id_list = CheckDataDaily().check_all_id()
+                for i in range(len(owner_id_list)):
+                    CheckDataDaily().check_data_daily(owner_id_list[i])
+                save_data.close_database()
 
 
 async def task_check():

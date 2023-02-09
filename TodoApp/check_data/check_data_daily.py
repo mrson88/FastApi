@@ -98,7 +98,7 @@ class CheckDataDaily:
             'D3': 1000 * 972.3,
             'D4': 1000 * 9000
         }
-        data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
+        # data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
         self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
                          (date_today_strf(),))
         result = self.cur.fetchone()
@@ -180,8 +180,7 @@ class CheckDataDaily:
             self.connection.close()
 
     def set_data_new_day(self, id_owner):
-        self.cur.execute("update payment set daily_pay=false where owner_id = %s",
-                         (id_owner))
+        self.cur.execute("update payment set daily_pay=false where owner_id = %s", id_owner)
         self.connection.commit()
         self.cur.close()
         self.connection.close()

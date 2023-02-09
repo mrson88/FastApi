@@ -35,13 +35,9 @@ class PostgresNoDuplicates:
         self.cur.execute("select * from result_daily where day = %s", (str(item[0]).replace('/', '-'),))
 
         result = self.cur.fetchone()
-        # print(str(item))
-
         # If it is in DB, create log message
         if result:
-            return
-            # print("Item already in database: %s" % str(item[0]))
-
+            return False
         # If text isn't in the DB, insert data
         else:
             # Define insert statement
@@ -49,11 +45,9 @@ class PostgresNoDuplicates:
                              (str(item[0]).replace('/', '-'),
                               item[1],
                               ))
-
-            # print('save data ok')
-
             # Execute insert of data into database
             self.connection.commit()
+            return True
 
     def process_item_five_minute(self, item):
         # Create quotes table if none exists
