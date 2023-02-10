@@ -234,6 +234,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
         models.PaymentHistory.data_type == 'x4').first()
     print(list_payment_all)
+    print(type(list_payment_all))
 
     # query = text(
     #     "SELECT SUM(data_money) AS total FROM payment_history  WHERE data_type='win_L2'")
