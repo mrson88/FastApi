@@ -40,51 +40,51 @@ class CheckDataDaily:
         # print(result_id)
         return result_id
 
-    def check_data_daily(self, id_owner):
-
-        xien = [99, 99 / 27, 17, 74, 251]
-
-        if int(time_hour()) > 18 and int(time_minute()) > 30:
-            self.cur.execute("select result from result_daily where day = %s", (date_today_strf(),))
-        else:
-            self.cur.execute("select result from result_daily where day = %s", (before_x_day(1),))
-        result = self.cur.fetchone()
-        # print(type(result[0]))
-        if result:
-            result_calculate = []
-
-            for i in range(len(result[0])):
-                result_calculate.append(result[0][i][-2:])
-            # print(result_calculate)
-
-            for i in range(5):
-                self.cur.execute(
-                    "select data from xsmb where date = %s and data_type = %s and owner_id = %s and is_check = %s",
-                    (date_today_strf(), f'x{i}', id_owner, False))
-                result_data = self.cur.fetchall()
-
-                x = 0
-                for j in range(len(result_data)):
-
-                    aa = list(result_data[j][0])
-                    # print(len(aa))
-                    for k in range(len(aa)):
-                        bb = str(result_data[j][0][k]).split()
-                        if set(bb).issubset(result_calculate):
-                            x += 1
-                            # print('bb=', bb)
-                # print('x=', x)
-                self.cur.execute(
-                    f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
-                    (xien[i], id_owner,))
-                self.connection.commit()
-
-                # print(len(result_data))
-                self.cur.execute("update xsmb set is_check=true where date = %s and data_type = %s and owner_id = %s",
-                                 (date_today_strf(), f'x{i}', id_owner))
-                self.connection.commit()
-                self.cur.close()
-                self.connection.close()
+    # def check_data_daily(self, id_owner):
+    #
+    #     xien = [99, 99 / 27, 17, 74, 251]
+    #
+    #     if int(time_hour()) > 18 and int(time_minute()) > 30:
+    #         self.cur.execute("select result from result_daily where day = %s", (date_today_strf(),))
+    #     else:
+    #         self.cur.execute("select result from result_daily where day = %s", (before_x_day(1),))
+    #     result = self.cur.fetchone()
+    #     # print(type(result[0]))
+    #     if result:
+    #         result_calculate = []
+    #
+    #         for i in range(len(result[0])):
+    #             result_calculate.append(result[0][i][-2:])
+    #         # print(result_calculate)
+    #
+    #         for i in range(5):
+    #             self.cur.execute(
+    #                 "select data from xsmb where date = %s and data_type = %s and owner_id = %s and is_check = %s",
+    #                 (date_today_strf(), f'x{i}', id_owner, False))
+    #             result_data = self.cur.fetchall()
+    #
+    #             x = 0
+    #             for j in range(len(result_data)):
+    #
+    #                 aa = list(result_data[j][0])
+    #                 # print(len(aa))
+    #                 for k in range(len(aa)):
+    #                     bb = str(result_data[j][0][k]).split()
+    #                     if set(bb).issubset(result_calculate):
+    #                         x += 1
+    #                         # print('bb=', bb)
+    #             # print('x=', x)
+    #             self.cur.execute(
+    #                 f"update payment set data_money=data_money+{x}*%s where owner_id = %s",
+    #                 (xien[i], id_owner,))
+    #             self.connection.commit()
+    #
+    #             # print(len(result_data))
+    #             self.cur.execute("update xsmb set is_check=true where date = %s and data_type = %s and owner_id = %s",
+    #                              (date_today_strf(), f'x{i}', id_owner))
+    #             self.connection.commit()
+    #             self.cur.close()
+    #             self.connection.close()
 
     def check_data(self, id_owner, type_data):
         win_factor = {

@@ -1,7 +1,6 @@
-from sqlalchemy import Boolean, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from database import Base
-from sqlalchemy import Table, Column, Float, Integer, String, MetaData, ForeignKey, ARRAY
+from sqlalchemy import Table, Column, Float, Integer, String, MetaData, ForeignKey, ARRAY, Boolean
 
 
 class Users(Base):
