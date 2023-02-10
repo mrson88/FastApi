@@ -235,7 +235,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     #     .all()
 
     query = text(
-        "SELECT  SUM(data_money) FROM payment_history WHERE data_type=win_L2")
+        "SELECT SUM(data_money) AS total FROM payment_history  WHERE data_type='win_L2'")
     result = engine.execute(query)
 
     return result
