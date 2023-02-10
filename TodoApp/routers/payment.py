@@ -244,7 +244,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     #                   func.sum(text("table_name.value_column"))).filter(text("table_name.data_column IN :data")).params(
     #     data=[item.data_column for item in data]).group_by(func.date_trunc("day", text("table_name.data_column"))).all()
 
-    return list_payment_all
+    return str(list_payment_all)
 
 
 @router.post("/payment_history")
