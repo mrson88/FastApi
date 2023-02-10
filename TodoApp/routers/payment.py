@@ -238,7 +238,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     # query = text(
     #     "SELECT SUM(data_money) AS total FROM payment_history  WHERE data_type='win_L2'")
     # result = engine.execute(query)
-    result = db.query(func.sum(text(f"table_name.data_money"))).scalar()
+    # result = db.query(func.sum(text(f"table_name.data_money"))).scalar()
     # result = db.query(func.date_trunc("day", text("table_name.data_column")),
     #                   func.sum(text("table_name.value_column"))).filter(text("table_name.data_column IN :data")).params(
     #     data=[item.data_column for item in data]).group_by(func.date_trunc("day", text("table_name.data_column"))).all()
