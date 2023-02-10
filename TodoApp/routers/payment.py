@@ -234,11 +234,12 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     # list_payment_all = db.query(models.PaymentHistory).sum(models.PaymentHistory.data_money) \
     #     .all()
 
-    query = text(
-        "SELECT SUM(data_money) AS total FROM payment_history  WHERE data_type='win_L2'")
-    result = engine.execute(query)
+    # query = text(
+    #     "SELECT SUM(data_money) AS total FROM payment_history  WHERE data_type='win_L2'")
+    # result = engine.execute(query)
+    result = db.query(func.sum(text(f"table_name.data_money"))).scalar()
 
-    return result
+    return {"sum": result}
 
 
 @router.post("/payment_history")
