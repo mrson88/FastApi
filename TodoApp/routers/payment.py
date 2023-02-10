@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append("..")
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, Column, Integer, Date, func, text
 from typing import Optional, List
 from fastapi import Depends, HTTPException, APIRouter
 import models
@@ -230,12 +230,14 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 
 
 @router.get("/payment_history_all")
-async def read_payment_history_all(data: List[DataInput], db: Session = Depends(get_db)):
+async def read_payment_history_all(data: List[DataInput], column: str, db: Session = Depends(get_db)):
     # list_payment_all = db.query(models.PaymentHistory).sum(models.PaymentHistory.data_money) \
     #     .all()
-    result = db.query(text("date_trunc('date', payment_history.data_type)"), text("SUM(table_name.data_money)")).filter(
-        text("payment_history.data_type IN :data")).params(data=[item.data_column for item in data]).group_by(
-        text("date_trunc('date', payment_history.data_type)")).all()
+    # result = db.query(text("date_trunc('date', payment_history.data_type)"), text("SUM(table_name.data_money)")).filter(
+    #     text("payment_history.data_type IN :data")).params(data=[item.data_column for item in data]).group_by(
+    #     text("date_trunc('date', payment_history.data_type)")).all()
+    column = 'data_money'
+    result = db.query(func.sum(text(f"table_name.{column}"))).scalar()
 
     return result
 
