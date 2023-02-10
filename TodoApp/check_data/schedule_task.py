@@ -4,7 +4,7 @@ from TodoApp.crawl_data.crawl_data import crawl_data, create_data_five_minute
 from TodoApp.check_data.save_data_to_database import PostgresNoDuplicates
 from TodoApp.check_data.check_data_daily import CheckDataDaily
 
-is_check_5_minute = False
+is_check_2_minute = False
 
 
 async def task_daily():
@@ -34,21 +34,21 @@ async def task_check():
     owner_id_list = CheckDataDaily().check_all_id()
     for i in range(len(owner_id_list)):
         # CheckDataDaily().check_data_daily(owner_id_list[i])
-        CheckDataDaily().check_data(owner_id_list[i])
+        CheckDataDaily().check_data(owner_id_list[i], 'xs_2p')
     save_data.close_database()
 
 
-async def task_five_minute():
+async def task_two_minute():
     # async with httpx.AsyncClient() as client:
-    global is_check_5_minute
+    global is_check_2_minute
     while True:
         seconds = time.time()
         local_time = time.localtime(seconds)
 
         await asyncio.sleep(1)
         if int(local_time.tm_min) % 2 == 0 and (int(local_time.tm_sec) in [0, 5]):
-            is_check_5_minute = False
-            if not is_check_5_minute:
+            is_check_2_minute = False
+            if not is_check_2_minute:
                 # print("time: ", local_time.tm_sec)
                 save_data = PostgresNoDuplicates()
                 finish_1 = time.time() - seconds
@@ -65,7 +65,7 @@ async def task_five_minute():
                 finish_4 = time.time() - seconds
                 print('finish_4=', finish_4)
                 save_data.close_database()
-                is_check_5_minute = True
+                is_check_2_minute = True
 
 
 async def task_new_day():
