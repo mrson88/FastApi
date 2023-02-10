@@ -237,7 +237,7 @@ async def read_payment_history_all(data: List[DataInput], column: str, db: Sessi
     #     text("payment_history.data_type IN :data")).params(data=[item.data_column for item in data]).group_by(
     #     text("date_trunc('date', payment_history.data_type)")).all()
     column = 'data_money'
-    result = db.query(func.sum(text(f"table_name.{column}"))).scalar()
+    result = db.query(func.sum(text(f"payment_history.{column}"))).scalar()
 
     return result
 
