@@ -231,14 +231,14 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 
 @router.get("/payment_history_all")
 async def read_payment_history_all(data: List[DataInput], db: Session = Depends(get_db)):
-    # list_payment_all = db.query(models.PaymentHistory).sum(models.PaymentHistory.data_money) \
-    #     .order_by(models.PaymentHistory.id.desc()).limit(50) \
-    #     .all()
-    result = db.query(text("date_trunc('date', payment_history.data_type)"), text("SUM(table_name.data_money)")).filter(
-        text("payment_history.data_type IN :data")).params(data=[item.data_column for item in data]).group_by(
-        text("date_trunc('date', payment_history.data_type)")).all()
+    list_payment_all = db.query(models.PaymentHistory).sum(models.PaymentHistory.data_money) \
+        .order_by(models.PaymentHistory.id.desc()).limit(50) \
+        .all()
+    # result = db.query(text("date_trunc('date', payment_history.data_type)"), text("SUM(table_name.data_money)")).filter(
+    #     text("payment_history.data_type IN :data")).params(data=[item.data_column for item in data]).group_by(
+    #     text("date_trunc('date', payment_history.data_type)")).all()
 
-    return result
+    return list_payment_all
 
 
 @router.post("/payment_history")
