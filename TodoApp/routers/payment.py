@@ -231,7 +231,8 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 
 @router.get("/payment_history_all")
 async def read_payment_history_all(db: Session = Depends(get_db)):
-    list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).first()
+    list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
+        models.PaymentHistory.data_type == 'x4').first()
     print(list_payment_all)
 
     # query = text(
