@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append("..")
-
+from sqlalchemy import create_engine, text
 from typing import Optional, List
 from fastapi import Depends, HTTPException, APIRouter
 import models
@@ -49,6 +49,16 @@ class PaymentHistory(BaseModel):
 class Users(BaseModel):
     first_name: Optional[str]
     last_name: Optional[str]
+
+
+class DataInput(BaseModel):
+    data_column: str
+    value_column: int
+
+
+class DataOutput(BaseModel):
+    data_column: str
+    value_sum: int
 
 
 @router.post('/check')
@@ -217,6 +227,18 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
         .all()
 
     return list_payment_id
+
+
+@router.get("/payment_history_all")
+async def read_payment_history_all(data: List[DataInput], db: Session = Depends(get_db)):
+    # list_payment_all = db.query(models.PaymentHistory).sum(models.PaymentHistory.data_money) \
+    #     .order_by(models.PaymentHistory.id.desc()).limit(50) \
+    #     .all()
+    result = db.query(text("date_trunc('date', payment_history.data_type)"), text("SUM(table_name.data_money)")).filter(
+        text("payment_history.data_type IN :data")).params(data=[item.data_column for item in data]).group_by(
+        text("date_trunc('date', payment_history.data_type)")).all()
+
+    return result
 
 
 @router.post("/payment_history")
