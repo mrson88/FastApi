@@ -1,6 +1,6 @@
 import asyncio
 import time
-from TodoApp.crawl_data.crawl_data import crawl_data, create_data_five_minute
+from TodoApp.crawl_data.crawl_data import crawl_data, create_data_two_minute
 from TodoApp.check_data.save_data_to_database import PostgresNoDuplicates
 from TodoApp.check_data.check_data_daily import CheckDataDaily
 
@@ -30,7 +30,7 @@ async def task_check():
     # print("time: ", local_time.tm_sec)
     save_data = PostgresNoDuplicates()
     save_data.process_item(crawl_data())
-    save_data.process_item_five_minute(create_data_five_minute())
+    save_data.process_item_two_minute(create_data_two_minute())
     owner_id_list = CheckDataDaily().check_all_id()
     for i in range(len(owner_id_list)):
         # CheckDataDaily().check_data_daily(owner_id_list[i])
@@ -53,7 +53,7 @@ async def task_two_minute():
                 save_data = PostgresNoDuplicates()
                 # finish_1 = time.time() - seconds
                 # print('finish_1=', finish_1)
-                save_data.process_item_five_minute(create_data_five_minute())
+                save_data.process_item_two_minute(create_data_two_minute())
                 # finish_2 = time.time() - seconds
                 # print('finish_2=', finish_2)
                 owner_id_list = CheckDataDaily().check_all_id()

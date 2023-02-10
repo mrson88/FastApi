@@ -49,7 +49,7 @@ class PostgresNoDuplicates:
             self.connection.commit()
             return True
 
-    def process_item_five_minute(self, item):
+    def process_item_two_minute(self, item):
         # Create quotes table if none exists
         self.cur.execute("""
         CREATE TABLE IF NOT EXISTS result_five_minute(

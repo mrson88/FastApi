@@ -23,7 +23,7 @@ def check_body(b):
     return [b[i].text for i in range(len(b))]
 
 
-def create_data_five_minute():
+def create_data_two_minute():
     data = create_data_list_five_minute()
     date_today = datetime.date.today()
     # no_of_days = datetime.timedelta(days=1)
