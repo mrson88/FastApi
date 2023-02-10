@@ -230,16 +230,20 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 
 
 @router.get("/payment_history_all")
-async def read_payment_history_all(db: Session = Depends(get_db)):
-    # list_payment_all = db.query(models.PaymentHistory).sum(models.PaymentHistory.data_money) \
-    #     .all()
+async def read_payment_history_all(data: List[DataInput], db: Session = Depends(get_db)):
+    list_payment_all = db.query(models.PaymentHistory).sum(models.PaymentHistory.data_money) \
+        .filter(models.PaymentHistory.data_type == 'win_L2') \
+        .all()
 
     # query = text(
     #     "SELECT SUM(data_money) AS total FROM payment_history  WHERE data_type='win_L2'")
     # result = engine.execute(query)
     result = db.query(func.sum(text(f"table_name.data_money"))).scalar()
+    # result = db.query(func.date_trunc("day", text("table_name.data_column")),
+    #                   func.sum(text("table_name.value_column"))).filter(text("table_name.data_column IN :data")).params(
+    #     data=[item.data_column for item in data]).group_by(func.date_trunc("day", text("table_name.data_column"))).all()
 
-    return {"sum": result}
+    return list_payment_all
 
 
 @router.post("/payment_history")
