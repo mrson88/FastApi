@@ -238,9 +238,9 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(30)]
     # print(list_day)
     list_payment_all = 0
-    for i in list_day:
+    for i in len(list_day):
         list_payment = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-            models.PaymentHistory.date == i, models.PaymentHistory.owner_id == 1,
+            models.PaymentHistory.date == list_day[i], models.PaymentHistory.owner_id == 1,
             models.PaymentHistory.data_money < 0
         ).scalar()
         list_payment_all += list_payment
