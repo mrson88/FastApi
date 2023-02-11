@@ -239,6 +239,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     # print(list_day)
     list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
         models.PaymentHistory.date == '11-02-2023', models.PaymentHistory.owner_id == 1,
+        models.PaymentHistory.data_money < 0
     ).scalar()
 
     # list_payment_all = db.query(func.sum(text(f"payment_history.data_money"))).filter(
