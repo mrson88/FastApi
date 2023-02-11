@@ -232,12 +232,13 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 
 @router.get("/payment_history_all")
 async def read_payment_history_all(db: Session = Depends(get_db)):
-    thirty_days_ago = datetime.now().date() - timedelta(days=30)
-    thirty_days_ago_strf = thirty_days_ago.strftime("%d-%m-%Y")
+    # thirty_days_ago = (datetime.now().date() - timedelta(days=30)).strftime("%d-%m-%Y")
+    # thirty_days_ago_strf = thirty_days_ago.strftime("%d-%m-%Y")
+    list_day = [(datetime.now().date() - timedelta(days=(i + 1))).strftime("%d-%m-%Y") for i in range(30)]
     # reverse_date = (str(thirty_days_ago).split("-"))
 
     # convert_date = datetime.date(*[int(i) for i in reverse_date])
-    print(thirty_days_ago_strf)
+    print(list_day)
     # list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
     #     (convert_date >= thirty_days_ago)).scalar()
     # print(list_payment_all)
@@ -251,7 +252,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     #                   func.sum(text("table_name.value_column"))).filter(text("table_name.data_column IN :data")).params(
     #     data=[item.data_column for item in data]).group_by(func.date_trunc("day", text("table_name.data_column"))).all()
 
-    return str(thirty_days_ago_strf)
+    return str(list_day)
 
 
 @router.post("/payment_history")
