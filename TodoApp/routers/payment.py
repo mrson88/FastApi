@@ -258,11 +258,11 @@ async def read_payment_history_all(user: dict = Depends(get_current_user), db: S
                 list_payment_all += list_payment
             if list_win is not None:
                 list_win_all += list_win
-
-        print([str(list_payment_all), str(list_win_all)])
-        print(type(list_payment_all))
+        #
+        # print([str(list_payment_all), str(list_win_all)])
+        # print(type(list_payment_all))
         all_data.append([str(list_payment_all), str(list_win_all)])
-
+    print(all_data)
     return all_data
 
 
