@@ -238,14 +238,21 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(30)]
     print(list_day)
     list_payment_all = 0
+    list_win_all = 0
     for i in (list_day):
         print(i)
         list_payment = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-            models.PaymentHistory.date == i, models.PaymentHistory.owner_id == 1,
+            models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == 1,
             models.PaymentHistory.data_money < 0
+        ).scalar()
+        list_win = db.query(func.sum(models.PaymentHistory.data_money)).filter(
+            models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == 1,
+            models.PaymentHistory.data_money > 0
         ).scalar()
         if list_payment is not None:
             list_payment_all += list_payment
+        if list_win is not None:
+            list_win_all += list_win
 
     # list_payment_all = db.query(func.sum(text(f"payment_history.data_money"))).filter(
     #     text(f"payment_history.date IN:list_day"), text(f"table_name.data_type IN :data_type_list")).params(
@@ -261,7 +268,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     #                   func.sum(text("table_name.value_column"))).filter(text("table_name.data_column IN :data")).params(
     #     data=[item.data_column for item in data]).group_by(func.date_trunc("day", text("table_name.data_column"))).all()
 
-    return str(list_payment_all)
+    return [str(list_payment_all), str(list_win_all)]
 
 
 @router.post("/payment_history")
