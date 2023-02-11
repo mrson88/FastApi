@@ -235,7 +235,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
     data_type_win_list = [('win_' + str(i)) for i in data_type_list]
 
-    list_day = [(datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y") for i in range(30)]
+    list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(30)]
     # print(list_day)
     list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
         models.PaymentHistory.date in list_day, models.PaymentHistory.owner_id == 1,
