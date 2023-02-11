@@ -1,4 +1,5 @@
 import sys
+from datetime import datetime, timedelta
 
 sys.path.append("..")
 from sqlalchemy import create_engine, Column, Integer, Date, func, text
@@ -231,8 +232,9 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 
 @router.get("/payment_history_all")
 async def read_payment_history_all(db: Session = Depends(get_db)):
+    thirty_days_ago = datetime.now() - timedelta(days=30)
     list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-        models.PaymentHistory.data_type == 'x4').first()
+        (models.PaymentHistory.date >= thirty_days_ago)).scalar()
     print(list_payment_all)
     print(type(list_payment_all))
 
