@@ -230,14 +230,14 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
     return list_payment_id
 
 
-@router.get("/payment_history_all")
-async def read_payment_history_all(user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+@router.get("/payment_history_all/{day}")
+async def read_payment_history_all(day: int, db: Session = Depends(get_db)):
     data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
     data_type_win_list = [('win_' + str(i)) for i in data_type_list]
     list_user_id = db.query(models.Users.id) \
         .all()
 
-    list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(30)]
+    list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(day)]
     # print(list_user_id)
     all_data = []
     for k in list_user_id:
