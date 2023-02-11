@@ -234,15 +234,15 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 async def read_payment_history_all(db: Session = Depends(get_db)):
     # thirty_days_ago = (datetime.now().date() - timedelta(days=30)).strftime("%d-%m-%Y")
     # thirty_days_ago_strf = thirty_days_ago.strftime("%d-%m-%Y")
-    list_day = [(datetime.now().date() - timedelta(days=(i + 1))).strftime("%d-%m-%Y") for i in range(30)]
+    list_day = [(datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y") for i in range(30)]
     # reverse_date = (str(thirty_days_ago).split("-"))
 
     # convert_date = datetime.date(*[int(i) for i in reverse_date])
-    print(list_day)
-    # list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-    #     (convert_date >= thirty_days_ago)).scalar()
-    # print(list_payment_all)
-    # print(type(list_payment_all))
+    # print(list_day)
+    list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
+        (models.PaymentHistory.date in list_day)).scalar()
+    print(list_payment_all)
+    print(type(list_payment_all))
 
     # query = text(
     #     "SELECT SUM(data_money) AS total FROM payment_history  WHERE data_type='win_L2'")
@@ -252,7 +252,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     #                   func.sum(text("table_name.value_column"))).filter(text("table_name.data_column IN :data")).params(
     #     data=[item.data_column for item in data]).group_by(func.date_trunc("day", text("table_name.data_column"))).all()
 
-    return str(list_day)
+    return str(list_payment_all)
 
 
 @router.post("/payment_history")
