@@ -234,34 +234,34 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 async def read_payment_history_all(user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
     data_type_win_list = [('win_' + str(i)) for i in data_type_list]
-    list_user_id = db.query(models.Users.owner_id) \
+    list_user_id = db.query(models.Users.id) \
         .all()
 
     list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(30)]
     print(list_user_id)
     all_data = []
-    # for k in list_user_id:
-    #     list_payment_all = 0
-    #     list_win_all = 0
-    #
-    #     for i in list_day:
-    #         print(i)
-    #         list_payment = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-    #             models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k,
-    #             models.PaymentHistory.data_money < 0
-    #         ).scalar()
-    #         list_win = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-    #             models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k,
-    #             models.PaymentHistory.data_money > 0
-    #         ).scalar()
-    #         if list_payment is not None:
-    #             list_payment_all += list_payment
-    #         if list_win is not None:
-    #             list_win_all += list_win
-    #
-    #     print([str(list_payment_all), str(list_win_all)])
-    #     print(type(list_payment_all))
-    #     all_data.append([str(list_payment_all), str(list_win_all)])
+    for k in list_user_id:
+        list_payment_all = 0
+        list_win_all = 0
+
+        for i in list_day:
+            print(i)
+            list_payment = db.query(func.sum(models.PaymentHistory.data_money)).filter(
+                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k,
+                models.PaymentHistory.data_money < 0
+            ).scalar()
+            list_win = db.query(func.sum(models.PaymentHistory.data_money)).filter(
+                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k,
+                models.PaymentHistory.data_money > 0
+            ).scalar()
+            if list_payment is not None:
+                list_payment_all += list_payment
+            if list_win is not None:
+                list_win_all += list_win
+
+        print([str(list_payment_all), str(list_win_all)])
+        print(type(list_payment_all))
+        all_data.append([str(list_payment_all), str(list_win_all)])
 
     return all_data
 
