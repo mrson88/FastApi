@@ -242,7 +242,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     #                                                    str(models.PaymentHistory.data_type) in data_type_list).scalar()
 
     list_payment_all = db.query(func.sum(text(f"payment_history.data_money"))).filter(
-        text(f"payment_history.date IN:{list_day}"), text(f"payment_history.data_type IN :{data_type_list}")).scalar()
+        text(f"payment_history.date IN {list_day}"), text(f"payment_history.data_type IN {data_type_list}")).scalar()
     print(list_payment_all)
     print(type(list_payment_all))
 
