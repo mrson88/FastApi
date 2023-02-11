@@ -234,8 +234,7 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 async def read_payment_history_all(user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
     data_type_win_list = [('win_' + str(i)) for i in data_type_list]
-    list_user_id = db.query(models.Payment) \
-        .filter(models.Payment.owner_id == user.get("id")) \
+    list_user_id = db.query(models.Users.owner_id) \
         .all()
 
     list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(30)]
