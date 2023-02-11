@@ -261,7 +261,7 @@ async def read_payment_history_all(user: dict = Depends(get_current_user), db: S
         #
         # print([str(list_payment_all), str(list_win_all)])
         # print(type(list_payment_all))
-        all_data.append([str(list_payment_all), str(list_win_all)])
+        all_data.append([k, str(list_payment_all), str(list_win_all)])
     print(all_data)
     return all_data
 
