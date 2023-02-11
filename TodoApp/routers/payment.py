@@ -240,7 +240,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     # convert_date = datetime.date(*[int(i) for i in reverse_date])
     # print(list_day)
     list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-        (models.PaymentHistory.date in list_day) and models.PaymentHistory.owner_id == 3).scalar()
+        (models.PaymentHistory.date == list_day[0]) and models.PaymentHistory.owner_id == 3).scalar()
     print(list_payment_all)
     print(type(list_payment_all))
 
