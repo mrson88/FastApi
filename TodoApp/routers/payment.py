@@ -243,6 +243,7 @@ async def read_payment_history_all(user: dict = Depends(get_current_user), db: S
     for k in list_user_id:
         list_payment_all = 0
         list_win_all = 0
+        lis_cost_all = 0
 
         for i in list_day:
             # print(i)
@@ -261,7 +262,7 @@ async def read_payment_history_all(user: dict = Depends(get_current_user), db: S
         #
         # print([str(list_payment_all), str(list_win_all)])
         # print(type(list_payment_all))
-        all_data.append([k, str(list_payment_all), str(list_win_all)])
+        all_data.append([k[0], str(list_payment_all), str(list_win_all)])
     print(all_data)
     return all_data
 
