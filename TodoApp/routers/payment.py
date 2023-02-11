@@ -244,7 +244,8 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
             models.PaymentHistory.date == i, models.PaymentHistory.owner_id == 1,
             models.PaymentHistory.data_money < 0
         ).scalar()
-        list_payment_all += list_payment
+        if list_payment is not None:
+            list_payment_all += list_payment
 
     # list_payment_all = db.query(func.sum(text(f"payment_history.data_money"))).filter(
     #     text(f"payment_history.date IN:list_day"), text(f"table_name.data_type IN :data_type_list")).params(
