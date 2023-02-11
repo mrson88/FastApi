@@ -232,15 +232,17 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 
 @router.get("/payment_history_all")
 async def read_payment_history_all(db: Session = Depends(get_db)):
-    # thirty_days_ago = (datetime.now().date() - timedelta(days=30)).strftime("%d-%m-%Y")
-    # thirty_days_ago_strf = thirty_days_ago.strftime("%d-%m-%Y")
+    data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
+    data_type_win_list = [('win_' + str(i)) for i in data_type_list]
+
     list_day = [(datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y") for i in range(30)]
     # reverse_date = (str(thirty_days_ago).split("-"))
 
     # convert_date = datetime.date(*[int(i) for i in reverse_date])
     # print(list_day)
     list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-        (models.PaymentHistory.date == list_day[0]), models.PaymentHistory.owner_id == 1).scalar()
+        (models.PaymentHistory.date == list_day[0]), models.PaymentHistory.owner_id == 1,
+                                                     models.PaymentHistory.data_type in data_type_list).scalar()
     print(list_payment_all)
     print(type(list_payment_all))
 
