@@ -231,44 +231,39 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 
 
 @router.get("/payment_history_all")
-async def read_payment_history_all(db: Session = Depends(get_db)):
+async def read_payment_history_all(user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
     data_type_win_list = [('win_' + str(i)) for i in data_type_list]
-
+    list_user_id = db.query(models.Payment) \
+        .filter(models.Payment.owner_id == user.get("id")) \
+        .all()
     list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(30)]
     print(list_day)
-    list_payment_all = 0
-    list_win_all = 0
-    for i in (list_day):
-        print(i)
-        list_payment = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-            models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == 1,
-            models.PaymentHistory.data_money < 0
-        ).scalar()
-        list_win = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-            models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == 1,
-            models.PaymentHistory.data_money > 0
-        ).scalar()
-        if list_payment is not None:
-            list_payment_all += list_payment
-        if list_win is not None:
-            list_win_all += list_win
+    all_data = []
+    for k in list_user_id:
+        list_payment_all = 0
+        list_win_all = 0
 
-    # list_payment_all = db.query(func.sum(text(f"payment_history.data_money"))).filter(
-    #     text(f"payment_history.date IN:list_day"), text(f"table_name.data_type IN :data_type_list")).params(
-    #     list_day=list_day, data_type_list=data_type_list).scalar()
-    print([str(list_payment_all), str(list_win_all)])
-    print(type(list_payment_all))
+        for i in list_day:
+            print(i)
+            list_payment = db.query(func.sum(models.PaymentHistory.data_money)).filter(
+                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k,
+                models.PaymentHistory.data_money < 0
+            ).scalar()
+            list_win = db.query(func.sum(models.PaymentHistory.data_money)).filter(
+                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k,
+                models.PaymentHistory.data_money > 0
+            ).scalar()
+            if list_payment is not None:
+                list_payment_all += list_payment
+            if list_win is not None:
+                list_win_all += list_win
 
-    # query = text(
-    #     "SELECT SUM(data_money) AS total FROM payment_history  WHERE data_type='win_L2'")
-    # result = engine.execute(query)
-    # result = db.query(func.sum(text(f"table_name.data_money"))).scalar()
-    # result = db.query(func.date_trunc("day", text("table_name.data_column")),
-    #                   func.sum(text("table_name.value_column"))).filter(text("table_name.data_column IN :data")).params(
-    #     data=[item.data_column for item in data]).group_by(func.date_trunc("day", text("table_name.data_column"))).all()
+        print([str(list_payment_all), str(list_win_all)])
+        print(type(list_payment_all))
+        all_data.append([str(list_payment_all), str(list_win_all)])
 
-    return [str(list_payment_all), str(list_win_all)]
+    return all_data
 
 
 @router.post("/payment_history")
