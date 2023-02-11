@@ -234,6 +234,7 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 async def read_payment_history_all(db: Session = Depends(get_db)):
     thirty_days_ago = datetime.today() - timedelta(days=30)
     # reverse_date = (str(thirty_days_ago).split("-"))
+
     # convert_date = datetime.date(*[int(i) for i in reverse_date])
     print(thirty_days_ago)
     # list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
