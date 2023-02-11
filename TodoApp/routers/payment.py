@@ -238,14 +238,14 @@ async def read_payment_history_all(user: dict = Depends(get_current_user), db: S
         .all()
 
     list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(30)]
-    print(list_user_id)
+    # print(list_user_id)
     all_data = []
     for k in list_user_id:
         list_payment_all = 0
         list_win_all = 0
 
         for i in list_day:
-            print(i)
+            # print(i)
             list_payment = db.query(func.sum(models.PaymentHistory.data_money)).filter(
                 models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k[0],
                 models.PaymentHistory.data_money < 0
