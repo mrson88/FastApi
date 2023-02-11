@@ -236,10 +236,10 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     reverse_date = (str(models.PaymentHistory.date).split("-"))
     convert_date = datetime.date(*[int(i) for i in reverse_date])
     print(convert_date)
-    list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-        (convert_date >= thirty_days_ago)).scalar()
-    print(list_payment_all)
-    print(type(list_payment_all))
+    # list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
+    #     (convert_date >= thirty_days_ago)).scalar()
+    # print(list_payment_all)
+    # print(type(list_payment_all))
 
     # query = text(
     #     "SELECT SUM(data_money) AS total FROM payment_history  WHERE data_type='win_L2'")
@@ -249,7 +249,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     #                   func.sum(text("table_name.value_column"))).filter(text("table_name.data_column IN :data")).params(
     #     data=[item.data_column for item in data]).group_by(func.date_trunc("day", text("table_name.data_column"))).all()
 
-    return str(list_payment_all)
+    return str(convert_date)
 
 
 @router.post("/payment_history")
