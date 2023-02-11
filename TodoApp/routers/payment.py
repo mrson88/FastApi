@@ -233,7 +233,8 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 @router.get("/payment_history_all")
 async def read_payment_history_all(db: Session = Depends(get_db)):
     thirty_days_ago = datetime.today() - timedelta(days=30)
-    convert_date = datetime.date(*[int(i) for i in str(models.PaymentHistory.date).split("-")])
+    reverse_date = str(models.PaymentHistory.date)[::-1].split("-")
+    convert_date = datetime.date(*[int(i) for i in reverse_date])
     list_payment_all = db.query(func.sum(models.PaymentHistory.data_money)).filter(
         (convert_date >= thirty_days_ago)).scalar()
     print(list_payment_all)
