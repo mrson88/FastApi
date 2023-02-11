@@ -232,7 +232,7 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 
 @router.get("/payment_history_all")
 async def read_payment_history_all(db: Session = Depends(get_db)):
-    thirty_days_ago = datetime.today() - timedelta(days=30)
+    thirty_days_ago = datetime.now().date() - timedelta(days=30)
     # reverse_date = (str(thirty_days_ago).split("-"))
 
     # convert_date = datetime.date(*[int(i) for i in reverse_date])
