@@ -236,6 +236,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
     data_type_win_list = [('win_' + str(i)) for i in data_type_list]
     list_user_id = db.query(models.Users) \
         .all()
+    print(list_user_id)
 
     list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(1)]
     # print(list_user_id)
@@ -246,26 +247,26 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
         lis_cost_all = 0
         final_payment = 0
 
-        for i in list_day:
-            # print(i)
-            list_payment = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k[0][0],
-                models.PaymentHistory.data_money < 0
-            ).scalar()
-            list_win = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k[0][0],
-                models.PaymentHistory.data_money > 0
-            ).scalar()
-            if list_payment is not None:
-                list_payment_all += list_payment
-            if list_win is not None:
-                list_win_all += list_win
-
-            final_payment += float(list_payment_all) + float(list_win_all)
+        # for i in list_day:
+        #     # print(i)
+        #     list_payment = db.query(func.sum(models.PaymentHistory.data_money)).filter(
+        #         models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k[0][0],
+        #         models.PaymentHistory.data_money < 0
+        #     ).scalar()
+        #     list_win = db.query(func.sum(models.PaymentHistory.data_money)).filter(
+        #         models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k[0][0],
+        #         models.PaymentHistory.data_money > 0
+        #     ).scalar()
+        #     if list_payment is not None:
+        #         list_payment_all += list_payment
+        #     if list_win is not None:
+        #         list_win_all += list_win
         #
-        # print([str(list_payment_all), str(list_win_all)])
-        print(type(final_payment))
-        all_data.append([f"{k[0]} {k[0]}", str(final_payment)])
+        #     final_payment += float(list_payment_all) + float(list_win_all)
+        # #
+        # # print([str(list_payment_all), str(list_win_all)])
+        # print(type(final_payment))
+        # all_data.append([f"{k[0]} {k[0]}", str(final_payment)])
     # print(all_data)
     return all_data
 
