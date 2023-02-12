@@ -268,7 +268,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
         # print(type(final_payment))
         all_data.append([k[0], final_payment, f"{str(k[1])} {str(k[2])}"])
     all_data = all_data.sort(key=lambda alldata: str(alldata[1]))
-    # print(all_data)
+    print(all_data)
     return all_data
 
 
