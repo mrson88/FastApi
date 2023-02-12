@@ -234,7 +234,7 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 async def read_payment_history_all(db: Session = Depends(get_db)):
     data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
     data_type_win_list = [('win_' + str(i)) for i in data_type_list]
-    list_user_id = db.query(models.Users.id) \
+    list_user_id = db.query(models.Users) \
         .all()
 
     list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(1)]
@@ -244,6 +244,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
         list_payment_all = 0
         list_win_all = 0
         lis_cost_all = 0
+        final_payment = 0
 
         for i in list_day:
             # print(i)
@@ -259,10 +260,11 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
                 list_payment_all += list_payment
             if list_win is not None:
                 list_win_all += list_win
+            final_payment = list_payment_all + list_win_all
         #
         # print([str(list_payment_all), str(list_win_all)])
         # print(type(list_payment_all))
-        all_data.append([k[0], str(list_payment_all), str(list_win_all)])
+        all_data.append([f"{k[2]} {k[3]}", str(final_payment)])
     # print(all_data)
     return all_data
 
