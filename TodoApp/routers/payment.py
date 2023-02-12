@@ -249,11 +249,11 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
         for i in list_day:
             # print(i)
             list_payment = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k[0],
+                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k[0][0],
                 models.PaymentHistory.data_money < 0
             ).scalar()
             list_win = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k[0],
+                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k[0][0],
                 models.PaymentHistory.data_money > 0
             ).scalar()
             if list_payment is not None:
