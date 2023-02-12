@@ -224,7 +224,7 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
         raise get_user_exception()
     list_payment_id = db.query(models.PaymentHistory) \
         .filter(models.PaymentHistory.owner_id == user.get("id")) \
-        .order_by(models.PaymentHistory.id.desc()).limit(50) \
+        .order_by(models.PaymentHistory.id.desc()).limit(10) \
         .all()
 
     return list_payment_id
@@ -234,7 +234,7 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 async def read_payment_history_all(db: Session = Depends(get_db)):
     data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
     data_type_win_list = [('win_' + str(i)) for i in data_type_list]
-    list_user_id = db.query(models.Payment.owner_id, models.Payment.first_name, models.Payment.last_name) \
+    list_user_id = db.query(models.Payment.owner_id, models.Payment.first_name, models.Payment.last_name).limit(10) \
         .all()
     # print(list_user_id)
 
