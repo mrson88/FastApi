@@ -260,7 +260,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
                 list_payment_all += list_payment
             if list_win is not None:
                 list_win_all += list_win
-            final_payment = list_payment_all + list_win_all
+            final_payment = float(list_payment_all) + float(list_win_all)
         #
         # print([str(list_payment_all), str(list_win_all)])
         # print(type(list_payment_all))
