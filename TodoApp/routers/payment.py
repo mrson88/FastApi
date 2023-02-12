@@ -234,7 +234,7 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
 async def read_payment_history_all(db: Session = Depends(get_db)):
     data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
     data_type_win_list = [('win_' + str(i)) for i in data_type_list]
-    list_user_id = db.query(models.Users) \
+    list_user_id = db.query(models.Users.id, models.Users.first_name, models.Users.last_name) \
         .all()
     print(list_user_id)
 
@@ -250,11 +250,11 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
         for i in list_day:
             # print(i)
             list_payment = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k['id'][0],
+                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k[0],
                 models.PaymentHistory.data_money < 0
             ).scalar()
             list_win = db.query(func.sum(models.PaymentHistory.data_money)).filter(
-                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k['id'][0],
+                models.PaymentHistory.date == str(i), models.PaymentHistory.owner_id == k[0],
                 models.PaymentHistory.data_money > 0
             ).scalar()
             if list_payment is not None:
@@ -266,7 +266,7 @@ async def read_payment_history_all(db: Session = Depends(get_db)):
         #
         # print([str(list_payment_all), str(list_win_all)])
         print(type(final_payment))
-        all_data.append([f"{k['id']}", str(final_payment)])
+        all_data.append([f"{k[1]}", str(final_payment)])
     # print(all_data)
     return all_data
 
