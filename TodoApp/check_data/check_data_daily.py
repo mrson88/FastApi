@@ -98,9 +98,11 @@ class CheckDataDaily:
             'D3': 1000 * 972.3,
             'D4': 1000 * 9000
         }
-        # data_type_list = ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']
-        self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
-                         (date_today_strf(),))
+        if type_data == 'xs_mb':
+            self.cur.execute("select result from result_daily where day = %s", (date_today_strf(),))
+        else:
+            self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
+                             (date_today_strf(),))
         result = self.cur.fetchone()
         # print('result=', result[0])
 
