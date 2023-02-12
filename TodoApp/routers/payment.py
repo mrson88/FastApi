@@ -238,7 +238,7 @@ async def read_payment_history_all(day: str, db: Session = Depends(get_db)):
         .all()
     # print(list_user_id)
 
-    list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(day)]
+    list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(int(day))]
     # print(list_user_id)
     all_data = []
     for k in list_user_id:
