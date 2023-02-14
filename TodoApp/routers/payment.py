@@ -37,6 +37,7 @@ class Payment(BaseModel):
     data_type: Optional[str]
     first_name: Optional[str]
     last_name: Optional[str]
+    time_pay: Optional[int]
 
 
 class PaymentHistory(BaseModel):
@@ -129,6 +130,7 @@ async def create_payment(payment: Payment,
     payment_model.owner_id = user.get("id")
     payment_model.active = True
     payment_model.daily_pay = True
+    payment_model.time_pay = 0
     db.add(payment_model)
     db.commit()
     db.close()
@@ -195,16 +197,16 @@ async def add_payment(payment_id: int,
     payment_model.date = payment.date
     payment_model.time = payment.time
     payment_model.data_type = payment.data_type
+    if payment_model.time_pay < 4:
+        payment_model.time_pay += 1
+    else:
+        raise http_exception()
     if float(payment.data_money) > 0 and payment_model.active:
-        if not payment_model.daily_pay:
-            payment_model.data_money = payment_model.data_money + 3000000
-            payment_model.daily_pay = True
 
+        if payment.data_money < 100000001:
+            payment_model.data_money += payment.data_money
         else:
-            if payment.data_money < 100000001:
-                payment_model.data_money += payment.data_money
-            else:
-                raise http_exception()
+            raise http_exception()
         db.add(payment_model)
         db.commit()
         db.close()
