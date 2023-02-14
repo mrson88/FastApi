@@ -182,7 +182,7 @@ class CheckDataDaily:
             self.connection.close()
 
     def set_data_new_day(self, id_owner):
-        self.cur.execute("update payment set daily_pay=false where owner_id = %s", id_owner)
+        self.cur.execute("update payment set daily_pay=false,time_pay=0 where owner_id = %s", id_owner)
         self.connection.commit()
         self.cur.close()
         self.connection.close()
