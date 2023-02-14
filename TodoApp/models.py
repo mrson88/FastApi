@@ -60,6 +60,7 @@ class Payment(Base):
     data_type = Column(String)
     first_name = Column(String)
     last_name = Column(String)
+    time_pay = Column(Integer)
     owner = relationship("Users", back_populates="payment")
 
 

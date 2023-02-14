@@ -37,7 +37,6 @@ class Payment(BaseModel):
     data_type: Optional[str]
     first_name: Optional[str]
     last_name: Optional[str]
-    time_pay: Optional[int]
 
 
 class PaymentHistory(BaseModel):
