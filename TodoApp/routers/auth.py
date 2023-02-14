@@ -92,18 +92,19 @@ async def get_current_user(token: str = Depends(oauth2_bearer)):
 @router.post("/create/user")
 async def create_new_user(create_user: CreateUser, db: Session = Depends(get_db)):
     create_user_model = models.Users()
-    create_user_model.email = create_user.email
-    create_user_model.username = create_user.username
-    create_user_model.first_name = create_user.first_name
-    create_user_model.last_name = create_user.last_name
-
-    hash_password = get_password_hash(create_user.password)
-
-    create_user_model.hashed_password = hash_password
-    create_user_model.is_active = True
-
-    db.add(create_user_model)
-    db.commit()
+    if check_data_username(create_user.username) and check_data_other(create_user.email) and check_data_other(
+            create_user.username) and check_data_other(create_user.last_name):
+        create_user_model.email = create_user.email
+        create_user_model.username = create_user.username
+        create_user_model.first_name = create_user.first_name
+        create_user_model.last_name = create_user.last_name
+        hash_password = get_password_hash(create_user.password)
+        create_user_model.hashed_password = hash_password
+        create_user_model.is_active = True
+        db.add(create_user_model)
+        db.commit()
+    else:
+        raise token_exception()
 
 
 @router.post("/token")
@@ -136,3 +137,15 @@ def token_exception():
         headers={"WWW-Authenticate": "Bearer"},
     )
     return token_exception_response
+
+
+def check_data_username(data):
+    if data != '' and ' ' not in str(data):
+        return True
+    return False
+
+
+def check_data_other(data):
+    if data != '':
+        return True
+    return False
