@@ -81,7 +81,7 @@ async def read_all_by_user(user: dict = Depends(get_current_user),
         raise get_user_exception()
     list_user_id = db.query(models.Payment) \
         .filter(models.Payment.owner_id == user.get("id")) \
-        .all()
+        .first()
     # if not list_user_id.daily_pay:
     #     list_user_id.data_money = list_user_id.data_money + 3000000
     #     list_user_id.daily_pay = True
@@ -106,7 +106,7 @@ async def read_all_by_user(user: dict = Depends(get_current_user),
     if user is None:
         raise get_user_exception()
     list_top_user = db.query(models.Payment) \
-        .order_by(models.Payment.data_money.desc()).limit(50) \
+        .order_by(models.Payment.data_money.desc()).limit(10) \
         .all()
     return list_top_user
 
@@ -120,7 +120,10 @@ async def create_payment(payment: Payment,
     payment_model = models.Payment()
     payment_model.date = payment.date
     payment_model.time = payment.time
-    payment_model.data_money = payment.data_money
+    if payment.data_money < 100000001:
+        payment_model.data_money = payment.data_money
+    else:
+        raise http_exception()
     payment_model.first_name = payment.first_name
     payment_model.last_name = payment.last_name
     payment_model.owner_id = user.get("id")
@@ -129,7 +132,6 @@ async def create_payment(payment: Payment,
     db.add(payment_model)
     db.commit()
     db.close()
-
     return successful_response(200)
 
 
@@ -152,20 +154,14 @@ async def minus_payment(payment_id: int,
     payment_model.date = payment.date
     payment_model.time = payment.time
     payment_model.data_type = payment.data_type
-    # print(payment.data_type)
     if float(payment.data_money) > 0:
         if payment.data_type in ['x2', 'x3', 'x4']:
-            # print('1')
             payment_model.data_money -= float(payment.data_money) * 10000
         elif payment.data_type in ['L2']:
-            # print('2')
             payment_model.data_money -= float(payment.data_money) * 27000
-            # print('3')
         elif payment.data_type in ['L3', 'L4']:
             payment_model.data_money -= float(payment.data_money) * 20000
-
         elif payment.data_type in ['D2', 'D3', 'D4']:
-            # print('4')
             payment_model.data_money -= float(payment.data_money) * 1000
         else:
             payment_model.data_money -= 0
@@ -224,7 +220,7 @@ async def read_payment_history_by_user(user: dict = Depends(get_current_user),
         raise get_user_exception()
     list_payment_id = db.query(models.PaymentHistory) \
         .filter(models.PaymentHistory.owner_id == user.get("id")) \
-        .order_by(models.PaymentHistory.id.desc()).limit(10) \
+        .order_by(models.PaymentHistory.id.desc()).limit(100) \
         .all()
 
     return list_payment_id
@@ -236,10 +232,7 @@ async def read_payment_history_all(day: str, db: Session = Depends(get_db)):
     data_type_win_list = [('win_' + str(i)) for i in data_type_list]
     list_user_id = db.query(models.Payment.owner_id, models.Payment.first_name, models.Payment.last_name).limit(10) \
         .all()
-    # print(list_user_id)
-
     list_day = [str((datetime.now().date() - timedelta(days=i)).strftime("%d-%m-%Y")) for i in range(int(day))]
-    # print(list_user_id)
     all_data = []
     for k in list_user_id:
         list_payment_all = 0
@@ -261,15 +254,9 @@ async def read_payment_history_all(day: str, db: Session = Depends(get_db)):
                 list_payment_all += list_payment
             if list_win is not None:
                 list_win_all += list_win
-
             final_payment += float(list_payment_all) + float(list_win_all)
-        #
-        # print([str(list_payment_all), str(list_win_all)])
-
         all_data.append([k[0], str(final_payment), f"{str(k[1])} {str(k[2])}"])
-    # print(all_data)
     all_data_final = sorted(all_data, key=lambda alldata: float(alldata[1]), reverse=True)
-    # print(all_data_final)
     return all_data_final
 
 
