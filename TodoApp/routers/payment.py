@@ -196,7 +196,7 @@ async def add_payment(payment_id: int,
     payment_model.date = payment.date
     payment_model.time = payment.time
     payment_model.data_type = payment.data_type
-    if payment_model.time_pay < 4:
+    if payment_model.time_pay < 3:
         payment_model.time_pay += 1
     else:
         raise http_exception()
