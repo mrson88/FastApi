@@ -1,3 +1,6 @@
+import sys
+from datetime import datetime, timedelta
+
 sys.path.append("..")
 from sqlalchemy import create_engine, Column, Integer, Date, func, text
 from typing import Optional, List
@@ -11,8 +14,6 @@ from TodoApp.check_data.schedule_task import task_check
 import asyncio
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-import sys
-from datetime import datetime, timedelta
 
 router = APIRouter(
     prefix="/chat",
