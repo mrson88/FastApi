@@ -25,7 +25,7 @@ models.Base.metadata.create_all(bind=engine)
 
 
 @router.get("/")
-def read_root():
+async def read_root():
     return {"Hello": "World"}
 
 
@@ -35,7 +35,7 @@ def read_messages():
 
 
 @router.post("/messages")
-def create_message(message: str):
+async def create_message(message: str):
     return JSONResponse(content={"message": message})
 
 
