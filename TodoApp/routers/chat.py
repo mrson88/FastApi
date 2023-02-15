@@ -36,4 +36,17 @@ def read_messages():
 
 @router.post("/messages")
 def create_message(message: str):
-    return JSONResponse(content={"message": message})
+    data = JSONResponse(content={"message": message})
+    print(data)
+    return successful_response(200)
+
+
+def successful_response(status_code: int):
+    return {
+        'status': status_code,
+        'transaction': 'Successful'
+    }
+
+
+def http_exception():
+    return HTTPException(status_code=404, detail="Todo not found")
