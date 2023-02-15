@@ -8,7 +8,6 @@ is_check_2_minute = False
 
 
 async def task_daily():
-    # async with httpx.AsyncClient() as client:
     while True:
         seconds = time.time()
         local_time = time.localtime(seconds)
@@ -39,7 +38,6 @@ async def task_check():
 
 
 async def task_two_minute():
-    # async with httpx.AsyncClient() as client:
     global is_check_2_minute
     while True:
         seconds = time.time()
@@ -49,18 +47,10 @@ async def task_two_minute():
         if int(local_time.tm_min) % 2 == 0 and (int(local_time.tm_sec) in [0, 5]):
             is_check_2_minute = False
             if not is_check_2_minute:
-                # print("time: ", local_time.tm_sec)
                 save_data = PostgresNoDuplicates()
-                # finish_1 = time.time() - seconds
-                # print('finish_1=', finish_1)
                 save_data.process_item_two_minute(create_data_two_minute())
-                # finish_2 = time.time() - seconds
-                # print('finish_2=', finish_2)
                 owner_id_list = CheckDataDaily().check_all_id()
-                # finish_3 = time.time() - seconds
-                # print('finish_3=', finish_3)
                 for i in range(len(owner_id_list)):
-                    # for j in ['x2', 'x3', 'x4', 'L2', 'L3', 'L4', 'D2', 'D3', 'D4']:
                     CheckDataDaily().check_data(owner_id_list[i], 'xs_2p')
                 # finish_4 = time.time() - seconds
                 # print('finish_4=', finish_4)
@@ -69,7 +59,6 @@ async def task_two_minute():
 
 
 async def task_new_day():
-    # async with httpx.AsyncClient() as client:
     while True:
         seconds = time.time()
         local_time = time.localtime(seconds)
