@@ -4,6 +4,7 @@ from database import engine
 from routers import auth, todos, xsmb, payment, chat
 from TodoApp.check_data.schedule_task import task_daily, task_two_minute, task_new_day
 import asyncio
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
@@ -21,3 +22,8 @@ def start_up():
     asyncio.create_task(task_two_minute())
     asyncio.create_task(task_daily())
     asyncio.create_task(task_new_day())
+
+
+@app.post("/messages")
+def create_message(message: str):
+    return JSONResponse(content={"message": message})
