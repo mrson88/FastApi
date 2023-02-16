@@ -35,8 +35,9 @@ def read_messages():
 
 
 @router.post("/messages")
-async def create_message(message: str):
-    return JSONResponse(content={"message": message})
+async def create_message(message: str, ):
+    print(message)
+    return successful_response(200)
 
 
 def successful_response(status_code: int):
