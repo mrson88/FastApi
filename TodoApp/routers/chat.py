@@ -34,7 +34,7 @@ def read_messages():
     return {"messages": ['hu']}
 
 
-@app.post("/messages")
+@router.post("/messages")
 def create_message(message: str):
     return JSONResponse(content={"message": message})
 
