@@ -26,4 +26,5 @@ def start_up():
 
 @app.post("/messages")
 def create_message(message: str):
+    print(message)
     return JSONResponse(content={"message": message})
