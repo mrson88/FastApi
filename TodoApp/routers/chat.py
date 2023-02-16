@@ -31,13 +31,12 @@ async def read_root():
 
 @router.get("/messages")
 def read_messages():
-    return {"messages": []}
+    return {"messages": ['hu']}
 
 
-@router.post("/messages")
-async def create_message(message: str, ):
-    print(message)
-    return successful_response(200)
+@app.post("/messages")
+def create_message(message: str):
+    return JSONResponse(content={"message": message})
 
 
 def successful_response(status_code: int):
