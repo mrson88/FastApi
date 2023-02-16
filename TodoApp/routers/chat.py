@@ -36,8 +36,14 @@ def read_messages():
 
 @router.post("/messages")
 def create_message(message: str, user: dict = Depends(get_current_user), ):
+    if not message:
+        error = {
+            "error": "Message is required",
+            "code": "ERR-001"
+        }
+        raise HTTPException(status_code=422, detail=error)
     if user is None:
-        raise get_user_exception()
+        raise HTTPException(status_code=401, detail="Unauthorized")
     return JSONResponse(content={"message": message})
 
 
