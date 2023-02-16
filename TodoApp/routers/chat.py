@@ -35,7 +35,9 @@ def read_messages():
 
 
 @router.post("/messages")
-def create_message(message: str):
+def create_message(message: str, user: dict = Depends(get_current_user), ):
+    if user is None:
+        raise get_user_exception()
     return JSONResponse(content={"message": message})
 
 
