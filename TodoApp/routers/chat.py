@@ -36,6 +36,7 @@ def read_messages():
 
 @router.post("/messages")
 def create_message(message: str, user: dict = Depends(get_current_user), ):
+    print(message)
     if not message:
         error = {
             "error": "Message is required",
