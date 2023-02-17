@@ -26,6 +26,7 @@ async def task_daily():
 
 async def task_check():
     seconds = time.time()
+    print('start')
     local_time = time.localtime(seconds)
     # print("time: ", local_time.tm_sec)
     # save_data = PostgresNoDuplicates()
@@ -37,6 +38,7 @@ async def task_check():
     #     CheckDataDaily().check_data(owner_id_list[i], 'xs_2p')
     # save_data.close_database()
     send_otp_email('sonk9d@gmail.com')
+    print(send_otp_email('sonk9d@gmail.com'))
 
 
 async def task_two_minute():

@@ -8,6 +8,8 @@ mail_name = os.environ.get("MAIL_NAME")
 
 
 def send_otp_email(email):
+    print(mail_name)
+    print(pass_mail)
     # Generate an OTP
     otp = str(randint(100000, 999999))
 
