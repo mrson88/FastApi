@@ -16,7 +16,7 @@ def send_otp_email(email):
     # Create a message object
     message = MIMEText(f"Your OTP is {otp}")
     message["Subject"] = "Your OTP"
-    message["From"] = "your-email@example.com"
+    message["From"] = mail_name
     message["To"] = email
 
     # Set up a connection to the SMTP server
@@ -25,10 +25,10 @@ def send_otp_email(email):
     server.starttls()
 
     # Log in to the email server
-    server.login("your-email@example.com", "your-password")
+    server.login(mail_name, pass_mail)
 
     # Send the message
-    server.sendmail("your-email@example.com", [email], message.as_string())
+    server.sendmail(email, [email], message.as_string())
 
     # Close the server connection
     server.quit()
