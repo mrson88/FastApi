@@ -67,7 +67,10 @@ async def create_xsmb(xsmb: Xsmb,
     xsmb_model.data = xsmb.data
     xsmb_model.xs_type = xsmb.xs_type
     xsmb_model.data_type = xsmb.data_type
-    xsmb_model.data_cost_per = xsmb.data_cost_per
+    if abs(float(xsmb.data_cost_per)) > 0:
+        xsmb_model.data_cost_per = xsmb.data_cost_per
+    else:
+        http_exception()
     # print(xsmb.data)
     # print(xsmb.data_type)
     # print(xsmb.xs_type)

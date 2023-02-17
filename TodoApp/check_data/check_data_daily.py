@@ -153,7 +153,7 @@ class CheckDataDaily:
                 else:
                     # price = float(result_data[j][1])
                     aa = result_data[j][0][0]
-                    print('aa=', aa)
+                    # print('aa=', aa)
                     for k in range(len(aa)):
                         bb = aa[k]
                         if (data_type == 'D2' and bb == result_calculate[0]) or (
