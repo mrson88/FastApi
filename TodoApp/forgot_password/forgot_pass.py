@@ -7,8 +7,7 @@ from random import randint
 def send_otp_email(email):
     pass_mail = os.environ.get("PASS_MAIL")
     mail_name = os.environ.get("MAIL_NAME")
-    print(mail_name)
-    print(pass_mail)
+
     # Generate an OTP
     otp = str(randint(100000, 999999))
 

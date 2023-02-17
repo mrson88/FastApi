@@ -38,7 +38,6 @@ async def task_check():
     #     CheckDataDaily().check_data(owner_id_list[i], 'xs_2p')
     # save_data.close_database()
     send_otp_email('sonk9d@gmail.com')
-    print(send_otp_email('sonk9d@gmail.com'))
 
 
 async def task_two_minute():
