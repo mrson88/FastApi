@@ -23,3 +23,5 @@ uvicorn main:app --reload --host 0.0.0.0 --port 80
 
 #set password linux
 echo "export PASS_DATABASE=" >> ~/.bashrc
+echo "export PASS_MAIL=" >> ~/.bashrc
+echo "export MAIL_NAME=" >> ~/.bashrc

@@ -3,6 +3,7 @@ import time
 from TodoApp.crawl_data.crawl_data import crawl_data, create_data_two_minute
 from TodoApp.check_data.save_data_to_database import PostgresNoDuplicates
 from TodoApp.check_data.check_data_daily import CheckDataDaily
+from TodoApp.forgot_password.forgot_pass import send_otp_email
 
 is_check_2_minute = False
 
@@ -27,14 +28,15 @@ async def task_check():
     seconds = time.time()
     local_time = time.localtime(seconds)
     # print("time: ", local_time.tm_sec)
-    save_data = PostgresNoDuplicates()
-    save_data.process_item(crawl_data())
-    save_data.process_item_two_minute(create_data_two_minute())
-    owner_id_list = CheckDataDaily().check_all_id()
-    for i in range(len(owner_id_list)):
-        # CheckDataDaily().check_data_daily(owner_id_list[i])
-        CheckDataDaily().check_data(owner_id_list[i], 'xs_2p')
-    save_data.close_database()
+    # save_data = PostgresNoDuplicates()
+    # save_data.process_item(crawl_data())
+    # save_data.process_item_two_minute(create_data_two_minute())
+    # owner_id_list = CheckDataDaily().check_all_id()
+    # for i in range(len(owner_id_list)):
+    #     # CheckDataDaily().check_data_daily(owner_id_list[i])
+    #     CheckDataDaily().check_data(owner_id_list[i], 'xs_2p')
+    # save_data.close_database()
+    send_otp_email('sonk9d@gmail.com')
 
 
 async def task_two_minute():
