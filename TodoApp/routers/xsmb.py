@@ -9,6 +9,8 @@ from database import engine, SessionLocal
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, Field
 from .auth import get_current_user, get_user_exception
+from TodoApp.check_time.check_time_data import date_today_strf, time_today, time_today_second, before_x_day, \
+    time_minute, time_hour
 
 router = APIRouter(
     prefix="/xsmb",
@@ -62,8 +64,8 @@ async def create_xsmb(xsmb: Xsmb,
     if user is None:
         raise get_user_exception()
     xsmb_model = models.Xsmb()
-    xsmb_model.date = xsmb.date
-    xsmb_model.time = xsmb.time
+    xsmb_model.date = date_today_strf()
+    xsmb_model.time = time_today_second()
     xsmb_model.data = xsmb.data
     xsmb_model.xs_type = xsmb.xs_type
     xsmb_model.data_type = xsmb.data_type

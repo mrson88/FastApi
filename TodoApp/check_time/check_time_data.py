@@ -20,6 +20,10 @@ def time_today():
     return time.strftime('%H:%M')
 
 
+def time_today_second():
+    return time.strftime('%H:%M:%S')
+
+
 def date_today_strf():
     date_today = datetime.date.today()
     return date_today.strftime("%d-%m-%Y")

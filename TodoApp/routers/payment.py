@@ -12,6 +12,8 @@ from pydantic import BaseModel
 from .auth import get_current_user, get_user_exception
 from TodoApp.check_data.schedule_task import task_check
 import asyncio
+from TodoApp.check_time.check_time_data import date_today_strf, time_today, time_today_second, before_x_day, \
+    time_minute, time_hour
 
 router = APIRouter(
     prefix="/payment",
@@ -108,9 +110,9 @@ async def create_payment(payment: Payment,
     if user is None:
         raise get_user_exception()
     payment_model = models.Payment()
-    payment_model.date = payment.date
-    payment_model.time = payment.time
-    if payment.data_money < 1000000001:
+    payment_model.date = date_today_strf()
+    payment_model.time = time_today_second()
+    if payment.data_money < 100000001:
         payment_model.data_money = payment.data_money
     else:
         raise http_exception()
@@ -142,8 +144,8 @@ async def minus_payment(payment_id: int,
     if payment_model is None:
         raise http_exception()
 
-    payment_model.date = payment.date
-    payment_model.time = payment.time
+    payment_model.date = date_today_strf()
+    payment_model.time = time_today_second()
     payment_model.data_type = payment.data_type
     if float(payment.data_money) > 0:
         if payment.data_type in ['x2', 'x3', 'x4']:
@@ -183,8 +185,8 @@ async def add_payment(payment_id: int,
     if payment_model is None:
         raise http_exception()
 
-    payment_model.date = payment.date
-    payment_model.time = payment.time
+    payment_model.date = date_today_strf()
+    payment_model.time = time_today_second()
     payment_model.data_type = payment.data_type
     if payment_model.time_pay < 3:
         payment_model.time_pay += 1
@@ -192,7 +194,7 @@ async def add_payment(payment_id: int,
         raise http_exception()
     if float(payment.data_money) > 0 and payment_model.active:
 
-        if payment.data_money < 100000001:
+        if payment.data_money < 1000000001:
             payment_model.data_money += payment.data_money
         else:
             raise http_exception()
@@ -258,8 +260,8 @@ async def create_payment_history(payment_his: PaymentHistory,
     if user is None:
         raise get_user_exception()
     payment_his_model = models.PaymentHistory()
-    payment_his_model.date = payment_his.date
-    payment_his_model.time = payment_his.time
+    payment_his_model.date = date_today_strf()
+    payment_his_model.time = time_today_second()
     payment_his_model.data_type = payment_his.data_type
     payment_his_model.result_his = payment_his.result_his
     payment_his_model.owner_id = user.get("id")
