@@ -129,8 +129,12 @@ class CheckDataDaily:
                 data_type = result_data[j][2]
                 x = 0
                 result_his = []
-                if data_type == 'L2':
+                if type(result_data[j][1]) == 'str':
                     price = float(result_data[j][1])
+                else:
+                    price = 0
+                if data_type == 'L2':
+
                     aa = result_data[j][0][0]
                     for k in range(len(aa)):
                         bb = aa[k]
@@ -139,7 +143,7 @@ class CheckDataDaily:
                                 x += 1
                                 result_his.append(bb)
                 elif data_type in ['x2', 'x3', 'x4']:
-                    price = float(result_data[j][1])
+                    # price = float(result_data[j][1])
                     aa = result_data[j][0]
                     for k in range(len(aa)):
                         bb = aa[k]
@@ -147,7 +151,7 @@ class CheckDataDaily:
                             x += 1
                             result_his.append(bb)
                 else:
-                    price = float(result_data[j][1])
+                    # price = float(result_data[j][1])
                     aa = result_data[j][0][0]
                     print('aa=', aa)
                     for k in range(len(aa)):
