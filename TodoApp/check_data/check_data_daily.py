@@ -84,7 +84,8 @@ class CheckDataDaily:
                 data_type = result_data[j][2]
                 x = 0
                 result_his = []
-                if type(result_data[j][1]) == 'str':
+                print(type(result_data[j][1]))
+                if type(result_data[j][1]) == str:
                     price = float(result_data[j][1])
                 else:
                     price = 0
