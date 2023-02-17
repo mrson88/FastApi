@@ -110,7 +110,7 @@ async def create_payment(payment: Payment,
     payment_model = models.Payment()
     payment_model.date = payment.date
     payment_model.time = payment.time
-    if payment.data_money < 100000001:
+    if payment.data_money < 1000000001:
         payment_model.data_money = payment.data_money
     else:
         raise http_exception()
