@@ -19,7 +19,7 @@ def send_otp_email(email):
     message["To"] = email
 
     # Set up a connection to the SMTP server
-    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server = smtplib.SMTP("smtp.hostinger.com", 587)
     server.ehlo()
     server.starttls()
 
