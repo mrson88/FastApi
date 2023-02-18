@@ -120,7 +120,7 @@ async def sign_up(request: SignUpRequest, db: Session = Depends(get_db)):
         otp_codes[request.email] = otp_code
         if send_otp_email(request.email, otp_code):
             return {"message": "OTP code sent to email address."}
-        raise http_exception()
+        raise get_user_exception()
 
 
 @router.post("/verify")
