@@ -123,10 +123,9 @@ async def sign_up(request: SignUpRequest):
     # else:
     #     raise token_exception()
     otp_codes[request.email] = otp_code
-    if (send_otp_email(request.email, otp_code)) != '':
+    if send_otp_email(request.email, otp_code):
         return {"message": "OTP code sent to email address."}
-    else:
-        raise http_exception()
+    raise http_exception()
 
 
 @router.post("/verify")

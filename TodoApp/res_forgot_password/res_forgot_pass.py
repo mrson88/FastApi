@@ -26,9 +26,10 @@ def send_otp_email(email, otp):
     server.login(mail_name, pass_mail)
 
     # Send the message
-    aa = server.sendmail(mail_name, [email], message.as_string())
-    print(aa)
+    check_otp = server.sendmail(mail_name, [email], message.as_string())
+    print(check_otp)
     # Close the server connection
     server.quit()
-
-    return otp
+    if check_otp != {}:
+        return
+    return False
