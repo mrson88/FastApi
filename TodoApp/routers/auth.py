@@ -111,7 +111,7 @@ async def sign_up(request: SignUpRequest, db: Session = Depends(get_db)):
     otp_code = ''.join(random.choices(string.digits, k=6))
     list_user_email_final = []
     list_user_email = db.query(models.Users.email).all()
-    for data in range(len(list_user_email)):
+    for data in list_user_email:
         list_user_email_final.append(data[0])
     print(list_user_email_final)
     # if check_data_username(create_user.username) and check_data_other(create_user.email) and check_data_other(
