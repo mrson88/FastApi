@@ -113,7 +113,7 @@ async def sign_up(request: SignUpRequest, db: Session = Depends(get_db)):
     list_user_email = db.query(models.Users.email).all()
     for data in range(len(list_user_email)):
         list_user_email_final.append(data[0])
-    print(list_user_email)
+    print(list_user_email_final)
     # if check_data_username(create_user.username) and check_data_other(create_user.email) and check_data_other(
     #         create_user.username) and check_data_other(create_user.last_name):
     #     create_user_model.email = create_user.email
@@ -127,7 +127,7 @@ async def sign_up(request: SignUpRequest, db: Session = Depends(get_db)):
     #     db.commit()
     # else:
     #     raise token_exception()
-    if request.email in list_user_email:
+    if request.email in list_user_email_final:
         raise http_exception()
     otp_codes[request.email] = otp_code
     if send_otp_email(request.email, otp_code):
