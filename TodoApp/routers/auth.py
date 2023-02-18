@@ -106,9 +106,10 @@ otp_codes = {}
 
 
 @router.post("/create/user")
-async def sign_up(request: SignUpRequest):
+async def sign_up(request: SignUpRequest, db: Session = Depends(get_db)):
     # create_user_model = models.Users()
     otp_code = ''.join(random.choices(string.digits, k=6))
+    list_user_email = db.query(models.Users.email).all()
     # if check_data_username(create_user.username) and check_data_other(create_user.email) and check_data_other(
     #         create_user.username) and check_data_other(create_user.last_name):
     #     create_user_model.email = create_user.email
@@ -122,6 +123,8 @@ async def sign_up(request: SignUpRequest):
     #     db.commit()
     # else:
     #     raise token_exception()
+    if request.email in list_user_email:
+        raise http_exception()
     otp_codes[request.email] = otp_code
     if send_otp_email(request.email, otp_code):
         return {"message": "OTP code sent to email address."}
