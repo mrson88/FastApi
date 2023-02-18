@@ -26,8 +26,8 @@ def send_otp_email(email, otp):
     server.login(mail_name, pass_mail)
 
     # Send the message
-    server.sendmail(mail_name, [email], message.as_string())
-
+    aa = server.sendmail(mail_name, [email], message.as_string())
+    print(aa)
     # Close the server connection
     server.quit()
 
