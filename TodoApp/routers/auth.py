@@ -1,7 +1,8 @@
+import string
 import sys
 
 sys.path.append("..")
-
+import random
 from fastapi import Depends, HTTPException, status, APIRouter
 from pydantic import BaseModel
 from typing import Optional
@@ -12,6 +13,7 @@ from database import SessionLocal, engine
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
+from TodoApp.res_forgot_password.res_forgot_pass import send_otp_email
 
 SECRET_KEY = "KlgH6AzYDeZeGwD288to79I3vTHT8wp7"
 ALGORITHM = "HS256"
@@ -23,6 +25,7 @@ class CreateUser(BaseModel):
     first_name: str
     last_name: str
     password: str
+    otp: str
 
 
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -89,12 +92,53 @@ async def get_current_user(token: str = Depends(oauth2_bearer)):
         raise get_user_exception()
 
 
+class SignUpRequest(BaseModel):
+    email: str
+
+
+# Model for OTP verification request
+class OTPVerificationRequest(BaseModel):
+    email: str
+    otp: str
+
+
+otp_codes = {}
+
+
 @router.post("/create/user")
-async def create_new_user(create_user: CreateUser, db: Session = Depends(get_db)):
+async def sign_up(request: SignUpRequest):
+    # create_user_model = models.Users()
+    otp_code = ''.join(random.choices(string.digits, k=6))
+    # if check_data_username(create_user.username) and check_data_other(create_user.email) and check_data_other(
+    #         create_user.username) and check_data_other(create_user.last_name):
+    #     create_user_model.email = create_user.email
+    #     create_user_model.username = create_user.username
+    #     create_user_model.first_name = create_user.first_name
+    #     create_user_model.last_name = create_user.last_name
+    #     hash_password = get_password_hash(create_user.password)
+    #     create_user_model.hashed_password = hash_password
+    #     create_user_model.is_active = True
+    #     db.add(create_user_model)
+    #     db.commit()
+    # else:
+    #     raise token_exception()
+    otp_codes[request.email] = otp_code
+    if (send_otp_email(request.email, otp_code)) != '':
+        return {"message": "OTP code sent to email address."}
+    else:
+        raise http_exception()
+
+
+@router.post("/verify")
+def verify(create_user: CreateUser, db: Session = Depends(get_db)):
     create_user_model = models.Users()
     if check_data_username(create_user.username) and check_data_other(create_user.email) and check_data_other(
             create_user.username) and check_data_other(create_user.last_name):
         create_user_model.email = create_user.email
+        if create_user_model.email not in otp_codes:
+            raise HTTPException(status_code=400, detail="OTP code not found.")
+        if otp_codes[create_user.email] != create_user.otp:
+            raise HTTPException(status_code=400, detail="Invalid OTP code.")
         create_user_model.username = create_user.username
         create_user_model.first_name = create_user.first_name
         create_user_model.last_name = create_user.last_name
@@ -105,6 +149,8 @@ async def create_new_user(create_user: CreateUser, db: Session = Depends(get_db)
         db.commit()
     else:
         raise token_exception()
+
+    return {"message": "OTP code verified."}
 
 
 @router.post("/token")
@@ -149,3 +195,7 @@ def check_data_other(data):
     if data != '':
         return True
     return False
+
+
+def http_exception():
+    return HTTPException(status_code=404, detail="Todo not found")

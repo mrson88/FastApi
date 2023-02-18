@@ -4,12 +4,12 @@ from email.mime.text import MIMEText
 from random import randint
 
 
-def send_otp_email(email):
+def send_otp_email(email, otp):
     pass_mail = os.environ.get("PASS_MAIL")
     mail_name = os.environ.get("MAIL_NAME")
 
     # Generate an OTP
-    otp = str(randint(100000, 999999))
+    # otp = str(randint(100000, 999999))
 
     # Create a message object
     message = MIMEText(f"Your OTP is {otp}")

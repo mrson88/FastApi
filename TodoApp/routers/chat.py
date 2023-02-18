@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 sys.path.append("..")
 from sqlalchemy import create_engine, Column, Integer, Date, func, text
 from typing import Optional, List
-from fastapi import Depends, HTTPException, APIRouter
+from fastapi import Depends, HTTPException, APIRouter, WebSocket
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
@@ -12,7 +12,7 @@ from pydantic import BaseModel
 from .auth import get_current_user, get_user_exception
 from TodoApp.check_data.schedule_task import task_check
 import asyncio
-from fastapi import FastAPI
+
 from fastapi.responses import JSONResponse
 
 router = APIRouter(
@@ -20,6 +20,15 @@ router = APIRouter(
     tags=["chat"],
     responses={404: {"description": "Not found"}}
 )
+
+
+def get_db():
+    try:
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
+
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -46,6 +55,18 @@ def create_message(message: str, user: dict = Depends(get_current_user), ):
     if user is None:
         raise HTTPException(status_code=401, detail="Unauthorized")
     return JSONResponse(content={"message": message})
+
+
+@router.websocket("/chat/{group_id}/{user_id}")
+async def chat(websocket: WebSocket, group_id: int, user_id: int):
+    await websocket.accept()
+    await router.db.execute("INSERT INTO chat_user (group_id, user_id) VALUES ($1, $2)", group_id, user_id)
+
+    while True:
+        message = await websocket.receive_text()
+        await router.db.execute("INSERT INTO chat_message (group_id, user_id, message) VALUES ($1, $2, $3)", group_id,
+                                user_id, message)
+        await websocket.send_text(message)
 
 
 def successful_response(status_code: int):

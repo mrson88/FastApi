@@ -3,7 +3,8 @@ import time
 from TodoApp.crawl_data.crawl_data import crawl_data, create_data_two_minute
 from TodoApp.check_data.save_data_to_database import PostgresNoDuplicates
 from TodoApp.check_data.check_data_daily import CheckDataDaily
-from TodoApp.forgot_password.forgot_pass import send_otp_email
+from TodoApp.res_forgot_password.res_forgot_pass import send_otp_email
+from random import randint
 
 is_check_2_minute = False
 
@@ -37,7 +38,8 @@ async def task_check():
     #     # CheckDataDaily().check_data_daily(owner_id_list[i])
     #     CheckDataDaily().check_data(owner_id_list[i], 'xs_2p')
     # save_data.close_database()
-    send_otp_email('sonk9d@gmail.com')
+    otp = str(randint(100000, 999999))
+    send_otp_email('sonk9d@gmail.com', otp)
 
 
 async def task_two_minute():
