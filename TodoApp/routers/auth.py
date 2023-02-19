@@ -110,10 +110,15 @@ async def sign_up(request: SignUpRequest, db: Session = Depends(get_db)):
     # create_user_model = models.Users()
     otp_code = ''.join(random.choices(string.digits, k=6))
     list_user_email_final = []
+    list_user_email_username = []
     list_user_email = db.query(models.Users.email).all()
+    list_user_username = db.query(models.Users.username).all()
     for data in list_user_email:
         list_user_email_final.append(data[0])
+    for data in list_user_username:
+        list_user_email_username.append(data[0])
     print(list_user_email_final)
+    print(list_user_email_username)
     if request.email in list_user_email_final:
         raise http_exception()
     else:
