@@ -45,7 +45,7 @@ def send_fastapi_otp_email(email, otp):
         MAIL_PORT=587,
         MAIL_SERVER="smtp.hostinger.com",
         MAIL_TLS=True,
-        MAIL_SSL=False,
+        # MAIL_SSL=False,
         # USE_CREDENTIALS=True,
     )
     mail = FastMail(conf)
