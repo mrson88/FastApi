@@ -53,7 +53,8 @@ class CheckDataDaily:
             'D4': 1000 * 9000
         }
         if type_data == 'xs_mb':
-            self.cur.execute("select result from result_daily where day = %s", (date_today_strf(),))
+            self.cur.execute("select result from result_daily where day = %s order by id desc limit 1",
+                             (date_today_strf(),))
         else:
             self.cur.execute("select result from result_five_minute where day = %s order by id desc limit 1",
                              (date_today_strf(),))

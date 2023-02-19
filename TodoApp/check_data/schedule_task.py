@@ -7,22 +7,27 @@ from TodoApp.res_forgot_password.res_forgot_pass import send_otp_email
 from random import randint
 
 is_check_2_minute = False
+is_check_daily = False
 
 
 async def task_daily():
+    global is_check_daily
     while True:
         seconds = time.time()
         local_time = time.localtime(seconds)
 
         await asyncio.sleep(60)
         if int(local_time.tm_hour) == 18 and 31 < int(local_time.tm_min) < 50:
+            is_check_daily = False
             print("time: ", local_time.tm_sec)
             save_data = PostgresNoDuplicates()
-            if save_data.process_item(crawl_data()):
+            save_data.process_item(crawl_data())
+            if not is_check_daily:
                 owner_id_list = CheckDataDaily().check_all_id()
                 for i in range(len(owner_id_list)):
                     CheckDataDaily().check_data(owner_id_list[i], 'xs_mb')
                 save_data.close_database()
+                is_check_daily = True
 
 
 async def task_check():
