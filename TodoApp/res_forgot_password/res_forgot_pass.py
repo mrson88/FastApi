@@ -3,7 +3,7 @@ import os
 from email.mime.text import MIMEText
 
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
-from fastapi import HTTPException
+from fastapi import HTTPException, BackgroundTasks
 
 pass_mail = os.environ.get("PASS_MAIL")
 mail_name = os.environ.get("MAIL_NAME")
@@ -47,9 +47,9 @@ def send_fastapi_otp_email(email, otp):
         MAIL_FROM=mail_name,
         MAIL_PORT=587,
         MAIL_SERVER="smtp.hostinger.com",
-        # MAIL_TLS=True,
-        # MAIL_SSL=False,
-        # USE_CREDENTIALS=True,
+        MAIL_TLS=True,
+        MAIL_SSL=False,
+        TEMPLATE_FOLDER="./app/templates"
     )
     mail = FastMail(conf)
     message = MessageSchema(
@@ -57,6 +57,7 @@ def send_fastapi_otp_email(email, otp):
         recipients=[email],
         body=f"Your OTP is {otp}",
     )
+
     response = mail.send_message(message)
     print(response)
     # if response.status != 250:

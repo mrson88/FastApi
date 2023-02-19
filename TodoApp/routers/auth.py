@@ -133,7 +133,7 @@ async def sign_up(request: SignUpRequest, db: Session = Depends(get_db)):
         raise http_exception()
     else:
         otp_codes[request.email] = otp_code
-        if send_otp_email(request.email, otp_code):
+        if send_fastapi_otp_email(request.email, otp_code):
             return {"message": "OTP code sent to email address."}
         raise get_user_exception()
 
