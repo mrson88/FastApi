@@ -117,8 +117,8 @@ async def sign_up(request: SignUpRequest, db: Session = Depends(get_db)):
         list_user_email_final.append(data[0])
     for data in list_user_username:
         list_user_email_username.append(data[0])
-    print(list_user_email_final)
-    print(list_user_email_username)
+    # print(list_user_email_final)
+    # print(list_user_email_username)
     if request.email in list_user_email_final:
         raise http_exception()
     else:
