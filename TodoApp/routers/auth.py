@@ -185,7 +185,9 @@ async def create_new_pass(create_new_pass: CreateNewPassword, db: Session = Depe
     create_pass_model = db.query(models.Users) \
         .filter(models.Users.email == create_new_pass.email) \
         .first()
+    print(create_pass_model)
     if check_data_username(create_new_pass.pass_word):
+        print('1')
         create_pass_model.email = create_new_pass.email
         if create_pass_model.email not in otp_codes:
             raise HTTPException(status_code=400, detail="OTP code not found.")
