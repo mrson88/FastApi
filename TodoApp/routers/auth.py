@@ -181,18 +181,18 @@ def verify(create_user: CreateUser, db: Session = Depends(get_db)):
 
 @router.put("/create_new_pass")
 async def create_new_pass(create_new_pass: CreateNewPassword, db: Session = Depends(get_db)):
-    create_user_model = models.Users()
+    # create_user_model = models.Users()
     create_pass_model = db.query(models.Users) \
         .filter(models.Users.email == create_new_pass.email) \
         .first()
     if check_data_username(create_new_pass.pass_word):
         create_pass_model.email = create_new_pass.email
-        if create_user_model.email not in otp_codes:
+        if create_pass_model.email not in otp_codes:
             raise HTTPException(status_code=400, detail="OTP code not found.")
         if otp_codes[create_new_pass.email] != create_new_pass.otp:
             raise HTTPException(status_code=400, detail="Invalid OTP code.")
         create_pass_model.hashed_password = get_password_hash(create_new_pass.pass_word)
-        db.add(create_user_model)
+        db.add(create_pass_model)
         db.commit()
         db.close()
     else:
