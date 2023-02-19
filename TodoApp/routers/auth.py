@@ -94,6 +94,11 @@ async def get_current_user(token: str = Depends(oauth2_bearer)):
 
 class SignUpRequest(BaseModel):
     email: str
+    username: str
+
+
+class ForgotPass(BaseModel):
+    email: str
 
 
 # Model for OTP verification request
@@ -102,12 +107,17 @@ class OTPVerificationRequest(BaseModel):
     otp: str
 
 
+class CreateNewPassword(BaseModel):
+    email: str
+    otp: str
+    pass_word: str
+
+
 otp_codes = {}
 
 
 @router.post("/create/user")
 async def sign_up(request: SignUpRequest, db: Session = Depends(get_db)):
-    # create_user_model = models.Users()
     otp_code = ''.join(random.choices(string.digits, k=6))
     list_user_email_final = []
     list_user_email_username = []
@@ -119,7 +129,23 @@ async def sign_up(request: SignUpRequest, db: Session = Depends(get_db)):
         list_user_email_username.append(data[0])
     # print(list_user_email_final)
     # print(list_user_email_username)
-    if request.email in list_user_email_final:
+    if request.email in list_user_email_final or request.username in list_user_username:
+        raise http_exception()
+    else:
+        otp_codes[request.email] = otp_code
+        if send_otp_email(request.email, otp_code):
+            return {"message": "OTP code sent to email address."}
+        raise get_user_exception()
+
+
+@router.post("/forgot_pass")
+async def forgot_pass(request: ForgotPass, db: Session = Depends(get_db)):
+    otp_code = ''.join(random.choices(string.digits, k=6))
+    list_user_email_final = []
+    list_user_email = db.query(models.Users.email).all()
+    for data in list_user_email:
+        list_user_email_final.append(data[0])
+    if request.email not in list_user_email_final:
         raise http_exception()
     else:
         otp_codes[request.email] = otp_code
@@ -146,10 +172,32 @@ def verify(create_user: CreateUser, db: Session = Depends(get_db)):
         create_user_model.is_active = True
         db.add(create_user_model)
         db.commit()
+        db.close()
     else:
         raise token_exception()
 
     return {"message": "OTP code verified."}
+
+
+@router.put("/create_new_pass")
+async def create_new_pass(create_new_pass: CreateNewPassword, db: Session = Depends(get_db)):
+    create_user_model = models.Users()
+    create_pass_model = db.query(models.Users) \
+        .filter(models.Users.email == create_new_pass.email) \
+        .first()
+    if check_data_username(create_new_pass.pass_word):
+        create_pass_model.email = create_new_pass.email
+        if create_user_model.email not in otp_codes:
+            raise HTTPException(status_code=400, detail="OTP code not found.")
+        if otp_codes[create_new_pass.email] != create_new_pass.otp:
+            raise HTTPException(status_code=400, detail="Invalid OTP code.")
+        create_pass_model.hashed_password = get_password_hash(create_new_pass.pass_word)
+        db.add(create_user_model)
+        db.commit()
+        db.close()
+    else:
+        raise token_exception()
+    return {"message": "Change password."}
 
 
 @router.post("/token")

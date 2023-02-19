@@ -35,7 +35,7 @@ def send_otp_email(email, otp):
         print(f'Error: {e}')
         return False
     server.quit()
-    # return True
+    return True
 
     # Close the server connection
 
