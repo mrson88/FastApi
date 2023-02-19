@@ -56,6 +56,6 @@ def send_fastapi_otp_email(email, otp):
     )
     response = mail.send_message(message)
     print(response)
-    if response.status != 250:
-        raise HTTPException(status_code=500, detail="Email sending failed")
+    # if response.status != 250:
+    #     raise HTTPException(status_code=500, detail="Email sending failed")
     return True
