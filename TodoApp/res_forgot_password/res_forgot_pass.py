@@ -39,9 +39,9 @@ def send_otp_email(email, otp):
 
 def send_fastapi_otp_email(email, otp):
     conf = ConnectionConfig(
-        MAIL_USERNAME=email,
+        MAIL_USERNAME=mail_name,
         MAIL_PASSWORD=pass_mail,
-        MAIL_FROM=mail_name,
+        MAIL_FROM=email,
         MAIL_PORT=587,
         MAIL_SERVER="smtp.hostinger.com",
         # MAIL_TLS=True,
