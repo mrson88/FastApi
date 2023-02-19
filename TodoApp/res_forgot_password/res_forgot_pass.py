@@ -1,7 +1,7 @@
 import smtplib
 import os
 from email.mime.text import MIMEText
-from random import randint
+
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from fastapi import HTTPException
 
