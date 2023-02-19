@@ -43,10 +43,10 @@ def send_fastapi_otp_email(email, otp):
         MAIL_PASSWORD=pass_mail,
         MAIL_FROM=mail_name,
         MAIL_PORT=587,
-        MAIL_SERVER="smtp.phuonghoang88.online",
-        MAIL_TLS=True,
-        MAIL_SSL=False,
-        USE_CREDENTIALS=True,
+        MAIL_SERVER="smtp.hostinger.com",
+        # MAIL_TLS=True,
+        # MAIL_SSL=False,
+        # USE_CREDENTIALS=True,
     )
     mail = FastMail(conf)
     message = MessageSchema(
