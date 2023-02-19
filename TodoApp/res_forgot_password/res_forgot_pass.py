@@ -5,11 +5,11 @@ from email.mime.text import MIMEText
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from fastapi import HTTPException
 
+pass_mail = os.environ.get("PASS_MAIL")
+mail_name = os.environ.get("MAIL_NAME")
+
 
 def send_otp_email(email, otp):
-    pass_mail = os.environ.get("PASS_MAIL")
-    mail_name = os.environ.get("MAIL_NAME")
-
     # Generate an OTP
     # otp = str(randint(100000, 999999))
 
@@ -39,11 +39,11 @@ def send_otp_email(email, otp):
 
 def send_fastapi_otp_email(email, otp):
     conf = ConnectionConfig(
-        MAIL_USERNAME="your-email@your-domain.com",
-        MAIL_PASSWORD="your-email-password",
-        MAIL_FROM="your-email@your-domain.com",
+        MAIL_USERNAME=email,
+        MAIL_PASSWORD=pass_mail,
+        MAIL_FROM=mail_name,
         MAIL_PORT=587,
-        MAIL_SERVER="smtp.your-domain.com",
+        MAIL_SERVER="smtp.hostinger.com",
         MAIL_TLS=True,
         MAIL_SSL=False,
         USE_CREDENTIALS=True,
