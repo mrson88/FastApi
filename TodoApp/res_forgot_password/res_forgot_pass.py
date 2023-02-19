@@ -2,6 +2,8 @@ import smtplib
 import os
 from email.mime.text import MIMEText
 from random import randint
+from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
+from fastapi import HTTPException
 
 
 def send_otp_email(email, otp):
@@ -26,10 +28,34 @@ def send_otp_email(email, otp):
     server.login(mail_name, pass_mail)
 
     # Send the message
-    response_code, response_message = server.sendmail(mail_name, [email], message.as_string())
-    print(response_code, response_message)
+    response_code = server.sendmail(mail_name, [email], message.as_string())
+    print(response_code)
     # Close the server connection
     server.quit()
     if response_code != {}:
         return
     return False
+
+
+def send_fastapi_otp_email(email, otp):
+    conf = ConnectionConfig(
+        MAIL_USERNAME="your-email@your-domain.com",
+        MAIL_PASSWORD="your-email-password",
+        MAIL_FROM="your-email@your-domain.com",
+        MAIL_PORT=587,
+        MAIL_SERVER="smtp.your-domain.com",
+        MAIL_TLS=True,
+        MAIL_SSL=False,
+        USE_CREDENTIALS=True,
+    )
+    mail = FastMail(conf)
+    message = MessageSchema(
+        subject="OTP",
+        recipients=[email],
+        body=f"Your OTP is {otp}",
+    )
+    response = await mail.send_message(message)
+    print(response)
+    # if response.status != 250:
+    #     raise HTTPException(status_code=500, detail="Email sending failed")
+    return True

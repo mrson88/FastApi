@@ -13,7 +13,7 @@ from database import SessionLocal, engine
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
-from TodoApp.res_forgot_password.res_forgot_pass import send_otp_email
+from TodoApp.res_forgot_password.res_forgot_pass import send_otp_email, send_fastapi_otp_email
 
 SECRET_KEY = "KlgH6AzYDeZeGwD288to79I3vTHT8wp7"
 ALGORITHM = "HS256"
@@ -118,7 +118,7 @@ async def sign_up(request: SignUpRequest, db: Session = Depends(get_db)):
         raise http_exception()
     else:
         otp_codes[request.email] = otp_code
-        if send_otp_email(request.email, otp_code):
+        if send_fastapi_otp_email(request.email, otp_code):
             return {"message": "OTP code sent to email address."}
         raise get_user_exception()
 
