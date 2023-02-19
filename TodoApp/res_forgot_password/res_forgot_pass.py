@@ -30,11 +30,10 @@ def send_otp_email(email, otp):
     # Send the message
     try:
         server.sendmail(mail_name, [email], message.as_string())
-        server.quit()
-        return True
     except smtplib.SMTPException as e:
-        server.quit()
         return False
+    server.quit()
+    return True
 
     # Close the server connection
 
