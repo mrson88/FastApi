@@ -28,13 +28,15 @@ def send_otp_email(email, otp):
     server.login(mail_name, pass_mail)
 
     # Send the message
-    response_code = server.sendmail(mail_name, [email], message.as_string())
-    print(response_code)
+    try:
+        server.sendmail(mail_name, [email], message.as_string())
+        server.quit()
+        return True
+    except smtplib.SMTPException as e:
+        server.quit()
+        return False
+
     # Close the server connection
-    server.quit()
-    if response_code != {}:
-        return
-    return False
 
 
 def send_fastapi_otp_email(email, otp):
