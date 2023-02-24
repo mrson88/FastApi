@@ -188,13 +188,13 @@ async def add_payment(payment_id: int,
     payment_model.date = date_today_strf()
     payment_model.time = time_today_second()
     payment_model.data_type = payment.data_type
-    if payment_model.time_pay > -30:
+    if payment_model.time_pay < 6:
         payment_model.time_pay += 1
     else:
         raise http_exception()
     if float(payment.data_money) > 0 and payment_model.active:
 
-        if payment.data_money < 1000000001:
+        if payment.data_money < 10000001:
             payment_model.data_money += payment.data_money
         else:
             raise http_exception()
